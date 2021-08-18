@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "ostream": "cpp",
+    "iostream": "cpp",
+    "valarray": "cpp",
+    "source_location": "cpp",
+    "numeric": "cpp",
+    "array": "cpp"
+  }
+}
