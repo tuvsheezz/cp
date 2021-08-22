@@ -24,23 +24,14 @@ using namespace std;
 int main()
 {
   FAST;
-  int n, x;
-  string q;
-  map<string, map<int, int>> mp;
-  map<string, priority_queue<int, vector<int>, less<int>>> m;
-  cin >> n;
-  repa(i, 0, n)
+  string s;
+  cin >> s;
+  repa(i, 0, s.size())
   {
-    cin >> q >> x;
-    mp[q][x] = i + 1;
-    m[q].push(x);
+    if (s[i] == '.')
+      break;
+    cout << s[i];
   }
-  for (auto const &xx : m)
-    while (!xx.second.empty())
-    {
-      x = xx.second.top();
-      xx.second.pop();
-      cout << mp[xx.first][x] << endl;
-    }
+  cout << '\n';
   return 0;
 }

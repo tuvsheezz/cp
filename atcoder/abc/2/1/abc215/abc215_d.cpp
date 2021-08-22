@@ -19,69 +19,13 @@ using namespace std;
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
 #define MOD2 998244353
-#define MAX_N 100100
-
-str cyesno(bool cond)
-{
-  return cond ? "Yes\n" : "No\n";
-}
-str uyesno(bool cond)
-{
-  return (cond) ? "YES\n" : "NO\n";
-}
-
-struct UnionFind
-{
-  ll par[MAX_N];
-  ll ran[MAX_N] = {0};
-  ll siz[MAX_N];
-  ll size_max = 0;
-  ll count;
-
-  void init(ll n)
-  {
-    repa(i, 0, n)
-    {
-      par[i] = i;
-      siz[i] = 1;
-    }
-    count = n;
-    size_max = 1;
-  }
-
-  ll root(ll x) { return par[x] == x ? x : par[x] = root(par[x]); }
-  bool same(ll x, ll y) { return root(x) == root(y); }
-  void unite(ll x, ll y)
-  {
-    x = root(x);
-    y = root(y);
-    if (x == y)
-      return;
-
-    if (siz[x] < siz[y])
-      swap(x, y);
-    par[y] = x;
-    siz[x] += siz[y];
-    size_max = max(siz[x], size_max);
-    count--;
-  }
-  ll numbers_of_sets() { return count; }
-};
-
-ll big_pow(ll x, ll n, ll mod)
-{
-  if (n == 0)
-    return 1;
-  ll z = big_pow(x * x % mod, n / 2, mod);
-  if (n & 1)
-    z = z * x % mod;
-  return z;
-}
+#define MAX_N 1010101
 
 vector<bool> is_prime(MAX_N, true);
+vector<bool> is_coprime(MAX_N, true);
 vector<ll> prime_numbers;
 
-void prepare_prime_numbers()
+void pre()
 {
   is_prime[0] = false;
   is_prime[1] = false;
@@ -101,18 +45,6 @@ void prepare_prime_numbers()
     if (is_prime[i])
       prime_numbers.push_back(i);
   }
-}
-
-bool is_prime_simple(ll n)
-{
-  if (n == 1)
-    return false;
-  for (ll i = 2; i * i <= n; i++)
-  {
-    if (n % i == 0)
-      return false;
-  }
-  return true;
 }
 
 vector<ll> prime_divisors(ll n)
@@ -135,9 +67,47 @@ vector<ll> prime_divisors(ll n)
   return res;
 }
 
+void coprime_table(ll n, ll m)
+{
+  repa(i, 1, MAX_N + 1)
+  {
+    if (n * i > m)
+      break;
+    if (i * n <= m)
+      if (i * n != 1)
+        is_coprime[i * n] = false;
+  }
+}
+
 int main()
 {
   FAST;
-
+  pre();
+  ll n, m, t;
+  map<ll, bool> checked;
+  vector<ll> ans;
+  cin >> n >> m;
+  repa(i, 0, n)
+  {
+    cin >> t;
+    auto divs = prime_divisors(t);
+    for (auto const &x : divs)
+    {
+      if (checked[x])
+        continue;
+      coprime_table(x, m);
+      checked[x] = true;
+    }
+  }
+  repa(i, 1, m + 1)
+  {
+    if (is_coprime[i])
+      ans.push_back(i);
+  }
+  cout << ans.size() << '\n';
+  for (auto const &x : ans)
+  {
+    cout << x << '\n';
+  }
   return 0;
 }
