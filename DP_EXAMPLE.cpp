@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define FAST ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define FAST                        \
+  ios_base::sync_with_stdio(false); \
+  cin.tie(0);                       \
+  cout.tie(0);
 #define ll long long
 #define dd double
 #define ull unsigned long long
@@ -17,19 +20,24 @@ using namespace std;
 #define INF 10e17
 ll memo[50][50][60];
 
-ll cut(ll n, ll m, ll k) {
-  if(k == 0 || n * m == k || memo[n][m][k])
+ll cut(ll n, ll m, ll k)
+{
+  if (k == 0 || n * m == k || memo[n][m][k])
     return memo[n][m][k];
   ll ans = INF;
 
-  for(ll i = 1; i <= n - i; i++) {
-    for(ll j = 0; j <= k; j++) {
+  for (ll i = 1; i <= n - i; i++)
+  {
+    for (ll j = 0; j <= k; j++)
+    {
       ll cost = m * m + cut(i, m, k - j) + cut(n - i, m, j);
       ans = min(ans, cost);
     }
   }
-  for(ll i = 1; i <= m - i; i++) {
-    for(ll j = 0; j <= k; j++) {
+  for (ll i = 1; i <= m - i; i++)
+  {
+    for (ll j = 0; j <= k; j++)
+    {
       ll cost = n * n + cut(n, i, k - j) + cut(n, m - i, j);
       ans = min(ans, cost);
     }
@@ -38,16 +46,20 @@ ll cut(ll n, ll m, ll k) {
   return ans;
 }
 
-void solve() {
+void solve()
+{
   ll N, M, K;
   cin >> N >> M >> K;
   cout << cut(N, M, K) << '\n';
 }
 
-int main() {
+int main()
+{
   FAST;
-  ll t; cin >> t;
-  while(t--) {
+  ll t;
+  cin >> t;
+  while (t--)
+  {
     solve();
   }
   return 0;

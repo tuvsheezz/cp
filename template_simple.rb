@@ -1,21 +1,8 @@
-def solve
-  s = gets.chomp.split('')
-  permutations = s.permutation.uniq.sort
-  permutations.each do |per|
-    flag = true
-    per.each.with_index do |c, i|
-      flag = false if s[i] == c
-    end
-    if flag
-      puts per.join
-      return
-    end
-  end
-  puts "IMPOSSIBLE"
+x, y = gets.split('.').map(&:to_i)
+if y < 3
+  puts "#{x}-"
+elsif y < 7
+  puts "#{x}"
+else
+  puts "#{x}+"
 end
-
-def main
-  gets.to_i.times { solve }
-end
-
-main
