@@ -4,8 +4,9 @@ using namespace std;
   ios_base::sync_with_stdio(false); \
   cin.tie(0);                       \
   cout.tie(0);
+#define M_PI 3.141592653589793238462643383279502884L
 #define ll long long
-#define dd double
+#define dd long double
 #define ull unsigned long long
 #define str string
 #define ivec vector<ll>
@@ -21,25 +22,11 @@ using namespace std;
 int main()
 {
   FAST;
-  ll x, n, a[444] = {0}, g, mn = 2 * MAX_N, ans = 0;
-  cin >> x >> n;
-  repa(i, 0, 444)
-  {
-    a[i] = abs(x - (i - 200));
-  }
-  repa(i, 0, n)
-  {
-    cin >> g;
-    a[g + 200] = MAX_N;
-  }
-  repa(i, 1, 400)
-  {
-    if (a[i] < mn)
-    {
-      mn = a[i];
-      ans = i;
-    }
-  }
-  cout << ans - 200 << '\n';
+  dd a, b, h, m;
+  cin >> a >> b >> h >> m;
+  dd aa = 30 * h + 0.5 * m;
+  dd ba = 6 * m;
+  aa = min(abs(aa - ba), 360 - abs(aa - ba));
+  cout << setprecision(30) << sqrt(a * a + b * b - 2 * a * b * cos(M_PI / 180 * aa)) << endl;
   return 0;
 }

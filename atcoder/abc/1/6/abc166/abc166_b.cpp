@@ -21,25 +21,24 @@ using namespace std;
 int main()
 {
   FAST;
-  ll x, n, a[444] = {0}, g, mn = 2 * MAX_N, ans = 0;
-  cin >> x >> n;
-  repa(i, 0, 444)
+  ll n, k, d, ans = 0;
+  cin >> n >> k;
+  map<ll, bool> mp;
+  repa(i, 0, k)
   {
-    a[i] = abs(x - (i - 200));
+    cin >> d;
+    repa(j, 0, d)
+    {
+      ll g;
+      cin >> g;
+      mp[g] = true;
+    }
   }
   repa(i, 0, n)
   {
-    cin >> g;
-    a[g + 200] = MAX_N;
+    if (!mp[i + 1])
+      ans++;
   }
-  repa(i, 1, 400)
-  {
-    if (a[i] < mn)
-    {
-      mn = a[i];
-      ans = i;
-    }
-  }
-  cout << ans - 200 << '\n';
+  cout << ans << '\n';
   return 0;
 }

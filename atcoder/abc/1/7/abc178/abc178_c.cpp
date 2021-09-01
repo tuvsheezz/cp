@@ -15,31 +15,24 @@ using namespace std;
 #define vsorta(v) sort(v.begin(), v.end())
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
+#define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
 
 int main()
 {
   FAST;
-  ll x, n, a[444] = {0}, g, mn = 2 * MAX_N, ans = 0;
-  cin >> x >> n;
-  repa(i, 0, 444)
+  ll n, ans;
+  cin >> n;
+  ll t1 = 1;
+  ll t2 = 1;
+  ll t3 = 1;
+  while (n--)
   {
-    a[i] = abs(x - (i - 200));
+    t1 = (t1 * 10) % MOD1;
+    t2 = (t2 * 9) % MOD1;
+    t3 = (t3 * 8) % MOD1;
   }
-  repa(i, 0, n)
-  {
-    cin >> g;
-    a[g + 200] = MAX_N;
-  }
-  repa(i, 1, 400)
-  {
-    if (a[i] < mn)
-    {
-      mn = a[i];
-      ans = i;
-    }
-  }
-  cout << ans - 200 << '\n';
+  cout << (t1 + t3 + 2 * MOD1 - t2 * 2) % MOD1 << '\n';
   return 0;
 }

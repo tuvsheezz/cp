@@ -21,25 +21,19 @@ using namespace std;
 int main()
 {
   FAST;
-  ll x, n, a[444] = {0}, g, mn = 2 * MAX_N, ans = 0;
-  cin >> x >> n;
-  repa(i, 0, 444)
+  ll x, y;
+  cin >> x >> y;
+  repa(i, 0, 100)
   {
-    a[i] = abs(x - (i - 200));
-  }
-  repa(i, 0, n)
-  {
-    cin >> g;
-    a[g + 200] = MAX_N;
-  }
-  repa(i, 1, 400)
-  {
-    if (a[i] < mn)
+    repa(j, 0, 100)
     {
-      mn = a[i];
-      ans = i;
+      if (i * 2 + j * 4 == y && i + j == x)
+      {
+        cout << "Yes\n";
+        return 0;
+      }
     }
   }
-  cout << ans - 200 << '\n';
+  cout << "No\n";
   return 0;
 }

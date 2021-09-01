@@ -21,13 +21,24 @@ using namespace std;
 int main()
 {
   FAST;
-  ll n, m, t;
+  ll n, m, t, g, prev = 0, a, b;
   cin >> n >> m >> t;
+  g = n;
+  repa(i, 0, m)
+  {
+    cin >> a >> b;
+    if (a > prev + g - 1)
+    {
+      cout << "No\n";
+      return 0;
+    }
+    g = min(n, prev + b - a);
+    prev = b;
+  }
+  if (t > prev + g - 1)
+    cout << "No\n";
+  else
+    cout << "Yes\n";
 
-  repa(i, 0, n){
-      cin >> n}
-
-      cout
-      << "Yes\n";
   return 0;
 }
