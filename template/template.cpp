@@ -1,19 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define FAST ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define FAST                        \
+  ios_base::sync_with_stdio(false); \
+  cin.tie(0);                       \
+  cout.tie(0);
 #define ll long long
 #define dd double
 #define ull unsigned long long
 #define str string
-#define ivec vector<ll>
-#define dvec vector<double>
+#define iv vector<ll>
+#define dv vector<double>
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define rep(i, e) for (ll i = 0; i < e; i++)
 #define repa(i, s, e) for (ll i = s; i < e; i++)
 #define repd(i, s, e) for (ll i = s; i >= e; i--)
 #define vsorta(v) sort(v.begin(), v.end())
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
+#define pr(x) cout << x;
+#define prd(x) cout << setprecision(50) << x;
+#define pn() cout << '\n';
+#define ps() cout << ' ';
 #define MOD2 998244353
 #define MAX_N 100100
+ll zero = 0;
+
+ll rl()
+{
+  ll n;
+  cin >> n;
+  return n;
+}
+str rs()
+{
+  str n;
+  cin >> n;
+  return n;
+}
+iv rv(ll n)
+{
+  iv a(n, 0);
+  rep(i, n) { cin >> a[i]; }
+  return a;
+}
 
 str cyesno(bool cond)
 {
@@ -73,7 +105,7 @@ ll big_pow(ll x, ll n, ll mod)
 }
 
 vector<bool> is_prime(MAX_N, true);
-vector<ll> prime_numbers;
+iv prime_numbers;
 
 void prepare_prime_numbers()
 {
@@ -109,9 +141,9 @@ bool is_prime_simple(ll n)
   return true;
 }
 
-vector<ll> prime_divisors(ll n)
+iv prime_divisors(ll n)
 {
-  vector<ll> res;
+  iv res;
   ll tmp = n;
   for (auto const &x : prime_numbers)
   {
@@ -128,30 +160,6 @@ vector<ll> prime_divisors(ll n)
   sort(res.begin(), res.end());
   return res;
 }
-
-class Graph
-{
-public:
-  map<int, bool> visited;
-  map<int, vector<int>> adj;
-  void addEdge(int v, int w);
-  void DFS(int v);
-  void resetVisited();
-};
-void Graph::resetVisited() { visited.clear(); }
-void Graph::addEdge(int v, int w) { adj[v].push_back(w); }
-void Graph::DFS(int v)
-{
-  visited[v] = true;
-  vector<int>::iterator i;
-  for (i = adj[v].begin(); i != adj[v].end(); ++i) {
-    if (!visited[*i]) {
-      // ans++;
-      DFS(*i);
-    }
-  }
-}
-
 
 int main()
 {
