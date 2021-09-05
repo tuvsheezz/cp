@@ -26,8 +26,7 @@ using namespace std;
 #define PN cout << '\n'
 #define PS cout << ' '
 #define ret return
-#define INFLL (1LL << 60)
-#define INF (1 << 30)
+#define INF (1LL << 60)
 #define MOD2 998244353
 #define MAX_N 100100
 
@@ -56,28 +55,20 @@ dv rvd(ll n)
   ret a;
 }
 
-str cyesno(bool cond)
-{
-  ret cond ? "Yes\n" : "No\n";
-}
-str uyesno(bool cond)
-{
-  ret(cond) ? "YES\n" : "NO\n";
-}
-
 int main()
 {
   FAST;
-  ll n = rl(), ans = 0, p = 0;
-  iv a = rv(n + 1), b = rv(n);
-  b.insert(b.end(), 0);
-  rep(i, n + 1)
+  ll n = rl(), l = rl(), p = INF, s = 0, k = -1;
+  repa(i, 0, n)
   {
-    ans += min(a[i], b[i] + p);
-    a[i] = max((ll)0, a[i] - p);
-    p = max((ll)0, b[i] - a[i]);
+    if (p > abs(l + i))
+    {
+      p = abs(l + i);
+      k = l + i;
+    }
+    s += l + i;
   }
-  pr(ans);
+  pr(s - k);
   PN;
   ret 0;
 }

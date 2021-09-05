@@ -20,64 +20,53 @@ using namespace std;
 #define vsorta(v) sort(v.begin(), v.end())
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
-#define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
-#define PN cout << '\n'
-#define PS cout << ' '
-#define ret return
-#define INFLL (1LL << 60)
-#define INF (1 << 30)
+#define prd(x) cout << setprecision(50) << x
+#define pn() cout << '\n'
+#define ps() cout << ' '
 #define MOD2 998244353
 #define MAX_N 100100
+ll zero = 0;
 
 ll rl()
 {
   ll n;
   cin >> n;
-  ret n;
+  return n;
 }
 str rs()
 {
   str n;
   cin >> n;
-  ret n;
+  return n;
 }
 iv rv(ll n)
 {
   iv a(n, 0);
   rep(i, n) { cin >> a[i]; }
-  ret a;
-}
-dv rvd(ll n)
-{
-  dv a(n, 0);
-  rep(i, n) { cin >> a[i]; }
-  ret a;
-}
-
-str cyesno(bool cond)
-{
-  ret cond ? "Yes\n" : "No\n";
-}
-str uyesno(bool cond)
-{
-  ret(cond) ? "YES\n" : "NO\n";
+  return a;
 }
 
 int main()
 {
   FAST;
-  ll n = rl(), ans = 0, p = 0;
-  iv a = rv(n + 1), b = rv(n);
-  b.insert(b.end(), 0);
-  rep(i, n + 1)
+  ll n = rl(), m = rl(), t = rl() + 1, p = 0, g;
+  g = n;
+  while (m--)
   {
-    ans += min(a[i], b[i] + p);
-    a[i] = max((ll)0, a[i] - p);
-    p = max((ll)0, b[i] - a[i]);
+    ll a = rl(), b = rl();
+    if (a - p > g - 1)
+    {
+      pr("No\n");
+      return 0;
+    }
+    g = g - (a - p);
+    g = min(n, g + b - a);
+    p = b;
   }
-  pr(ans);
-  PN;
-  ret 0;
+  if (t - p > g)
+    pr("No\n");
+  else
+    pr("Yes\n");
+  return 0;
 }

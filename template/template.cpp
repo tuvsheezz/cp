@@ -20,40 +20,48 @@ using namespace std;
 #define vsorta(v) sort(v.begin(), v.end())
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
-#define pr(x) cout << x;
-#define prd(x) cout << setprecision(50) << x;
-#define pn() cout << '\n';
-#define ps() cout << ' ';
+#define rev(v) reverse(v.begin(), v.end())
+#define pr(x) cout << x
+#define prd(x) cout << fixed << setprecision(50) << x
+#define PN cout << '\n'
+#define PS cout << ' '
+#define ret return
+#define INF (1LL << 60)
 #define MOD2 998244353
 #define MAX_N 100100
-ll zero = 0;
 
 ll rl()
 {
   ll n;
   cin >> n;
-  return n;
+  ret n;
 }
 str rs()
 {
   str n;
   cin >> n;
-  return n;
+  ret n;
 }
 iv rv(ll n)
 {
   iv a(n, 0);
   rep(i, n) { cin >> a[i]; }
-  return a;
+  ret a;
+}
+dv rvd(ll n)
+{
+  dv a(n, 0);
+  rep(i, n) { cin >> a[i]; }
+  ret a;
 }
 
 str cyesno(bool cond)
 {
-  return cond ? "Yes\n" : "No\n";
+  ret cond ? "Yes\n" : "No\n";
 }
 str uyesno(bool cond)
 {
-  return (cond) ? "YES\n" : "NO\n";
+  ret(cond) ? "YES\n" : "NO\n";
 }
 
 struct UnionFind
@@ -75,14 +83,14 @@ struct UnionFind
     size_max = 1;
   }
 
-  ll root(ll x) { return par[x] == x ? x : par[x] = root(par[x]); }
-  bool same(ll x, ll y) { return root(x) == root(y); }
+  ll root(ll x) { ret par[x] == x ? x : par[x] = root(par[x]); }
+  bool same(ll x, ll y) { ret root(x) == root(y); }
   void unite(ll x, ll y)
   {
     x = root(x);
     y = root(y);
     if (x == y)
-      return;
+      ret;
 
     if (siz[x] < siz[y])
       swap(x, y);
@@ -91,17 +99,17 @@ struct UnionFind
     size_max = max(siz[x], size_max);
     count--;
   }
-  ll numbers_of_sets() { return count; }
+  ll numbers_of_sets() { ret count; }
 };
 
 ll big_pow(ll x, ll n, ll mod)
 {
   if (n == 0)
-    return 1;
+    ret 1;
   ll z = big_pow(x * x % mod, n / 2, mod);
   if (n & 1)
     z = z * x % mod;
-  return z;
+  ret z;
 }
 
 vector<bool> is_prime(MAX_N, true);
@@ -132,13 +140,13 @@ void prepare_prime_numbers()
 bool is_prime_simple(ll n)
 {
   if (n == 1)
-    return false;
+    ret false;
   for (ll i = 2; i * i <= n; i++)
   {
     if (n % i == 0)
-      return false;
+      ret false;
   }
-  return true;
+  ret true;
 }
 
 iv prime_divisors(ll n)
@@ -158,12 +166,12 @@ iv prime_divisors(ll n)
   if (n > 1)
     res.push_back(n);
   sort(res.begin(), res.end());
-  return res;
+  ret res;
 }
 
 int main()
 {
   FAST;
 
-  return 0;
+  ret 0;
 }

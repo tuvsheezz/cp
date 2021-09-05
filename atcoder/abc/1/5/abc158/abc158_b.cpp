@@ -20,16 +20,14 @@ using namespace std;
 #define vsorta(v) sort(v.begin(), v.end())
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
-#define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
-#define PN cout << '\n'
-#define PS cout << ' '
+#define prd(x) cout << setprecision(50) << x
+#define pn() cout << '\n'
+#define ps() cout << ' '
 #define ret return
-#define INFLL (1LL << 60)
-#define INF (1 << 30)
 #define MOD2 998244353
 #define MAX_N 100100
+ll zero = 0;
 
 ll rl()
 {
@@ -49,35 +47,17 @@ iv rv(ll n)
   rep(i, n) { cin >> a[i]; }
   ret a;
 }
-dv rvd(ll n)
-{
-  dv a(n, 0);
-  rep(i, n) { cin >> a[i]; }
-  ret a;
-}
-
-str cyesno(bool cond)
-{
-  ret cond ? "Yes\n" : "No\n";
-}
-str uyesno(bool cond)
-{
-  ret(cond) ? "YES\n" : "NO\n";
-}
 
 int main()
 {
   FAST;
-  ll n = rl(), ans = 0, p = 0;
-  iv a = rv(n + 1), b = rv(n);
-  b.insert(b.end(), 0);
-  rep(i, n + 1)
-  {
-    ans += min(a[i], b[i] + p);
-    a[i] = max((ll)0, a[i] - p);
-    p = max((ll)0, b[i] - a[i]);
-  }
+  ll n = rl(), a = rl(), b = rl(), ans = 0;
+  ans = n / (a + b) * a;
+  if (a <= n % (a + b))
+    ans += a;
+  else
+    ans += n % (a + b);
   pr(ans);
-  PN;
+  pn();
   ret 0;
 }
