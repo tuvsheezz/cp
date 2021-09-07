@@ -10,6 +10,11 @@ using namespace std;
 #define str string
 #define iv vector<ll>
 #define dv vector<double>
+#define MLL map<ll, ll>
+#define MSL map<str, ll>
+#define MLB map<ll, bool>
+#define MLL map<ll, ll>
+#define IT iterator
 #define F first
 #define S second
 #define PB push_back
@@ -17,17 +22,22 @@ using namespace std;
 #define rep(i, e) for (ll i = 0; i < e; i++)
 #define repa(i, s, e) for (ll i = s; i < e; i++)
 #define repd(i, s, e) for (ll i = s; i >= e; i--)
+#define repauto(x, s) for (auto const &x : s)
 #define vsorta(v) sort(v.begin(), v.end())
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
 #define prd(x) cout << fixed << setprecision(50) << x
+#define Yes cout << "Yes\n"
+#define YES cout << "YES\n"
+#define No cout << "No\n"
+#define NO cout << "NO\n"
 #define PN cout << '\n'
 #define PS cout << ' '
+#define Ret return 0
 #define ret return
-#define INFLL (1LL << 60)
-#define INF (1 << 30)
+#define INF (1LL << 60)
 #define MOD2 998244353
 #define MAX_N 100100
 
@@ -55,29 +65,35 @@ dv rvd(ll n)
   rep(i, n) { cin >> a[i]; }
   ret a;
 }
-
-str cyesno(bool cond)
+ll vsum(iv v)
 {
-  ret cond ? "Yes\n" : "No\n";
-}
-str uyesno(bool cond)
-{
-  ret(cond) ? "YES\n" : "NO\n";
+  ll s = 0;
+  rep(i, v.size()) { s += v[i]; }
+  ret s;
 }
 
 int main()
 {
   FAST;
-  ll n = rl(), ans = 0, p = 0;
-  iv a = rv(n + 1), b = rv(n);
-  b.insert(b.end(), 0);
-  rep(i, n + 1)
+  ll n = rl(), m = rl(), ans = 0;
+  MLL mp;
+
+  MLL::IT it;
+  rep(i, n)
   {
-    ans += min(a[i], b[i] + p);
-    a[i] = max((ll)0, a[i] - p);
-    p = max((ll)0, b[i] - a[i]);
+    ll k = rl();
+    rep(j, k)
+    {
+      ll t = rl();
+      mp[t]++;
+    }
+  }
+  repauto(x, mp)
+  {
+    if (x.S == n)
+      ans++;
   }
   pr(ans);
   PN;
-  ret 0;
+  Ret;
 }

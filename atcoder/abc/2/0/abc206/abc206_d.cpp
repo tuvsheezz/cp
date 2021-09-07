@@ -38,7 +38,8 @@ using namespace std;
 #define ret return
 #define INF (1LL << 60)
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 200100
+
 ll rl()
 {
   ll n;
@@ -75,16 +76,18 @@ ll vsum(iv v)
   rep(i, (ll)v.size()) { s += v[i]; }
   ret s;
 }
+
 struct UnionFind
 {
-  ll par[MAX_N];
-  ll ran[MAX_N] = {0};
-  ll siz[MAX_N];
+  iv par, ran, siz;
   ll size_max = 0;
   ll count;
 
   void init(ll n)
   {
+    par.resize(n);
+    ran.resize(n, 0);
+    siz.resize(n);
     repa(i, 0, n)
     {
       par[i] = i;
@@ -113,84 +116,22 @@ struct UnionFind
   ll numbers_of_sets() { ret count; }
 };
 
-ll big_pow(ll x, ll n, ll mod)
-{
-  if (n == 0)
-    ret 1;
-  ll z = big_pow(x * x % mod, n / 2, mod);
-  if (n & 1)
-    z = z * x % mod;
-  ret z;
-}
-
-vector<bool> is_prime(MAX_N, true);
-iv prime_numbers;
-
-void prepare_prime_numbers()
-{
-  is_prime[0] = false;
-  is_prime[1] = false;
-  repa(i, 2, MAX_N + 1)
-  {
-    if (!is_prime[i])
-      continue;
-    ll mult = 2;
-    while (i * mult <= MAX_N)
-    {
-      is_prime[i * mult] = false;
-      mult++;
-    }
-  }
-  repa(i, 0, MAX_N + 1)
-  {
-    if (is_prime[i])
-      prime_numbers.push_back(i);
-  }
-}
-
-bool is_prime_simple(ll n)
-{
-  if (n == 1)
-    ret false;
-  for (ll i = 2; i * i <= n; i++)
-  {
-    if (n % i == 0)
-      ret false;
-  }
-  ret true;
-}
-
-iv prime_divisors(ll n)
-{
-  iv res;
-  ll tmp = n;
-  for (auto const &x : prime_numbers)
-  {
-    if (x * x > n)
-      break;
-    while (n % x == 0)
-    {
-      res.push_back(x);
-      n /= x;
-    }
-  }
-  if (n > 1)
-    res.push_back(n);
-  sort(res.begin(), res.end());
-  ret res;
-}
-
-void solve()
-{
-}
-
 int main()
 {
   FAST;
-  ll T = rl();
-  while (T--)
+  UnionFind uf;
+  ll n = rl(), ans = 0;
+  iv a = rv(n);
+  uf.init(MAX_N);
+  rep(i, n / 2)
   {
-    solve();
+    if (!uf.same(a[i], a[n - 1 - i]))
+    {
+      uf.unite(a[i], a[n - 1 - i]);
+      ans++;
+    }
   }
+  pr(ans);
+  PN;
   Ret;
 }

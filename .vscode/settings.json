@@ -19,6 +19,7 @@
     "span": "cpp",
     "regex": "cpp",
     "*.tcc": "cpp",
-    "random": "cpp"
+    "random": "cpp",
+    "numbers": "cpp"
   }
 }
