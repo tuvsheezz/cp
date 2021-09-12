@@ -9,6 +9,7 @@ using namespace std;
 #define ull unsigned long long
 #define str string
 #define iv vector<ll>
+#define ivv vector<vector<ll>>
 #define dv vector<double>
 #define MLL map<ll, ll>
 #define MSL map<str, ll>
