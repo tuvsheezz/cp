@@ -4,6 +4,7 @@ using namespace std;
   ios_base::sync_with_stdio(false); \
   cin.tie(0);                       \
   cout.tie(0);
+#define M_PI 3.141592653589793238462643383279502884L
 #define ll long long
 #define dd double
 #define ull unsigned long long
@@ -37,12 +38,18 @@ using namespace std;
 #define NO cout << "NO\n"
 #define PN cout << '\n'
 #define PS cout << ' '
-#define Ret return 0
+#define Ret \
+  PN;       \
+  return 0
 #define ret return
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
+ll ssize(str s)
+{
+  ret(ll) s.size();
+}
 ll rl()
 {
   ll n;
