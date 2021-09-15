@@ -38,9 +38,7 @@ using namespace std;
 #define NO cout << "NO\n"
 #define PN cout << '\n'
 #define PS cout << ' '
-#define Ret \
-  PN;       \
-  return 0
+#define Ret return 0
 #define ret return
 #define INF (1LL << 60)
 #define MOD1 1000000007
