@@ -82,14 +82,15 @@ ll vsum(iv v)
 }
 struct UnionFind
 {
-  ll par[MAX_N];
-  ll ran[MAX_N] = {0};
-  ll siz[MAX_N];
+  iv par, ran, siz;
   ll size_max = 0;
   ll count;
 
   void init(ll n)
   {
+    par.resize(n);
+    ran.resize(n, 0);
+    siz.resize(n);
     repa(i, 0, n)
     {
       par[i] = i;
@@ -115,111 +116,49 @@ struct UnionFind
     size_max = max(siz[x], size_max);
     count--;
   }
+  ll get_size(ll x) { ret siz[root(x)]; }
   ll numbers_of_sets() { ret count; }
 };
-
-ll big_pow(ll x, ll n, ll mod)
-{
-  if (n == 0)
-    ret 1;
-  ll z = big_pow(x * x % mod, n / 2, mod);
-  if (n & 1)
-    z = z * x % mod;
-  ret z;
-}
-
-vector<bool> is_prime(MAX_N, true);
-iv prime_numbers;
-
-void prepare_prime_numbers()
-{
-  is_prime[0] = false;
-  is_prime[1] = false;
-  repa(i, 2, MAX_N + 1)
-  {
-    if (!is_prime[i])
-      continue;
-    ll mult = 2;
-    while (i * mult <= MAX_N)
-    {
-      is_prime[i * mult] = false;
-      mult++;
-    }
-  }
-  repa(i, 0, MAX_N + 1)
-  {
-    if (is_prime[i])
-      prime_numbers.push_back(i);
-  }
-}
-
-bool is_prime_simple(ll n)
-{
-  if (n == 1)
-    ret false;
-  for (ll i = 2; i * i <= n; i++)
-  {
-    if (n % i == 0)
-      ret false;
-  }
-  ret true;
-}
-
-iv prime_divisors(ll n)
-{
-  iv res;
-  ll tmp = n;
-  for (auto const &x : prime_numbers)
-  {
-    if (x * x > n)
-      break;
-    while (n % x == 0)
-    {
-      res.push_back(x);
-      n /= x;
-    }
-  }
-  if (n > 1)
-    res.push_back(n);
-  sort(res.begin(), res.end());
-  ret res;
-}
-
-ll fact(ll n, ll mod)
-{
-  ll r = 1;
-  if (n < 2)
-    ret r;
-  repa(i, 1, n + 1)
-  {
-    r = (r * i) % mod;
-  }
-  ret r;
-}
-
-// BIT全検索
-// repa(i, 0, 1 << (n - 1)) {
-// 000001 -> 111111
-//   repa(j, 0, n + 1) {
-//     if(i >> j & 1) {
-//         1? 0?
-//     }
-//   }
-// }
-
-void solve()
-{
-}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  ll T = rl();
-  while (T--)
+
+  UnionFind uf;
+  ll n = rl(), m = rl();
+  uf.init(n);
+  vector<pair<ll, pair<ll, ll>>> br(m);
+  rep(i, m)
   {
-    solve();
+    ll u = rl(), w = rl(), b = rl();
+    br[i] = MP(b, MP(u - 1, w - 1));
+  }
+  ll pc = rl();
+  iv ans(pc, 0);
+  vector<pair<ll, pair<ll, ll>>> pe(pc);
+  rep(i, pc)
+  {
+    ll u = rl(), b = rl();
+    pe[i] = MP(b, MP(u - 1, i));
+  }
+  ll i = 0;
+  vsortd(pe);
+  vsortd(br);
+  repauto(x, pe)
+  {
+    while (x.F < br[i].F && i < (ll)br.size())
+    {
+      uf.unite(br[i].S.F, br[i].S.S);
+      i++;
+    }
+    ans[x.S.S] = uf.get_size(x.S.F);
+  }
+  repauto(x, ans)
+  {
+    pr(x);
+    PN;
   }
   Ret;
 }
