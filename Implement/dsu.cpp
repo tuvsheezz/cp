@@ -18,7 +18,6 @@ using VV = V<V<T>>;
 #define F first
 #define S second
 #define PB push_back
-#define PLL pair<LL, LL>
 #define MP make_pair
 #define rep(i, e) for (LL i = 0; i < e; i++)
 #define repa(i, s, e) for (LL i = s; i < e; i++)
@@ -70,28 +69,33 @@ LL vsum(V<T> v)
 
 struct UnionFind
 {
-  V<LL> parent, size;
+  V<LL> parent, size, wei;
   LL size_max = 0, count;
 
   void init(LL n)
   {
     parent.resize(n, -1);
     size.resize(n, 1);
+    wei.resize(n, 0);
     count = n;
     size_max = 1;
   }
   LL root(LL x) { ret parent[x] == -1 ? x : parent[x] = root(parent[x]); }
   bool same(LL x, LL y) { ret root(x) == root(y); }
-  void unite(LL x, LL y)
+  LL weight(LL x) { return wei[root(x)]; }
+  void unite(LL x, LL y, LL w)
   {
+    w += (weight(x) - weight(y));
+
     x = root(x);
     y = root(y);
     if (x == y)
       ret;
 
     if (size[x] < size[y])
-      swap(x, y);
+      swap(x, y), w = -w;
     parent[y] = x;
+    wei[y] = w;
     size[x] += size[y];
     size_max = max(size[x], size_max);
     count--;
@@ -100,108 +104,27 @@ struct UnionFind
   LL get_union_size(LL x) { ret size[root(x)]; }
 };
 
-LL big_pow(LL x, LL n, LL mod)
-{
-  if (n == 0)
-    ret 1;
-  LL z = big_pow(x * x % mod, n / 2, mod);
-  if (n & 1)
-    z = z * x % mod;
-  ret z;
-}
-
-vector<bool> is_prime(MAX_N, true);
-V<LL> prime_numbers;
-
-void prepare_prime_numbers()
-{
-  is_prime[0] = false;
-  is_prime[1] = false;
-  repa(i, 2, MAX_N + 1)
-  {
-    if (!is_prime[i])
-      continue;
-    LL mult = 2;
-    while (i * mult <= MAX_N)
-    {
-      is_prime[i * mult] = false;
-      mult++;
-    }
-  }
-  repa(i, 0, MAX_N + 1)
-  {
-    if (is_prime[i])
-      prime_numbers.push_back(i);
-  }
-}
-
-bool is_prime_simple(LL n)
-{
-  if (n == 1)
-    ret false;
-  for (LL i = 2; i * i <= n; i++)
-  {
-    if (n % i == 0)
-      ret false;
-  }
-  ret true;
-}
-
-V<LL> prime_divisors(LL n)
-{
-  V<LL> res;
-  LL tmp = n;
-  for (auto const &x : prime_numbers)
-  {
-    if (x * x > n)
-      break;
-    while (n % x == 0)
-    {
-      res.push_back(x);
-      n /= x;
-    }
-  }
-  if (n > 1)
-    res.push_back(n);
-  sort(res.begin(), res.end());
-  ret res;
-}
-
-LL fact(LL n, LL mod)
-{
-  LL r = 1;
-  if (n < 2)
-    ret r;
-  repa(i, 1, n + 1)
-  {
-    r = (r * i) % mod;
-  }
-  ret r;
-}
-
-// BIT全検索
-// repa(i, 0, 1 << (n - 1)) {
-// 000001 -> 111111
-//   repa(j, 0, n + 1) {
-//     if(i >> j & 1) {
-//         1? 0?
-//     }
-//   }
-// }
-
-void solve()
-{
-}
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL T = rd<LL>();
-  while (T--)
+  UnionFind UF;
+  LL n = rd<LL>(), Q = rd<LL>();
+  UF.init(n);
+  while (Q--)
   {
-    solve();
+    LL f = rd<LL>(), u = rd<LL>(), w = rd<LL>();
+    if (f == 0)
+    {
+      LL xw = rd<LL>();
+      UF.unite(u, w, xw);
+    }
+    else
+    {
+      (UF.same(u, w)) ? pr(UF.weight(w) - UF.weight(u)) : pr("?");
+      PN;
+    }
   }
   Ret;
 }

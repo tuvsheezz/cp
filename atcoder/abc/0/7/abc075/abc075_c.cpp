@@ -100,108 +100,27 @@ struct UnionFind
   LL get_union_size(LL x) { ret size[root(x)]; }
 };
 
-LL big_pow(LL x, LL n, LL mod)
-{
-  if (n == 0)
-    ret 1;
-  LL z = big_pow(x * x % mod, n / 2, mod);
-  if (n & 1)
-    z = z * x % mod;
-  ret z;
-}
-
-vector<bool> is_prime(MAX_N, true);
-V<LL> prime_numbers;
-
-void prepare_prime_numbers()
-{
-  is_prime[0] = false;
-  is_prime[1] = false;
-  repa(i, 2, MAX_N + 1)
-  {
-    if (!is_prime[i])
-      continue;
-    LL mult = 2;
-    while (i * mult <= MAX_N)
-    {
-      is_prime[i * mult] = false;
-      mult++;
-    }
-  }
-  repa(i, 0, MAX_N + 1)
-  {
-    if (is_prime[i])
-      prime_numbers.push_back(i);
-  }
-}
-
-bool is_prime_simple(LL n)
-{
-  if (n == 1)
-    ret false;
-  for (LL i = 2; i * i <= n; i++)
-  {
-    if (n % i == 0)
-      ret false;
-  }
-  ret true;
-}
-
-V<LL> prime_divisors(LL n)
-{
-  V<LL> res;
-  LL tmp = n;
-  for (auto const &x : prime_numbers)
-  {
-    if (x * x > n)
-      break;
-    while (n % x == 0)
-    {
-      res.push_back(x);
-      n /= x;
-    }
-  }
-  if (n > 1)
-    res.push_back(n);
-  sort(res.begin(), res.end());
-  ret res;
-}
-
-LL fact(LL n, LL mod)
-{
-  LL r = 1;
-  if (n < 2)
-    ret r;
-  repa(i, 1, n + 1)
-  {
-    r = (r * i) % mod;
-  }
-  ret r;
-}
-
-// BIT全検索
-// repa(i, 0, 1 << (n - 1)) {
-// 000001 -> 111111
-//   repa(j, 0, n + 1) {
-//     if(i >> j & 1) {
-//         1? 0?
-//     }
-//   }
-// }
-
-void solve()
-{
-}
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL T = rd<LL>();
-  while (T--)
+  LL n = rd<LL>(), m = rd<LL>(), ans = 0;
+  V<PLL> edges(m);
+  rep(i, m) { edges[i] = MP(rd<LL>() - 1, rd<LL>() - 1); }
+  rep(i, m)
   {
-    solve();
+    UnionFind uf;
+    uf.init(n);
+    rep(j, m)
+    {
+      if (i != j)
+        uf.unite(edges[j].F, edges[j].S);
+    }
+    if (uf.count_of_sets() > 1)
+      ans++;
   }
+  pr(ans);
+  PN;
   Ret;
 }
