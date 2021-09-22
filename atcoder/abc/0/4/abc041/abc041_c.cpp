@@ -18,6 +18,7 @@ using VV = V<V<T>>;
 #define F first
 #define S second
 #define PB push_back
+#define PLL pair<LL, LL>
 #define MP make_pair
 #define rep(i, e) for (LL i = 0; i < e; i++)
 #define repa(i, s, e) for (LL i = s; i < e; i++)
@@ -67,44 +68,19 @@ LL vsum(V<T> v)
   ret s;
 }
 
-V<LL> seg((1 << 20), (1LL << 31) - 1);
-
-void set_value(LL pos, LL val)
-{
-  pos += 1 << 19;
-  seg[pos] = val;
-  while ((pos /= 2) > 0)
-  {
-    seg[pos] = min(seg[pos * 2], seg[pos * 2 + 1]);
-  }
-}
-
-LL get_range_min(LL ql, LL qr, LL sl = 0, LL sr = (1 << 19), LL pos = 1)
-{
-  if (qr <= sl || sr <= ql)
-    ret(1LL << 31) - 1;
-  if (ql <= sl && sr <= qr)
-    ret seg[pos];
-  LL sm = (sl + sr) / 2;
-  ret min(get_range_min(ql, qr, sl, sm, pos * 2), get_range_min(ql, qr, sm, sr, pos * 2 + 1));
-}
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL n = rd<LL>(), q = rd<LL>();
-  while (q--)
+  LL n = rd<LL>();
+  V<PLL> v;
+  rep(i, n) { v.PB(MP(rd<LL>(), i + 1)); }
+  vsortd(v);
+  repauto(x, v)
   {
-    LL com = rd<LL>(), x = rd<LL>(), y = rd<LL>();
-    if (com == 0)
-      set_value(x, y);
-    else
-    {
-      pr(get_range_min(x, y + 1));
-      PN;
-    }
+    pr(x.S);
+    PN;
   }
   Ret;
 }

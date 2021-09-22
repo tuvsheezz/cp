@@ -18,7 +18,6 @@ using VV = V<V<T>>;
 #define F first
 #define S second
 #define PB push_back
-#define PLL pair<LL, LL>
 #define MP make_pair
 #define rep(i, e) for (LL i = 0; i < e; i++)
 #define repa(i, s, e) for (LL i = s; i < e; i++)
@@ -67,44 +66,6 @@ LL vsum(V<T> v)
   rep(i, (LL)v.size()) { s += v[i]; }
   ret s;
 }
-
-struct MYM
-{
-  DD distance_between_2_points(DD x1, DD y1, DD x2, DD y2) { ret sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); }
-  DD area_of_triangle_with_3_sides(DD a, DD b, DD c) { ret sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c)) / 4.0; }
-};
-
-struct UnionFind
-{
-  V<LL> parent, size;
-  LL size_max = 0, count;
-
-  void init(LL n)
-  {
-    parent.resize(n, -1);
-    size.resize(n, 1);
-    count = n;
-    size_max = 1;
-  }
-  LL root(LL x) { ret parent[x] == -1 ? x : parent[x] = root(parent[x]); }
-  bool same(LL x, LL y) { ret root(x) == root(y); }
-  void unite(LL x, LL y)
-  {
-    x = root(x);
-    y = root(y);
-    if (x == y)
-      ret;
-
-    if (size[x] < size[y])
-      swap(x, y);
-    parent[y] = x;
-    size[x] += size[y];
-    size_max = max(size[x], size_max);
-    count--;
-  }
-  LL count_of_sets() { ret count; }
-  LL get_union_size(LL x) { ret size[root(x)]; }
-};
 
 template <class T>
 T fsum(T a, T b) { ret a + b; }
@@ -185,108 +146,30 @@ struct SegmentTree
   void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
 };
 
-LL big_pow(LL x, LL n, LL mod)
-{
-  if (n == 0)
-    ret 1;
-  LL z = big_pow(x * x % mod, n / 2, mod);
-  if (n & 1)
-    z = z * x % mod;
-  ret z;
-}
-
-vector<bool> is_prime(MAX_N, true);
-V<LL> prime_numbers;
-
-void prepare_prime_numbers()
-{
-  is_prime[0] = false;
-  is_prime[1] = false;
-  repa(i, 2, MAX_N + 1)
-  {
-    if (!is_prime[i])
-      continue;
-    LL mult = 2;
-    while (i * mult <= MAX_N)
-    {
-      is_prime[i * mult] = false;
-      mult++;
-    }
-  }
-  repa(i, 0, MAX_N + 1)
-  {
-    if (is_prime[i])
-      prime_numbers.push_back(i);
-  }
-}
-
-bool is_prime_simple(LL n)
-{
-  if (n == 1)
-    ret false;
-  for (LL i = 2; i * i <= n; i++)
-  {
-    if (n % i == 0)
-      ret false;
-  }
-  ret true;
-}
-
-V<LL> prime_divisors(LL n)
-{
-  V<LL> res;
-  LL tmp = n;
-  for (auto const &x : prime_numbers)
-  {
-    if (x * x > n)
-      break;
-    while (n % x == 0)
-    {
-      res.push_back(x);
-      n /= x;
-    }
-  }
-  if (n > 1)
-    res.push_back(n);
-  sort(res.begin(), res.end());
-  ret res;
-}
-
-LL fact(LL n, LL mod)
-{
-  LL r = 1;
-  if (n < 2)
-    ret r;
-  repa(i, 1, n + 1)
-  {
-    r = (r * i) % mod;
-  }
-  ret r;
-}
-
-// BIT全検索
-// repa(i, 0, 1 << (n - 1)) {
-// 000001 -> 111111
-//   repa(j, 0, n + 1) {
-//     if(i >> j & 1) {
-//         1? 0?
-//     }
-//   }
-// }
-
-void solve()
-{
-}
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL T = rd<LL>();
-  while (T--)
+  LL n = rd<LL>(), q = rd<LL>();
+  SegmentTree<LL> st;
+  st.init(n, rv<LL>(n), &fsum, false);
+
+  while (q--)
   {
-    solve();
+    LL q = rd<LL>();
+    if (q == 1)
+    {
+      LL x = rd<LL>(), y = rd<LL>(), v = rd<LL>();
+      st.update_range(x - 1, y - 1, v);
+    }
+    else
+    {
+      LL x = rd<LL>();
+      pr(st.get_node(x - 1));
+      PN;
+    }
   }
+  // st.check_tree();
   Ret;
 }
