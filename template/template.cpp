@@ -149,16 +149,6 @@ struct SegmentTree
     ret ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
   }
 
-  T get_node(T ind)
-  {
-    LL sum = tree[ind += N];
-    while (ind / 2 >= 1)
-    {
-      sum += tree[ind /= 2];
-    }
-    ret sum;
-  }
-
   void update_range(T ql, T qr, T v) { _update_range(1, 0, N - 1, ql, qr, v); }
   void _update_range(T node, T sl, T sr, T ql, T qr, T v)
   {
@@ -182,6 +172,7 @@ struct SegmentTree
       tree[ind] = ope(tree[2 * ind], tree[2 * ind + 1]);
     }
   }
+  LL get_leaf(LL x) { ret tree[x + N]; }
   void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
 };
 
