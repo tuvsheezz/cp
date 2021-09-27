@@ -67,96 +67,90 @@ LL vsum(V<T> v)
   rep(i, (LL)v.size()) { s += v[i]; }
   ret s;
 }
-template <class T, class D>
-struct SegmentTree
+
+struct Graph
 {
-  V<D> tree;
-  T tree_size, N;
-  D def;
-  D(*ope)
-  (D, D);
+  LL vertices;
+  V<V<LL>> edges;
+  bool is_directed;
 
-  void init(T n, V<D> a, D (*op)(D, D), bool set_parent = true, D v = 0)
+  void init(LL n, bool is_directed = false)
   {
-    while (__builtin_popcount(n) != 1)
+    vertices = n;
+    edges.resize(n);
+    is_directed = is_directed;
+  }
+
+  void add_edge(LL u, LL v)
+  {
+    edges[u].PB(v);
+    if (!is_directed)
+      edges[v].PB(u);
+  }
+  V<LL> BFS(LL root)
+  {
+    V<bool> visited(vertices, false);
+    queue<LL> next_to_visit;
+
+    visited[root] = true;
+    next_to_visit.push(root);
+    // ene bodlognoos hamaaraad nemsen heseg
+    V<LL> dist(vertices, INF);
+    LL d = 0;
+    dist[0] = 0;
+    // ene hurtel
+    while (!next_to_visit.empty())
     {
-      a.PB(v);
-      n++;
+      LL current_node = next_to_visit.front();
+      next_to_visit.pop();
+      // ene mur bodlognoos hamaaraad nemsen heseg
+      d++;
+      repauto(x, edges[current_node])
+      {
+        if (!visited[x])
+        {
+          visited[x] = true;
+          next_to_visit.push(x);
+          // ene mur bodlognoos hamaaraad nemsen heseg
+          dist[x] = d;
+        }
+      }
     }
-    tree.resize(2 * n, v);
-    tree_size = 2 * n;
-    N = n;
-    def = v;
-    ope = op;
-    rep(i, n) { tree[n + i] = a[i]; }
-    if (set_parent)
-      repd(i, n - 1, 1) { tree[i] = ope(tree[2 * i], tree[2 * i + 1]); }
+    // ene 2 mur bodlognoos hamaaraad nemsen heseg
+    d++;
+    ret dist;
   }
-
-  D get_range(T ql, T qr) { ret _get_range(1, 0, N - 1, ql, qr); }
-  D _get_range(T node, T sl, T sr, T ql, T qr)
-  {
-    if (ql <= sl && sr <= qr)
-      ret tree[node];
-    if (sr < ql || qr < sl)
-      ret def;
-    ret ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
-  }
-
-  void update_node(T ind, D val)
-  {
-    tree[ind += N] = val;
-    while (ind / 2 >= 1)
-    {
-      ind /= 2;
-      tree[ind] = ope(tree[2 * ind], tree[2 * ind + 1]);
-    }
-  }
-  LL get_leaf(LL x) { ret tree[x + N]; }
 };
-
-V<bool> fope(V<bool> a, V<bool> b)
-{
-  V<bool> r(26, 0);
-  rep(i, 26) { r[i] = a[i] || b[i]; }
-  ret r;
-}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL n = rd<LL>();
-  STR s = rd<STR>();
-  V<V<bool>> a(n, V<bool>(26, false));
-  rep(i, n) { a[i][s[i] - 'a'] = true; }
-  SegmentTree<LL, V<bool>> st;
-  st.init(n, a, &fope, true, V<bool>(26, false));
-
-  LL q = rd<LL>();
-  while (q--)
+  LL n = rd<LL>(), m = rd<LL>();
+  Graph g;
+  g.init(n);
+  rep(i, m)
   {
-    LL com = rd<LL>();
-    if (com == 2)
+    LL u = rd<LL>() - 1, v = rd<LL>() - 1;
+    g.add_edge(u, v);
+  }
+  V<LL> dist = g.BFS(0);
+  bool no = false;
+  rep(i, n)
+  {
+    if (dist[i] == INF)
+      no = true;
+  }
+  if (no)
+    No;
+  else
+  {
+    Yes;
+    repa(i, 1, n)
     {
-      LL l = rd<LL>(), r = rd<LL>(), ans = 0;
-      V<bool> k = st.get_range(l - 1, r - 1);
-      rep(i, 26)
-      {
-        if (k[i])
-          ans++;
-      }
-      pr(ans);
+      pr(dist[i]);
       PN;
-    }
-    else
-    {
-      LL ind = rd<LL>();
-      char ch = rd<char>();
-      V<bool> v = V<bool>(26, false);
-      v[ch - 'a'] = true;
-      st.update_node(ind - 1, v);
     }
   }
   Ret;

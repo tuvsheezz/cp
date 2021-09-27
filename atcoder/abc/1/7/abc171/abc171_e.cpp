@@ -67,6 +67,15 @@ LL vsum(V<T> v)
   rep(i, (LL)v.size()) { s += v[i]; }
   ret s;
 }
+
+template <class T>
+T fsum(T a, T b) { ret a + b; }
+template <class T>
+T fmin(T a, T b) { ret min(a, b); }
+template <class T>
+T fmax(T a, T b) { ret max(a, b); }
+template <class T>
+T fxor(T a, T b) { ret a ^ b; }
 template <class T, class D>
 struct SegmentTree
 {
@@ -102,6 +111,19 @@ struct SegmentTree
       ret def;
     ret ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
   }
+  void update_range(T ql, T qr, D v) { _update_range(1, 0, N - 1, ql, qr, v); }
+  void _update_range(T node, T sl, T sr, T ql, T qr, D v)
+  {
+    if (ql <= sl && sr <= qr)
+    {
+      tree[node] = ope(tree[node], v);
+      ret;
+    }
+    if (sr < ql || qr < sl)
+      ret;
+    _update_range(2 * node, sl, (sl + sr) / 2, ql, qr, v);
+    _update_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr, v);
+  }
 
   void update_node(T ind, D val)
   {
@@ -112,15 +134,9 @@ struct SegmentTree
       tree[ind] = ope(tree[2 * ind], tree[2 * ind + 1]);
     }
   }
-  LL get_leaf(LL x) { ret tree[x + N]; }
+  D get_leaf(LL x) { ret tree[x + N]; }
+  void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
 };
-
-V<bool> fope(V<bool> a, V<bool> b)
-{
-  V<bool> r(26, 0);
-  rep(i, 26) { r[i] = a[i] || b[i]; }
-  ret r;
-}
 
 int main()
 {
@@ -128,36 +144,15 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL n = rd<LL>();
-  STR s = rd<STR>();
-  V<V<bool>> a(n, V<bool>(26, false));
-  rep(i, n) { a[i][s[i] - 'a'] = true; }
-  SegmentTree<LL, V<bool>> st;
-  st.init(n, a, &fope, true, V<bool>(26, false));
-
-  LL q = rd<LL>();
-  while (q--)
+  V<LL> a = rv<LL>(n);
+  SegmentTree<LL, LL> st;
+  st.init(n, a, &fxor);
+  rep(i, n)
   {
-    LL com = rd<LL>();
-    if (com == 2)
-    {
-      LL l = rd<LL>(), r = rd<LL>(), ans = 0;
-      V<bool> k = st.get_range(l - 1, r - 1);
-      rep(i, 26)
-      {
-        if (k[i])
-          ans++;
-      }
-      pr(ans);
-      PN;
-    }
-    else
-    {
-      LL ind = rd<LL>();
-      char ch = rd<char>();
-      V<bool> v = V<bool>(26, false);
-      v[ch - 'a'] = true;
-      st.update_node(ind - 1, v);
-    }
+    LL ans = st.get_range(i + 1, n - 1) ^ st.get_range(0, i - 1);
+    pr(ans);
+    PS;
   }
+  PN;
   Ret;
 }
