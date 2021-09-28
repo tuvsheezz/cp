@@ -87,15 +87,15 @@ struct Graph
     if (!is_directed)
       edges[v].PB(u);
   }
-  void BFS(LL root)
+  void BFS(LL root, LL aaaa)
   {
     V<bool> visited(vertices, false);
     queue<LL> next_to_visit;
 
     visited[root] = true;
-    next_to_visit.push(root);
+    next_to_visit.PB(root);
     V<LL> dist(vertices, INF);
-    dist[0] = 0;
+    dist[0] = 1;
     while (!next_to_visit.empty())
     {
       LL current_node = next_to_visit.front();
@@ -111,21 +111,11 @@ struct Graph
       }
     }
 
-    rep(i, vertices)
-    {
-      if (!visited[i])
-      {
-        No;
-        ret;
-      }
-    }
-
-    Yes;
-    repa(i, 1, vertices)
-    {
-      pr(dist[i]);
-      PN;
-    }
+    if (visited[vertices - 1])
+      pr(aaaa - dist[vertices - 1]);
+    else
+      pr("-1");
+    PN;
   }
 };
 
@@ -134,14 +124,25 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL n = rd<LL>(), m = rd<LL>();
-  Graph g;
-  g.init(n);
-  rep(i, m)
+  LL n = rd<LL>(), m = rd<LL>(), dots = 0;
+  V<V<char>> mp(n, V<char>(m));
+  Graph G;
+  G.init(n * m);
+  rep(i, n)
   {
-    LL u = rd<LL>() - 1, v = rd<LL>() - 1;
-    g.add_edge(u, v);
+    rep(j, m)
+    {
+      cin >> mp[i][j];
+      if (mp[i][j] == '.')
+        dots++;
+      if (i > 0 && mp[i - 1][j] == '.' && mp[i][j] == '.')
+        G.add_edge(i * m + j, (i - 1) * m + j);
+      if (j > 0 && mp[i][j - 1] == '.' && mp[i][j] == '.')
+        G.add_edge(i * m + j, i * m + j - 1);
+    }
   }
-  g.BFS(0);
+  G.BFS(0, dots);
   Ret;
 }
+
+// https://atcoder.jp/contests/abc088/tasks/abc088_d

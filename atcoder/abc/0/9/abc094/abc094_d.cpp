@@ -68,80 +68,28 @@ LL vsum(V<T> v)
   ret s;
 }
 
-struct Graph
-{
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-  }
-
-  void add_edge(LL u, LL v)
-  {
-    edges[u].PB(v);
-    if (!is_directed)
-      edges[v].PB(u);
-  }
-  void BFS(LL root)
-  {
-    V<bool> visited(vertices, false);
-    queue<LL> next_to_visit;
-
-    visited[root] = true;
-    next_to_visit.push(root);
-    V<LL> dist(vertices, INF);
-    dist[0] = 0;
-    while (!next_to_visit.empty())
-    {
-      LL current_node = next_to_visit.front();
-      next_to_visit.pop();
-      repauto(x, edges[current_node])
-      {
-        if (!visited[x])
-        {
-          dist[x] = dist[current_node] + 1;
-          visited[x] = true;
-          next_to_visit.push(x);
-        }
-      }
-    }
-
-    rep(i, vertices)
-    {
-      if (!visited[i])
-      {
-        No;
-        ret;
-      }
-    }
-
-    Yes;
-    repa(i, 1, vertices)
-    {
-      pr(dist[i]);
-      PN;
-    }
-  }
-};
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL n = rd<LL>(), m = rd<LL>();
-  Graph g;
-  g.init(n);
-  rep(i, m)
+  LL n = rd<LL>();
+  V<LL> v = rv<LL>(n);
+  vsorta(v);
+  LL ans1 = v[n - 1], ans2 = v[0], mn = abs(ans1 - ans2 - ans2);
+
+  rep(i, n)
   {
-    LL u = rd<LL>() - 1, v = rd<LL>() - 1;
-    g.add_edge(u, v);
+    LL tmp = abs(ans1 - v[i] * 2);
+    if (tmp < mn)
+    {
+      mn = tmp;
+      ans2 = v[i];
+    }
   }
-  g.BFS(0);
+  pr(ans1);
+  PS;
+  pr(ans2);
+  PN;
   Ret;
 }

@@ -68,80 +68,17 @@ LL vsum(V<T> v)
   ret s;
 }
 
-struct Graph
-{
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-  }
-
-  void add_edge(LL u, LL v)
-  {
-    edges[u].PB(v);
-    if (!is_directed)
-      edges[v].PB(u);
-  }
-  void BFS(LL root)
-  {
-    V<bool> visited(vertices, false);
-    queue<LL> next_to_visit;
-
-    visited[root] = true;
-    next_to_visit.push(root);
-    V<LL> dist(vertices, INF);
-    dist[0] = 0;
-    while (!next_to_visit.empty())
-    {
-      LL current_node = next_to_visit.front();
-      next_to_visit.pop();
-      repauto(x, edges[current_node])
-      {
-        if (!visited[x])
-        {
-          dist[x] = dist[current_node] + 1;
-          visited[x] = true;
-          next_to_visit.push(x);
-        }
-      }
-    }
-
-    rep(i, vertices)
-    {
-      if (!visited[i])
-      {
-        No;
-        ret;
-      }
-    }
-
-    Yes;
-    repa(i, 1, vertices)
-    {
-      pr(dist[i]);
-      PN;
-    }
-  }
-};
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL n = rd<LL>(), m = rd<LL>();
-  Graph g;
-  g.init(n);
-  rep(i, m)
-  {
-    LL u = rd<LL>() - 1, v = rd<LL>() - 1;
-    g.add_edge(u, v);
-  }
-  g.BFS(0);
+  LL n = rd<LL>(), k = rd<LL>(), ans = INF;
+  V<LL> a = rv<LL>(n);
+  vsorta(a);
+
+  rep(i, n - k + 1) { ans = min(ans, a[i + k - 1] - a[i]); }
+  pr(ans);
+  PN;
   Ret;
 }

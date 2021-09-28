@@ -68,80 +68,45 @@ LL vsum(V<T> v)
   ret s;
 }
 
-struct Graph
-{
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-  }
-
-  void add_edge(LL u, LL v)
-  {
-    edges[u].PB(v);
-    if (!is_directed)
-      edges[v].PB(u);
-  }
-  void BFS(LL root)
-  {
-    V<bool> visited(vertices, false);
-    queue<LL> next_to_visit;
-
-    visited[root] = true;
-    next_to_visit.push(root);
-    V<LL> dist(vertices, INF);
-    dist[0] = 0;
-    while (!next_to_visit.empty())
-    {
-      LL current_node = next_to_visit.front();
-      next_to_visit.pop();
-      repauto(x, edges[current_node])
-      {
-        if (!visited[x])
-        {
-          dist[x] = dist[current_node] + 1;
-          visited[x] = true;
-          next_to_visit.push(x);
-        }
-      }
-    }
-
-    rep(i, vertices)
-    {
-      if (!visited[i])
-      {
-        No;
-        ret;
-      }
-    }
-
-    Yes;
-    repa(i, 1, vertices)
-    {
-      pr(dist[i]);
-      PN;
-    }
-  }
-};
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL n = rd<LL>(), m = rd<LL>();
-  Graph g;
-  g.init(n);
-  rep(i, m)
+  STR s1 = rd<STR>(), s2 = rd<STR>(), s3 = rd<STR>();
+  set<char> ch;
+  rep(i, ssize(s1)) { ch.insert(s1[i]); }
+  rep(i, ssize(s2)) { ch.insert(s2[i]); }
+  rep(i, ssize(s3)) { ch.insert(s3[i]); }
+  map<char, LL> mp;
+  LL qqq = 0;
+  repauto(x, ch) { mp[x] = qqq++; }
+  if (ch.size() <= 10)
   {
-    LL u = rd<LL>() - 1, v = rd<LL>() - 1;
-    g.add_edge(u, v);
+    LL d[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    do
+    {
+      if (d[mp[s1[0]]] == 0 || d[mp[s2[0]]] == 0 || d[mp[s3[0]]] == 0)
+        continue;
+      LL X = 0, Y = 0, Z = 0;
+      rep(i, ssize(s1)) { X = X * 10 + d[mp[s1[i]]]; }
+      rep(i, ssize(s2)) { Y = Y * 10 + d[mp[s2[i]]]; }
+      rep(i, ssize(s3)) { Z = Z * 10 + d[mp[s3[i]]]; }
+
+      if (X + Y == Z)
+      {
+        pr(X);
+        PN;
+        pr(Y);
+        PN;
+        pr(Z);
+        PN;
+        Ret;
+      }
+
+    } while (next_permutation(d, d + 10));
   }
-  g.BFS(0);
+  pr("UNSOLVABLE\n");
+  Ret;
   Ret;
 }
