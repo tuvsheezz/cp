@@ -24,6 +24,41 @@ using VV = V<V<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
+#define rd(...) \
+  __VA_ARGS__;  \
+  read(__VA_ARGS__)
+#define rdv(value, ...) \
+  value(__VA_ARGS__);   \
+  cin >> value
+template <class T>
+auto &operator>>(istream &is, vector<T> &xs)
+{
+  for (auto &x : xs)
+    is >> x;
+  return is;
+}
+template <class T>
+auto &operator<<(ostream &os, vector<T> &xs)
+{
+  int sz = xs.size();
+  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+  return os;
+}
+template <class T, class Y>
+auto &operator<<(ostream &os, pair<T, Y> &xs)
+{
+  os << "{" << xs.first << ", " << xs.second << "}";
+  return os;
+}
+template <class T, class Y>
+auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
+{
+  for (auto &[x1, x2] : xs)
+    is >> x1 >> x2;
+  return is;
+}
+template <class... Args>
+auto &read(Args &...args) { return (cin >> ... >> args); }
 #define vsorta(v) sort(v.begin(), v.end())
 #define vsortd(v) sort(v.begin(), v.end(), greater<>())
 #define sort_arr(v, n) sort(v, v + n)
@@ -45,20 +80,6 @@ using VV = V<V<T>>;
 LL ssize(STR s)
 {
   ret(LL) s.size();
-}
-template <class T>
-T rd()
-{
-  T n;
-  cin >> n;
-  ret n;
-}
-template <class T>
-V<T> rv(T n)
-{
-  V<T> a(n, 0);
-  rep(i, n) { cin >> a[i]; }
-  ret a;
 }
 template <class T>
 LL vsum(V<T> v)
@@ -226,7 +247,6 @@ bool is_prime_simple(LL n)
 V<LL> prime_divisors(LL n)
 {
   V<LL> res;
-  LL tmp = n;
   for (auto const &x : prime_numbers)
   {
     if (x * x > n)
@@ -274,7 +294,7 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL T = rd<LL>();
+  LL rd(T);
   while (T--)
   {
     solve();
