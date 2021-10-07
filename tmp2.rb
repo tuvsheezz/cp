@@ -1,3 +1,30 @@
+x, y, a, b = gets.split.map(&:to_i)
+ans = 0
+while x * (a - 1) < b && x * a < y
+  ans+=1
+  x *= a
+end
+
+ans += (y - x) / b
+ans -= 1 if((y - x) % b == 0)
+
+puts ans
+
+# LL rd(x, y, a, b);
+#   LL ans = 0;
+#   while (x * (a - 1) < b)
+#   {
+#     ans++;
+#     x *= a;
+#   }
+#   ans += (y - x) / b;
+#   if ((y - x) % b == 0)
+#     ans--;
+#   pr(ans);
+#   PN;
+#   Ret;
+
+
 def main
   
 end
