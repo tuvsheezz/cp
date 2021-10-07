@@ -197,6 +197,41 @@ struct SegmentTree
   void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
 };
 
+// combinatorics
+V<LL> inv(MAX_N), fact(MAX_N), finv(MAX_N);
+void set_inv(LL mod)
+{
+  inv[1] = 1;
+  repa(i, 2, MAX_N) { inv[i] = (mod - (mod / i) * inv[mod % i]) % mod; }
+}
+void set_fact(LL mod)
+{
+  set_inv(mod);
+  fact[0] = 1;
+  finv[0] = 1;
+  repa(i, 1, MAX_N)
+  {
+    fact[i] = (fact[i - 1] * i) % mod;
+    finv[i] = (finv[i - 1] * inv[i]) % mod;
+  }
+}
+
+LL combination(LL n, LL k, LL mod)
+{
+  LL c = (((fact[n] * finv[k]) % mod) * finv[n - k]) % mod;
+  ret c;
+}
+
+LL combination2(LL n, LL k, LL mod)
+{
+  LL c = 1;
+  repa(i, n - k, n)
+  {
+    c = (c * (i + 1)) % mod;
+  }
+  ret(c * finv[k]) % mod;
+}
+
 LL big_pow(LL x, LL n, LL mod)
 {
   if (n == 0)
@@ -263,7 +298,7 @@ V<LL> prime_divisors(LL n)
   ret res;
 }
 
-LL fact(LL n, LL mod)
+LL single_fact(LL n, LL mod)
 {
   LL r = 1;
   if (n < 2)
