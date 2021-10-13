@@ -1,3 +1,17 @@
+def solve
+  n = gets.to_i
+  ans = []
+  s = n.to_s(2).split('').map(&:to_i)
+  q = 0
+  s.each do |x|
+    q += 1
+    if(x == 0)
+  end
+end
+
+T = gets.to_i
+T.times { solve }
+
 
 
 # int array input
