@@ -93,7 +93,7 @@ struct Graph
     queue<LL> next_to_visit;
 
     visited[root] = true;
-    next_to_visit.PB(root);
+    next_to_visit.push(root);
     V<LL> dist(vertices, INF);
     dist[0] = 1;
     while (!next_to_visit.empty())
