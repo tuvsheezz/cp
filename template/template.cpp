@@ -202,7 +202,7 @@ V<LL> inv(MAX_N), fact(MAX_N), finv(MAX_N);
 void set_inv(LL mod)
 {
   inv[1] = 1;
-  repa(i, 2, MAX_N) { inv[i] = (mod - (mod / i) * inv[mod % i]) % mod; }
+  repa(i, 2, MAX_N) { inv[i] = mod - ((mod / i) * inv[mod % i]) % mod; }
 }
 void set_fact(LL mod)
 {

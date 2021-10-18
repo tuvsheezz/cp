@@ -76,64 +76,51 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 200100
 
-struct Graph
+// combinatorics
+V<LL> inv(MAX_N), fact(MAX_N), finv(MAX_N);
+void set_inv(LL mod)
 {
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-
-  void init(LL n, bool dir = false)
+  inv[1] = 1;
+  repa(i, 2, MAX_N) { inv[i] = mod - ((mod / i) * inv[mod % i]) % mod; }
+}
+void set_fact(LL mod)
+{
+  set_inv(mod);
+  fact[0] = 1;
+  finv[0] = 1;
+  repa(i, 1, MAX_N)
   {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
+    fact[i] = (fact[i - 1] * i) % mod;
+    finv[i] = (finv[i - 1] * inv[i]) % mod;
   }
+}
 
-  void add_edge(LL u, LL v)
+LL combination(LL n, LL k, LL mod)
+{
+  LL c = (((fact[n] * finv[k]) % mod) * finv[n - k]) % mod;
+  ret c;
+}
+
+LL combination2(LL n, LL k, LL mod)
+{
+  LL c = 1;
+  repa(i, n - k, n)
   {
-    edges[u].PB(v);
-    if (!is_directed)
-      edges[v].PB(u);
+    c = (c * (i + 1)) % mod;
   }
-  void BFS(LL root, LL aaaa)
-  {
-    V<bool> visited(vertices, false);
-    queue<LL> next_to_visit;
-
-    visited[root] = true;
-    next_to_visit.push(root);
-    V<LL> dist(vertices, INF);
-    dist[0] = 1;
-    while (!next_to_visit.empty())
-    {
-      LL current_node = next_to_visit.front();
-      next_to_visit.pop();
-      repauto(x, edges[current_node])
-      {
-        if (!visited[x])
-        {
-          dist[x] = dist[current_node] + 1;
-          visited[x] = true;
-          next_to_visit.push(x);
-        }
-      }
-    }
-
-    if (visited[vertices - 1])
-      pr(aaaa - dist[vertices - 1]);
-    else
-      pr("-1");
-    PN;
-  }
-};
+  ret(c * finv[k]) % mod;
+}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-
+  LL rd(h, w);
+  set_fact(MOD1);
+  pr(combination2(h + w - 2, h - 1, MOD1));
+  PN;
   Ret;
 }
