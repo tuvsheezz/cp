@@ -83,18 +83,26 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL r = 0, p = 1, ans = 0;
-  V<LL> rem(2020, 0);
-  STR rd(s);
-  rem[0] = 1;
-  repd(i, (LL)s.size() - 1, 0)
-  {
-    r = (r + (s[i] - '0') * p) % 2019;
-    p = (p * 10) % 2019;
-    ans += rem[r];
-    rem[r]++;
-  }
+  LL rd(n, k);
+  V<LL> rdv(a, n);
+  LL ans = 0, cu = 1, it = 0;
 
+  rep(i, n)
+  {
+    if (a[i] == 0)
+    {
+      pr(n);
+      PN;
+      Ret;
+    }
+    cu *= a[i];
+    while (cu > k && it <= i)
+    {
+      cu /= a[it++];
+    }
+    if (cu <= k)
+      ans = max(ans, i - it + 1);
+  }
   pr(ans);
   PN;
   Ret;

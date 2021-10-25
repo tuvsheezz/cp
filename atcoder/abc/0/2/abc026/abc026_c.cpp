@@ -78,24 +78,61 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+struct Graph
+{
+  LL vertices;
+  V<V<LL>> edges;
+  bool is_directed;
+  V<bool> bfsv;
+
+  void init(LL n, bool dir = false)
+  {
+    vertices = n;
+    edges.resize(n);
+    is_directed = dir;
+    bfsv.resize(n);
+  }
+
+  void add_edge(LL u, LL v)
+  {
+    edges[u].PB(v);
+    if (!is_directed)
+      edges[v].PB(u);
+  }
+
+  LL DFS(LL root)
+  {
+    bfsv[root] = true;
+    if (edges[root].empty())
+      ret 1;
+    LL xmin = INF, xmax = 0;
+    repauto(x, edges[root])
+    {
+      if (!bfsv[x])
+      {
+        LL k = DFS(x);
+        xmin = min(k, xmin);
+        xmax = max(k, xmax);
+      }
+    }
+    ret xmax + xmin + 1;
+  }
+};
+
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL r = 0, p = 1, ans = 0;
-  V<LL> rem(2020, 0);
-  STR rd(s);
-  rem[0] = 1;
-  repd(i, (LL)s.size() - 1, 0)
+  LL rd(n);
+  Graph G;
+  G.init(n, true);
+  rep(i, n - 1)
   {
-    r = (r + (s[i] - '0') * p) % 2019;
-    p = (p * 10) % 2019;
-    ans += rem[r];
-    rem[r]++;
+    LL rd(x);
+    G.add_edge(x - 1, i + 1);
   }
-
-  pr(ans);
+  pr(G.DFS(0));
   PN;
   Ret;
 }

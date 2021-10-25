@@ -83,19 +83,46 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL r = 0, p = 1, ans = 0;
-  V<LL> rem(2020, 0);
-  STR rd(s);
-  rem[0] = 1;
-  repd(i, (LL)s.size() - 1, 0)
+  LL rd(h, w, c);
+  V<LL> rdv(a, c);
+  V<V<LL>> ans(h, V<LL>(w, 0));
+  LL cu = 0;
+  LL cuc = 0;
+  rep(i, h)
   {
-    r = (r + (s[i] - '0') * p) % 2019;
-    p = (p * 10) % 2019;
-    ans += rem[r];
-    rem[r]++;
+    rep(j, w)
+    {
+      if (cuc < a[cu])
+      {
+        ans[i][j] = cu + 1;
+        cuc++;
+      }
+      else
+      {
+        cuc = 1;
+        cu++;
+        ans[i][j] = cu + 1;
+      }
+    }
+  }
+  rep(i, h)
+  {
+    if (i % 2 == 0)
+      rep(j, w)
+      {
+        if (j > 0)
+          PS;
+        pr(ans[i][j]);
+      }
+    else
+      rep(j, w)
+      {
+        if (j > 0)
+          PS;
+        pr(ans[i][w - 1 - j]);
+      }
+    PN;
   }
 
-  pr(ans);
-  PN;
   Ret;
 }
