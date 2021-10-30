@@ -12,8 +12,10 @@ using VV = V<V<T>>;
 #define MLL map<LL, LL>
 #define MSL map<STR, LL>
 #define MLB map<LL, bool>
-#define PQA priority_queue<LL, V<LL>, greater<LL>>
-#define PQD priority_queue<LL, V<LL>, less<LL>>
+template <class T>
+using PQA = priority_queue<T, V<T>, greater<T>>;
+template <class T>
+using PQD = priority_queue<T, V<T>, less<T>>;
 #define IT iterator
 #define F first
 #define S second

@@ -78,48 +78,11 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-vector<bool> is_prime(MAX_N, true);
-V<LL> prime_numbers;
-
-void prepare_prime_numbers()
+LL simple_comb(LL n, LL k)
 {
-  is_prime[0] = false;
-  is_prime[1] = false;
-  repa(i, 2, MAX_N + 1)
-  {
-    if (!is_prime[i])
-      continue;
-    LL mult = 2;
-    while (i * mult <= MAX_N)
-    {
-      is_prime[i * mult] = false;
-      mult++;
-    }
-  }
-  repa(i, 0, MAX_N + 1)
-  {
-    if (is_prime[i])
-      prime_numbers.push_back(i);
-  }
-}
-
-V<LL> prime_divisors(LL n)
-{
-  V<LL> res;
-  for (auto const &x : prime_numbers)
-  {
-    if (x * x > n)
-      break;
-    while (n % x == 0)
-    {
-      res.push_back(x);
-      n /= x;
-    }
-  }
-  if (n > 1)
-    res.push_back(n);
-  sort(res.begin(), res.end());
-  ret res;
+  LL r = 1LL;
+  rep(i, k) { r = r * (n - i) / (i + 1); }
+  return r;
 }
 
 int main()
@@ -127,24 +90,31 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  prepare_prime_numbers();
-  LL rd(n);
-  LL ans = 1;
-  V<LL> div(n + 1, 0);
-  repa(i, 2, n + 1)
-  {
-    V<LL> tmp = prime_divisors(i);
-    repauto(x, tmp) { div[x]++; }
-  }
 
-  rep(x, div)
+  LL max_avg = 0;
+  LL cnt = 0;
+  LL rd(n, xx, y);
+  V<LL> rdv(b, n);
+  vsorta(b);
+
+  rep(i, xx) { max_avg += b[n - i - 1]; }
+
+  repa(x, xx, y + 1)
   {
+    LL ma = 0;
+    rep(i, x) { ma += b[n - i - 1]; }
+    if (ma * xx < max_avg * x)
+      continue;
+
+    LL lb = lower_bound(b.begin(), b.end(), b[n - xx - 1]) - b.begin();
+    LL ub = upper_bound(b.begin(), b.end(), b[n - xx - 1]) - b.begin();
+    LL l = ub - lb;
+    LL d = ub - (n - x);
+    cnt += simple_comb(l, d);
   }
-  repauto(x, div)
-  {
-    pr(x);
-    PS;
-  }
+  prd((DD)max_avg / xx);
+  PN;
+  pr(cnt);
   PN;
   Ret;
 }
