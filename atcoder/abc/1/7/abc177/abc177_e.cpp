@@ -78,62 +78,73 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 1000100
 
-struct Graph
+vector<bool> is_prime(MAX_N, true);
+V<LL> prime_numbers;
+
+void prepare_prime_numbers()
 {
-  LL vertices;
-  VV<PLL> edges;
-  bool is_directed;
-
-  void init(LL n, bool dir = false)
+  is_prime[0] = false;
+  is_prime[1] = false;
+  repa(i, 2, MAX_N + 1)
   {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-  }
-
-  void add_edge(LL u, LL v, LL c)
-  {
-    edges[u].PB(MP(v, c));
-    if (!is_directed)
-      edges[v].PB(MP(u, c));
-  }
-
-  void dijkstra(LL s)
-  {
-    V<LL> dist(vertices, INF);
-    dist[s] = 0;
-
-    PQA<PLL> next_to_visit;
-    next_to_visit.push(MP(0LL, s));
-
-    while (!next_to_visit.empty())
+    if (!is_prime[i])
+      continue;
+    LL mult = 2;
+    while (i * mult <= MAX_N)
     {
-      PLL current_node = next_to_visit.top();
-      next_to_visit.pop();
-      LL v = current_node.S;
-
-      if (dist[v] < current_node.F)
-        continue;
-
-      repauto(edge, edges[v])
-      {
-        if (dist[edge.F] > dist[v] + edge.S)
-        {
-          dist[edge.F] = dist[v] + edge.S;
-          next_to_visit.push(MP(dist[edge.F], edge.S));
-        }
-      }
+      is_prime[i * mult] = false;
+      mult++;
     }
   }
-};
+  repa(i, 0, MAX_N + 1)
+  {
+    if (is_prime[i])
+      prime_numbers.push_back(i);
+  }
+}
+
+V<LL> prime_divisors(LL n)
+{
+  V<LL> res;
+  for (auto const &x : prime_numbers)
+  {
+    if (x * x > n)
+      break;
+    if (n % x == 0)
+      res.push_back(x);
+    while (n % x == 0)
+    {
+      n /= x;
+    }
+  }
+  if (n > 1)
+    res.push_back(n);
+  sort(res.begin(), res.end());
+  ret res;
+}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
+  prepare_prime_numbers();
+  LL rd(n);
+  V<LL> rdv(a, n);
+  V<LL> q(MAX_N, 0);
+  rep(i, n)
+  {
+    repauto(x, prime_divisors(a[i])) { q[x]++; }
+  }
+  LL d = 0;
+  rep(i, MAX_N) { d = max(d, q[i]); }
+  if (d <= 1)
+    pr("pairwise coprime\n");
+  else if (d == n)
+    pr("not coprime\n");
+  else
+    pr("setwise coprime\n");
   Ret;
 }

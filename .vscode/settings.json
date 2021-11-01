@@ -48,6 +48,7 @@
     "iomanip": "cpp",
     "optional": "cpp",
     "system_error": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "cmath": "cpp"
   }
 }
