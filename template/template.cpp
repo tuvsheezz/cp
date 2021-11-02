@@ -322,6 +322,19 @@ LL single_fact(LL n, LL mod)
 //   }
 // }
 
+// 尺取り法
+// rep(i, n)　// ehnii pointer-oo arraygiin buh elementeer
+// {
+//   while (ss < k && j < n) // 2 dah pointer-oo ugugdsun nuhtsuliig hangah hurtel
+//   {
+//     ss += a[j++];
+//   }
+//   if (ss < k) // buh element-g oruulsan ch nuhtsul biylehgui uyd
+//     break;
+//   ans += n - j + 1; // nuhtsul hangasan hesguudiig hadgalaad
+//   ss -= a[i]; // yg odoo baigaa range-iinhee hamgiin ehnii elementiig hasaad ahiad daraagiinh ruu
+// }
+
 void solve()
 {
 }
