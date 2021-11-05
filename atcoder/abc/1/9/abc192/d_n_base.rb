@@ -13,9 +13,9 @@ if x.size == 1
 end
 
 bl = 0
-br = 10 ** 18 + 1
+br = 10**18 + 1
 
-while bl + 1 < br do
+while bl + 1 < br
   md = (bl + br) / 2
   if base_n(x, md) <= m
     bl = md
