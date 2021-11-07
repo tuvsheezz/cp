@@ -86,13 +86,17 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL rd(n, k);
-  V<LL> rdv(a, n);
-  vsorta(a);
-  auto ind = lower_bound(a.begin(), a.end(), k) - a.begin();
-  if (ind == n)
-    pr(-1);
-  else
-    pr(ind);
+  MLL mp;
+  LL ans = 0;
+  rep(i, n) { mp[(i + 1) % k]++; }
+
+  repauto(x, mp)
+  {
+    LL y = (k - x.F) % k;
+    if ((y + y) % k == 0)
+      ans += x.S * mp[y] * mp[y];
+  }
+  pr(ans);
   PN;
   Ret;
 }

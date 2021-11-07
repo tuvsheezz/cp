@@ -86,13 +86,28 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL rd(n, k);
-  V<LL> rdv(a, n);
-  vsorta(a);
-  auto ind = lower_bound(a.begin(), a.end(), k) - a.begin();
-  if (ind == n)
-    pr(-1);
-  else
-    pr(ind);
+  V<pair<LL, DD>> v(n);
+  V<LL> so(n);
+  DD l = 0, r = 100, mid, sum;
+  rep(i, n)
+  {
+    LL rd(m, p);
+    v[i] = MP(m, (DD)p);
+  }
+
+  while (r - l > 0.000000001)
+  {
+    mid = (l + r) / 2;
+    rep(i, n) { so[i] = v[i].F * (v[i].S - mid); }
+    vsortd(so);
+    sum = 0;
+    rep(i, k) { sum += so[i]; }
+    if (sum > 0)
+      l = mid;
+    else
+      r = mid;
+  }
+  prd(l);
   PN;
   Ret;
 }

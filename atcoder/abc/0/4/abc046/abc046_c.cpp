@@ -85,14 +85,20 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, k);
-  V<LL> rdv(a, n);
-  vsorta(a);
-  auto ind = lower_bound(a.begin(), a.end(), k) - a.begin();
-  if (ind == n)
-    pr(-1);
-  else
-    pr(ind);
+
+  LL rd(n, T, A);
+  rep(i, n - 1)
+  {
+    LL rd(t, a);
+    LL p1, p2;
+
+    p1 = (T + t - 1) / t;
+    p2 = (A + a - 1) / a;
+    p1 = max(p1, p2);
+    A = p1 * a;
+    T = p1 * t;
+  }
+  pr(A + T);
   PN;
   Ret;
 }

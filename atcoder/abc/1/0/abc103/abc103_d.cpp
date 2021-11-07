@@ -85,14 +85,26 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, k);
-  V<LL> rdv(a, n);
-  vsorta(a);
-  auto ind = lower_bound(a.begin(), a.end(), k) - a.begin();
-  if (ind == n)
-    pr(-1);
-  else
-    pr(ind);
+  LL rd(n, q);
+  V<PLL> T(q);
+  LL ans = 0, end = 0;
+  rep(i, q)
+  {
+    LL rd(s, e);
+    if (e < s)
+      swap(s, e);
+    T[i] = MP(e, s);
+  }
+  vsorta(T);
+  repauto(x, T)
+  {
+    if (end <= x.S)
+    {
+      ans++;
+      end = x.F;
+    }
+  }
+  pr(ans);
   PN;
   Ret;
 }

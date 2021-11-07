@@ -80,19 +80,39 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+vector<bool> is_prime(MAX_N, true);
+V<LL> pc(MAX_N, 0);
+
+void prepare_prime_numbers()
+{
+  is_prime[0] = false;
+  is_prime[1] = false;
+  repa(i, 2, MAX_N + 1)
+  {
+    if (!is_prime[i])
+      continue;
+    LL mult = 2;
+    while (i * mult <= MAX_N)
+    {
+      is_prime[i * mult] = false;
+      mult++;
+    }
+  }
+  rep(i, MAX_N) { pc[i + 1] = pc[i] + (is_prime[(i + 1) / 2] && is_prime[i]); }
+}
+
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, k);
-  V<LL> rdv(a, n);
-  vsorta(a);
-  auto ind = lower_bound(a.begin(), a.end(), k) - a.begin();
-  if (ind == n)
-    pr(-1);
-  else
-    pr(ind);
-  PN;
+  prepare_prime_numbers();
+  LL rd(Q);
+  while (Q--)
+  {
+    LL rd(l, r);
+    pr(pc[r + 1] - pc[l]);
+    PN;
+  }
   Ret;
 }

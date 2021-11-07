@@ -1,13 +1,7 @@
-def gs() = gets.chomp
+n, k = gets.split.map(&:to_i)
 
-def gi() = gets.to_i
-
-def gli() = gets.split.map(&:to_i)
-
-def cyesno(x) = x ? :Yes : :No
-
-def uyesno(x) = x ? :YES : :NO
-
-beggin, ratata, you = gli
-
-puts
+if k.odd?
+  puts (n / k)**3
+else
+  puts (n / k)**3 + ((n + k / 2) / k)**3
+end
