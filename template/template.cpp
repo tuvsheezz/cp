@@ -97,6 +97,28 @@ struct MYM
   DD area_of_triangle_with_3_sides(DD a, DD b, DD c) { ret sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c)) / 4.0; }
 };
 
+LL euler_phi(LL n)
+{
+  LL res = n, i = 2;
+  while (i * i <= n)
+  {
+    if (n % i == 0)
+    {
+      res = res / i * (i - 1);
+      while (n % i == 0)
+      {
+        n /= i;
+      }
+    }
+    i++;
+  }
+  if (n > 1)
+  {
+    res--;
+  }
+  ret res;
+}
+
 struct UnionFind
 {
   V<LL> parent, size;
@@ -199,6 +221,55 @@ struct SegmentTree
   void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
 };
 
+// Sieve of Eratosthenes
+struct Sieve
+{
+  V<LL> f, primes;
+  void init(int n)
+  {
+    f.resize(n + 1, 0);
+    f[0] = f[1] = -1;
+    repa(i, 2, n + 1)
+    {
+      if (f[i] > 0)
+        continue;
+      primes.PB(i);
+      f[i] = i;
+      for (LL j = i * i; j <= n; j += i)
+      {
+        if (f[j] == 0)
+          f[j] = i;
+      }
+    }
+  }
+  bool is_prime(LL n) { ret f[n] == n; }
+  V<LL> prime_factors(LL n)
+  {
+    V<LL> r;
+    while (n != 1)
+    {
+      r.PB(f[n]);
+      n /= f[n];
+    }
+    ret r;
+  }
+  V<PLL> prime_factors_count(LL n)
+  {
+    V<LL> l = prime_factors(n);
+    if (l.size() == 0)
+      ret{};
+    V<PLL> r(1, MP(l[0], 0));
+    repauto(x, l)
+    {
+      if (r.back().F == x)
+        r.back().S++;
+      else
+        r.emplace_back(x, 1);
+    }
+    ret r;
+  }
+};
+
 // combinatorics
 V<LL> inv(MAX_N), fact(MAX_N), finv(MAX_N);
 void set_inv(LL mod)
@@ -244,31 +315,6 @@ LL big_pow(LL x, LL n, LL mod)
   ret z;
 }
 
-vector<bool> is_prime(MAX_N, true);
-V<LL> prime_numbers;
-
-void prepare_prime_numbers()
-{
-  is_prime[0] = false;
-  is_prime[1] = false;
-  repa(i, 2, MAX_N + 1)
-  {
-    if (!is_prime[i])
-      continue;
-    LL mult = 2;
-    while (i * mult <= MAX_N)
-    {
-      is_prime[i * mult] = false;
-      mult++;
-    }
-  }
-  repa(i, 0, MAX_N + 1)
-  {
-    if (is_prime[i])
-      prime_numbers.push_back(i);
-  }
-}
-
 bool is_prime_simple(LL n)
 {
   if (n == 1)
@@ -279,25 +325,6 @@ bool is_prime_simple(LL n)
       ret false;
   }
   ret true;
-}
-
-V<LL> prime_divisors(LL n)
-{
-  V<LL> res;
-  for (auto const &x : prime_numbers)
-  {
-    if (x * x > n)
-      break;
-    while (n % x == 0)
-    {
-      res.push_back(x);
-      n /= x;
-    }
-  }
-  if (n > 1)
-    res.push_back(n);
-  sort(res.begin(), res.end());
-  ret res;
 }
 
 LL single_fact(LL n, LL mod)

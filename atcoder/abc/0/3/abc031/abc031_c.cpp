@@ -86,13 +86,8 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL rd(n, k);
-  V<LL> rdv(a, n);
-  vsorta(a);
-  auto ind = lower_bound(a.begin(), a.end(), k) - a.begin();
-  if (ind == n)
-    pr(-1);
-  else
-    pr(ind);
+  LL c = (k - 1) * (n - k) * 6 + (n - 1) * 3 + 1;
+  prd((DD)c / (DD)pow(n, 3));
   PN;
   Ret;
 }
