@@ -49,6 +49,7 @@
     "optional": "cpp",
     "system_error": "cpp",
     "variant": "cpp",
-    "cmath": "cpp"
+    "cmath": "cpp",
+    "limits": "cpp"
   }
 }
