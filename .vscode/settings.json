@@ -50,6 +50,7 @@
     "system_error": "cpp",
     "variant": "cpp",
     "cmath": "cpp",
-    "limits": "cpp"
+    "limits": "cpp",
+    "algorithm": "cpp"
   }
 }
