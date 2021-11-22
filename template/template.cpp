@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
 using namespace std;
+template <class T>
+using IS = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 #define PI 3.141592653589793238462643383279502884L
 #define LL long long
 #define DD double
@@ -307,6 +311,9 @@ LL combination2(LL n, LL k, LL mod)
 
 LL big_pow(LL x, LL n, LL mod)
 {
+  x = x % mod;
+  if (x == 0)
+    ret 0;
   if (n == 0)
     ret 1;
   LL z = big_pow(x * x % mod, n / 2, mod);

@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
 using namespace std;
+template <class T>
+using IS = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 #define PI 3.141592653589793238462643383279502884L
 #define LL long long
 #define DD double
@@ -85,9 +89,34 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, k);
-  LL c = (k - 1) * (n - k) * 6 + (n - 1) * 3 + 1;
-  prd((DD)c / (DD)pow(n, 3));
+  LL rd(n);
+  V<LL> rdv(a, n);
+  LL ans = -INF;
+  rep(i, n)
+  {
+    LL ap, ao = -INF, tmp;
+    rep(j, n)
+    {
+      if (i == j)
+        continue;
+      LL l = min(i, j), r = max(i, j), sc = 0, sd = 0;
+      repa(k, l, r + 1)
+      {
+        if ((k - l) % 2 == 0)
+          sc += a[k];
+        else
+          sd += a[k];
+      }
+      if (ao < sd)
+      {
+        ap = j;
+        ao = sd;
+        tmp = sc;
+      }
+    }
+    ans = max(ans, tmp);
+  }
+  pr(ans);
   PN;
   Ret;
 }
