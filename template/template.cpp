@@ -346,6 +346,27 @@ LL single_fact(LL n, LL mod)
   ret r;
 }
 
+V<pair<char, LL>> run_length_encoding(STR s)
+{
+  LL n = (LL)s.size();
+  V<pair<char, LL>> rle;
+  char pre = s[0];
+  LL count = 1;
+  repa(i, 1, n)
+  {
+    if (pre != s[i])
+    {
+      rle.PB({pre, count});
+      pre = s[i];
+      count = 1;
+    }
+    else
+      count++;
+  }
+  rle.PB(MP(pre, count));
+  ret rle;
+}
+
 // BIT全検索
 // repa(i, 0, 1 << (n - 1)) {
 // 000001 -> 111111
