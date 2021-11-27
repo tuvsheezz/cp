@@ -85,53 +85,29 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, m);
-  V<LL> pl(n, -1);
-  V<queue<LL>> qu(m, queue<LL>());
-  LL x, tmp, tm, ti;
-  rep(i, m)
+  LL rd(n);
+  V<LL> ans(n + 1, 0);
+  V<PLL> a;
+  rep(i, n)
   {
-    LL rd(k);
-    rep(j, k)
-    {
-      cin >> x;
-      x--;
-
-      qu[i].push(x);
-      tm = x;
-      ti = i;
-
-      while (pl[tm] != -1)
-      {
-        qu[ti].pop();
-        qu[pl[tm]].pop();
-
-        pr(tm);
-        PS;
-        pr(tmp);
-        PN;
-      }
-
-      if (qu[i].empty() && pl[x] == -1)
-        pl[x] = i;
-    }
+    LL rd(x, y);
+    a.PB(MP(x, 1));
+    a.PB(MP(x + y, -1));
   }
-  rep(i, m)
+
+  vsorta(a);
+  LL cu = 0;
+  rep(i, 2 * n)
   {
-    if (!qu[i].empty())
-    {
-      pr("No");
-      PS;
-    }
-    while (!qu[i].empty())
-    {
-      pr(qu[i].front());
-      PS;
-      qu[i].pop();
-    }
-    PN;
+    if (i > 0)
+      ans[cu] += a[i].F - a[i - 1].F;
+    cu += a[i].S;
   }
-  pr("Yes");
+  rep(i, n)
+  {
+    pr(ans[i + 1]);
+    PS;
+  }
   PN;
   Ret;
 }

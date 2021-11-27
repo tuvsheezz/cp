@@ -12,11 +12,8 @@ using VV = V<V<T>>;
 #define MLL map<LL, LL>
 #define MSL map<STR, LL>
 #define MLB map<LL, bool>
-#define QLL queue<LL>
-template <class T>
-using PQA = priority_queue<T, V<T>, greater<T>>;
-template <class T>
-using PQD = priority_queue<T, V<T>, less<T>>;
+#define PQA priority_queue<LL, V<LL>, greater<LL>>
+#define PQD priority_queue<LL, V<LL>, less<LL>>
 #define IT iterator
 #define F first
 #define S second
@@ -86,70 +83,27 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, m);
-  V<QLL> q(m, QLL());
-  LL k, x;
-  rep(i, m)
+  LL rd(n);
+  LL m = 3001;
+  V<LL> rdv(a, n);
+  V<LL> rdv(b, n);
+  V<LL> dp(m, 0);
+  dp[0] = 1;
+  rep(i, n)
   {
-    cin >> k;
-    rep(j, k)
+    V<LL> p(m, 0);
+    swap(dp, p);
+    rep(j, m - 1) { p[j + 1] = (p[j + 1] + p[j]) % MOD2; }
+    rep(j, m)
     {
-      cin >> x;
-      q[i].push(x);
+      if (a[i] <= j && j <= b[i])
+        dp[j] = (dp[j] + p[j]) % MOD2;
     }
   }
 
-  QLL next;
-  V<PLL> v(n + 1, PLL(-1, -1));
-  rep(i, m)
-  {
-    LL y = q[i].front();
-    if (v[y].F == -1)
-      v[y].F = i;
-    else
-    {
-      v[y].S = i;
-      next.push(y);
-    }
-  }
+  rep(j, m - 1) { dp[j + 1] = (dp[j + 1] + dp[j]) % MOD2; }
 
-  while (!next.empty())
-  {
-    LL y = next.front();
-    next.pop();
-    q[v[y].F].pop();
-    if (!q[v[y].F].empty())
-    {
-      LL z = q[v[y].F].front();
-      if (v[z].F == -1)
-        v[z].F = v[y].F;
-      else
-      {
-        v[z].S = v[y].F;
-        next.push(z);
-      }
-    }
-    q[v[y].S].pop();
-    if (!q[v[y].S].empty())
-    {
-      LL z = q[v[y].S].front();
-      if (v[z].F == -1)
-        v[z].F = v[y].S;
-      else
-      {
-        v[z].S = v[y].S;
-        next.push(z);
-      }
-    }
-  }
-  rep(i, m)
-  {
-    if (!q[i].empty())
-    {
-      No;
-      Ret;
-    }
-  }
-  Yes;
+  pr(dp[m - 1]);
+  PN;
   Ret;
 }
