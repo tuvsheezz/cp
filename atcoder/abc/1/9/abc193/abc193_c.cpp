@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define FAST ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define FAST                        \
+  ios_base::sync_with_stdio(false); \
+  cin.tie(0);                       \
+  cout.tie(0);
 #define ll long long
 #define dd double
 #define ull unsigned long long
@@ -19,12 +22,16 @@ int main()
 {
   FAST;
   map<ll, bool> checked;
-  ll n; cin >> n;
+  ll n;
+  cin >> n;
   ll ans = n;
-  for(ll i = 2; i * i <= n; i++) {
+  for (ll i = 2; i * i <= n; i++)
+  {
     ll c = i * i;
-    while(c <= n) {
-      if(!checked[c]) ans--;
+    while (c <= n)
+    {
+      if (!checked[c])
+        ans--;
       checked[c] = true;
       c *= i;
     }
