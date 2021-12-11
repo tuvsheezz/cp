@@ -82,48 +82,37 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 30
+
+LL FU(LL n, LL k)
+{
+  LL r = 1;
+  rep(i, k) { r = r * (n - i) / (i + 1); }
+  ret r;
+}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, m, Q);
-  V<PLL> p(n, MP(0, 0));
-  rep(i, n) { cin >> p[i].S >> p[i].F; }
-  vsortd(p);
-  V<LL> rdv(a, m);
-
-  while (Q--)
+  LL rd(a, b, x);
+  LL aa = a, bb = b;
+  rep(i, a + b)
   {
-    LL rd(l, r);
-    V<LL> c;
-    rep(i, m)
+    LL c = FU(aa + bb - 1, bb);
+    if (x <= c)
     {
-      if (i < l - 1 || r <= i)
-        c.PB(a[i]);
+      pr('a');
+      aa--;
     }
-    LL sz = c.size(), ans = 0;
-    vsorta(c);
-    V<LL> us(sz, false);
-
-    rep(i, n)
+    else
     {
-      auto it = lower_bound(c.begin(), c.end(), p[i].S);
-      if (it == c.end())
-        continue;
-      while (us[it - c.begin()] == true && it < c.end())
-      {
-        it++;
-      }
-      if (it == c.end())
-        continue;
-      ans += p[it - c.begin()].F;
-      us[it - c.begin()] = true;
+      x -= c;
+      pr('b');
+      bb--;
     }
-    pr(ans);
-    PN;
   }
+  PN;
   Ret;
 }
