@@ -1,11 +1,32 @@
-def gs() = gets.chomp
-def gi() = gets.to_i
-def gli() = gets.split.map(&:to_i)
-def cyesno(x) = x ? :Yes : :No
-def uyesno(x) = x ? :YES : :NO
+a, b = gets.split.map(&:to_i)
+s = a.to_s(2)
+t = b.to_s(2)
+f = 0
+if s == t
+  f += 1
+end
 
-gets
-s = gets.chomp.split('')
-k = gets.to_i
-puts s.map { |x| x != s[k - 1] ? '*' : x  }.join
-  
+if t.index(s) && s[-1] == '1'
+  ff = true
+  t.sub(s, '').each_char { |c| ff = false unless c == '1' }
+  f += 1 if ff
+end
+
+s = s.reverse
+while s[0] == '0' do  
+  s[0] = ''
+end
+
+if t.index(s)
+  ff = true
+  t.sub(s, '').each_char { |c| ff = false unless c == '1' }
+  f += 1 if ff
+end
+
+if t.index(s.reverse)
+  ff = true
+  t.sub(s.reverse, '').each_char { |c| ff = false unless c == '1' }
+  f += 1 if ff
+end
+
+puts f.positive? ? :YES : :NO

@@ -367,6 +367,54 @@ V<pair<char, LL>> run_length_encoding(STR s)
   ret rle;
 }
 
+struct Treap
+{
+  LL len, ADD = 1000010, MAXVAL = 1000000010;
+  unordered_map<LL, LL> mp; /// Change to LL if only LL in treap
+  IS<LL> T;
+
+  Treap() { len = 0, T.clear(), mp.clear(); }
+  void clear() { len = 0, T.clear(), mp.clear(); }
+
+  void insert(LL x)
+  {
+    len++, x += MAXVAL;
+    LL c = mp[x]++;
+    T.insert((x * ADD) + c);
+  }
+
+  void erase(LL x)
+  {
+    x += MAXVAL;
+    LL c = mp[x];
+    if (c)
+    {
+      c--, mp[x]--, len--;
+      T.erase((x * ADD) + c);
+    }
+  }
+
+  /// 1-based index, returns the K'th element in the treap, -1 if none exists
+  LL kth(LL k)
+  {
+    if (k < 1 || k > len)
+      return -1;
+    auto it = T.find_by_order(--k);
+    return ((*it) / ADD) - MAXVAL;
+  }
+
+  /// Count of value < x in treap
+  LL count(LL x)
+  {
+    x += MAXVAL;
+    LL c = mp[--x];
+    return (T.order_of_key((x * ADD) + c));
+  }
+
+  /// Number of elements in treap
+  LL size() { return len; }
+};
+
 // BIT全検索
 // repa(i, 0, 1 << (n - 1)) {
 // 000001 -> 111111
@@ -389,6 +437,17 @@ V<pair<char, LL>> run_length_encoding(STR s)
 //   ans += n - j + 1; // nuhtsul hangasan hesguudiig hadgalaad
 //   ss -= a[i]; // yg odoo baigaa range-iinhee hamgiin ehnii elementiig hasaad ahiad daraagiinh ruu
 // }
+
+// F -> asc, S -> desc
+bool comp(PLL &p1, PLL &p2)
+{
+  if (p1.F > p2.F)
+    ret false;
+  else if (p1.F < p2.F)
+    ret true;
+  else
+    ret p1.S > p2.S;
+}
 
 void solve()
 {

@@ -1,0 +1,6 @@
+1. 1 array-d X-ees baga ymuu ih heden too baigaag olh heregtei bol treap
+2. 1 array-iin K deh element-g ustgah K dah element-g medh heregtei bol IS
+3. 3 3-aar n songood selgeseer baigaad sortloh bol: ali 1 too n 2<= baih, 
+    esvel tegsh tootoi cycle-iinh n too tegsh baih. Cycle-g n unionfind-aar 
+    bodoj bolno.
+4. 
