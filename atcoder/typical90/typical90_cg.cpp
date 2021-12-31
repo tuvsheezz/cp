@@ -82,37 +82,40 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 30
-
-LL FU(LL n, LL k)
-{
-  LL r = 1;
-  rep(i, k) { r = r * (n - i) / (i + 1); }
-  ret r;
-}
+#define MAX_N 100100
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(a, b, x);
-  LL aa = a, bb = b;
-  rep(i, a + b)
+  LL rd(n);
+  V<LL> d;
+  for (LL i = 1; i * i <= n; i++)
   {
-    LL c = FU(aa + bb - 1, bb);
-    if (x <= c)
+    if (n % i == 0)
     {
-      pr('a');
-      aa--;
-    }
-    else
-    {
-      x -= c;
-      pr('b');
-      bb--;
+      d.PB(i);
+      if (n / i != i)
+        d.PB(n / i);
     }
   }
+  vsorta(d);
+
+  LL m = d.size(), ans = 0;
+  rep(i, m)
+  {
+    repa(j, i, m)
+    {
+      if ((n / d[i]) < d[j])
+        continue;
+      if (n % (d[i] * d[j]) != 0)
+        continue;
+      if (d[j] <= n / (d[i] * d[j]))
+        ans += 1;
+    }
+  }
+  pr(ans);
   PN;
   Ret;
 }

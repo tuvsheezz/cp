@@ -84,70 +84,28 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-struct Graph
-{
-  LL vertices;
-  V<set<LL>> edges;
-  V<LL> w;
-  bool is_directed;
-
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    w.resize(n, 0);
-    is_directed = dir;
-  }
-
-  void add_edge(LL u, LL v)
-  {
-    edges[u].insert(v);
-    if (!is_directed)
-      edges[v].insert(u);
-  }
-};
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL ans = 0;
-  LL rd(n);
-  Graph G;
-  G.init(n);
-  rep(i, n - 1)
+  LL rd(k);
+  if (k % 9 != 0)
+    pr(0);
+  else
   {
-    LL rd(u, v);
-    G.add_edge(u - 1, v - 1);
+    V<LL> dp(k + 1, 0);
+    dp[0] = 1;
+    rep(i, k)
+    {
+      rep(d, 9)
+      {
+        if (i >= d)
+          dp[i + 1] = (dp[i + 1] + dp[i - d]) % MOD1;
+      }
+    }
+    pr(dp[k]);
   }
-  stack<LL> q;
-  rep(i, n)
-  {
-    if (G.edges[i].size() == 1)
-      q.push(i);
-  }
-
-  while (!q.empty())
-  {
-    LL x = q.top();
-    q.pop();
-    auto it = G.edges[x].begin();
-
-    ans += G.w[*it] * G.w[x];
-
-    G.w[*it] += G.w[x];
-    G.edges[*it].erase(x);
-
-    if (G.edges[*it].size() == 1)
-      q.push(*it);
-
-    G.edges[x].erase(*it);
-    G.w[x] = 0;
-    pr(ans);
-    PN;
-  }
-  pr(ans);
   PN;
   Ret;
 }

@@ -89,23 +89,25 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n);
-  V<LL> rdv(a, n);
-  V<LL> b = a;
-  vsorta(b);
-  LL mn = b[0], mx = b[n - 1], mn2 = b[1], mx2 = b[n - 2];
-  LL c = max(0LL, mx) * 2 + max(0LL, -mn) * 2;
-  rep(i, n)
+  LL rd(n, k);
+  STR rd(s);
+  VV<LL> c(26, V<LL>(0));
+  LL now = 0, dec = 0;
+  rep(i, n) { c[s[i] - 'a'].PB(i); }
+  rep(i, k)
   {
-    if (a[i] == mx)
-      b[i] = max(0LL, 2 * mx2) + max(0LL, -mn * 2);
-    else if (a[i] == mn)
-      b[i] = max(0LL, mx * 2) + max(0LL, -mn2 * 2);
-    else
-      b[i] = c;
-
-    pr(b[i]);
-    PN;
+    rep(j, 26)
+    {
+      if (c[j].size() == 0)
+        continue;
+      auto it = lower_bound(c[j].begin(), c[j].end(), now);
+      if (it == c[j].end() || *it > n - k + i)
+        continue;
+      now = *it + 1;
+      pr(char(j + 'a'));
+      break;
+    }
   }
+  PN;
   Ret;
 }
