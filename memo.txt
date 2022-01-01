@@ -5,4 +5,7 @@
     bodoj bolno.
 4. n ^ (k ^ m) bol (k ^ m) % MOD - 1 gej bodood boddog ym shig baigaa ym
 5. modnii diameter-g duriin oroigoos (0) BFS hiigeed, 0-s hamgiin hol baigaag
-    n olood ter node-oosoo ahiad BFS hiigeed hamgiin hol n.
+    n olood ter node-oosoo ahiad BFS hiigeed hamgiin hol n.]
+6. Strongly connected components -> directed graph deer BFS hiigeed hamgiin tsaash yvah
+    bolomjgui bolsnoos n ehleed stack-t hiigeed, buh edge-iin chiglel-g esreg haruulaad
+    ahij 1 BFS hiigeed oldog.
