@@ -51,6 +51,7 @@
     "variant": "cpp",
     "cmath": "cpp",
     "limits": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "charconv": "cpp"
   }
 }

@@ -415,10 +415,30 @@ struct Treap
   LL size() { return len; }
 };
 
+// LIS<LL>(a, false) ntr gej hereglene shu!
+template <typename T>
+size_t LIS(const V<T> &a, bool strict)
+{
+  V<T> lis;
+  for (auto &p : a)
+  {
+    typename V<T>::iterator it;
+    if (strict)
+      it = lower_bound(begin(lis), end(lis), p);
+    else
+      it = upper_bound(begin(lis), end(lis), p);
+    if (end(lis) == it)
+      lis.emplace_back(p);
+    else
+      *it = p;
+  }
+  return lis.size();
+}
+
 // BIT全検索
-// repa(i, 0, 1 << (n - 1)) {
+// repa(i, 0, 1 << n) {
 // 000001 -> 111111
-//   repa(j, 0, n + 1) {
+//   repa(j, 0, n) {
 //     if(i >> j & 1) {
 //         1? 0?
 //     }
