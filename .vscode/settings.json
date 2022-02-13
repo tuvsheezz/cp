@@ -52,6 +52,9 @@
     "cmath": "cpp",
     "limits": "cpp",
     "algorithm": "cpp",
-    "charconv": "cpp"
+    "charconv": "cpp",
+    "compare": "cpp",
+    "queue": "cpp",
+    "stack": "cpp"
   }
 }

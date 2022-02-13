@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"

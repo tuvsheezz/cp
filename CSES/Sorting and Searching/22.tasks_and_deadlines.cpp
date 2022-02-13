@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -84,15 +86,28 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+// F -> asc, S -> desc
+bool comp(PLL &p1, PLL &p2)
+{
+  if (p1.F > p2.F)
+    ret false;
+  else if (p1.F < p2.F)
+    ret true;
+  else
+    ret p1.S < p2.S;
+}
+
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(x);
-  if (-pow(2, 31) <= x && x < pow(2, 31))
-    Yes;
-  else
-    No;
+  LL rd(n);
+  V<PLL> a(n);
+  rep(i, n) cin >> a[i].F >> a[i].S;
+  sort(a.begin(), a.end(), comp);
+  LL now = 0, ans = 0;
+  rep(i, n) ans += (a[i].S - (now += a[i].F));
+  prn(ans);
   Ret;
 }

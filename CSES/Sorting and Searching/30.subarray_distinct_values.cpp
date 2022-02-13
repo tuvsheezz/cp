@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -82,105 +84,30 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 1111
-
-V<LL> p(MAX_N, INF);
-
-LL knapSack(LL W, V<LL> &wt, V<LL> &val, LL n)
-{
-  // making and initializing dp array
-  LL dp[W + 1];
-  memset(dp, 0, sizeof(dp));
-
-  for (LL i = 1; i < n + 1; i++)
-  {
-    for (LL w = W; w >= 0; w--)
-    {
-
-      if (wt[i - 1] <= w)
-        // finding the maximum value
-        dp[w] = max(dp[w],
-                    dp[w - wt[i - 1]] + val[i - 1]);
-    }
-  }
-  return dp[W]; // returning the maximum value of knapsack
-}
-
-void solve()
-{
-  LL rd(n, k);
-  V<LL> rdv(b, n);
-  V<LL> rdv(c, n);
-
-  // VV<LL> dp(n + 1, V<LL>(k + 1, 0));
-
-  V<LL> q(n), q2(n);
-  LL sum = 0, mn = INF;
-  rep(i, n)
-  {
-    q[i] = p[b[i]], q2[i] = c[i];
-    sum += q[i];
-    mn = min(mn, q[i]);
-  }
-
-  if (mn > k)
-  {
-    pr(0);
-  }
-  else if (k >= sum)
-  {
-    LL ans = 0;
-    rep(i, n) { ans += q2[i]; }
-    pr(ans);
-  }
-  else
-    pr(knapSack(k, q, q2, n));
-
-  // V<PLL> q(n);
-  // rep(i, n) { q[i] = MP(p[b[i]], c[i]); }
-
-  // repa(i, 1, n + 1)
-  // {
-  //   LL wi = q[i - 1].F, vi = q[i - 1].S;
-  //   rep(j, k + 1)
-  //   {
-  //     if (vi == INF)
-  //       vi = 0;
-  //     rep(j, k + 1)
-  //     {
-  //       if (j - wi >= 0)
-  //         dp[i][j] = max(dp[i - 1][j], vi + dp[i - 1][j - wi]);
-  //       else
-  //         dp[i][j] = dp[i - 1][j];
-  //     }
-  //   }
-  // }
-
-  // pr(dp[n][k]);
-  PN;
-}
+#define MAX_N 100100
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  p[1] = 0;
-
-  repa(i, 1, MAX_N)
+  LL rd(n, k);
+  V<LL> rdv(a, n);
+  LL cur = 0, j = 0, ans = 0;
+  MLL mp;
+  rep(i, n)
   {
-    for (int j = 1; j <= i; j++)
+    while (cur + (mp[a[j]] == 0) <= k && j < n)
     {
-      if (i + i / j >= MAX_N)
-        continue;
-      p[i + i / j] = min(p[i + i / j], p[i] + 1);
+      mp[a[j++]]++;
+      if (mp[a[j]] == 0)
+        cur++;
     }
+    ans += j - i;
+    mp[a[i]]--;
+    if (mp[a[i]] == 0)
+      cur--;
   }
-  LL rd(T);
-
-  while (T--)
-  {
-    solve();
-  }
+  prn(ans);
   Ret;
 }

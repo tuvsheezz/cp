@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -84,33 +86,15 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-void solve()
-{
-  LL rd(n);
-  if (n % 7 == 0)
-    pr(n);
-  else
-  {
-    n -= n % 10;
-    while (n % 7 != 0)
-    {
-      n++;
-    }
-    pr(n);
-  }
-  PN;
-}
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-
-  LL rd(T);
-  while (T--)
-  {
-    solve();
-  }
+  LL rd(n);
+  V<LL> rdv(a, n);
+  LL sum = 0, k = -INF;
+  rep(i, n) { sum += a[i], k = max(k, a[i]); }
+  prn(max(2 * k, sum));
   Ret;
 }
