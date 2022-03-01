@@ -55,6 +55,15 @@
     "charconv": "cpp",
     "compare": "cpp",
     "queue": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "__bit_reference": "cpp",
+    "__hash_table": "cpp",
+    "__split_buffer": "cpp",
+    "__tree": "cpp",
+    "filesystem": "cpp",
+    "iterator": "cpp",
+    "map": "cpp",
+    "set": "cpp",
+    "ios": "cpp"
   }
 }
