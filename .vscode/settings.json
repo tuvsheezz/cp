@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "*.yaml": "yaml",
     "ostream": "cpp",
     "iostream": "cpp",
     "valarray": "cpp",
@@ -64,6 +65,7 @@
     "iterator": "cpp",
     "map": "cpp",
     "set": "cpp",
-    "ios": "cpp"
+    "ios": "cpp",
+    "bit": "cpp"
   }
 }

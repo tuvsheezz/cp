@@ -1,20 +1,13 @@
-def main
-  n = gi
-  s = gli.sort.reverse
-  ret = 0
-  for i in 0..n-1
-    ret += s[i * 2 + 1]
-  end
-  
-  puts ret  
-end
+a, b = gets.chomp.split(":")
+a = a.split("")
+x = a[0]
+x1 = a[1..].join.to_a
 
-MOD = 10 ** 9 + 7
-def gs; gets.chomp; end
-def gi; gets.to_i; end
-def gli; gets.split.map(&:to_i); end
-def cyesno(x); x ? :Yes : :No; end
-def uyesno(x); x ? :YES : :NO; end
-def array_to_hash_by_count(c); Hash.new(0).tap { |x| c.each { |z| x[z] += 1 } }; end
+b = b.split("")
+y = b[0]
+y1 = b[1..].join.to_a
 
-main()
+puts x
+puts x1
+puts y
+puts y1
