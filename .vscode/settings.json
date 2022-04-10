@@ -66,6 +66,10 @@
     "map": "cpp",
     "set": "cpp",
     "ios": "cpp",
-    "bit": "cpp"
-  }
+    "bit": "cpp",
+    "barrier": "cpp",
+    "latch": "cpp",
+    "semaphore": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "Disabled"
 }

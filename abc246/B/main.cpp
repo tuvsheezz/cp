@@ -30,38 +30,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -88,45 +88,20 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(n);
-  LL ans = 0;
-  VV<PLL> a(n);
-  rep(i, n)
-  {
-    LL rd(p);
-    a[i].resize(p);
-    rep(j, p) cin >> a[i][j].F >> a[i][j].S;
-  }
-
-  rep(bit, (1 << n) + 1)
-  {
-    V<LL> s;
-    rep(i, n)
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    DD rd(x, y);
+    prd();
+    if (x == 0)
+        cout << 0 << " " << 1 << endl;
+    else if (y == 0)
+        cout << 1 << " " << 0 << endl;
+    else
     {
-      if (bit >> i & 1)
-        s.PB(1);
-      else
-        s.PB(0);
+        DD q = x / sqrt(x * x + y * y);
+        DD p = y / sqrt(x * x + y * y);
+        cout << q << " " << p << endl;
     }
-    LL d = 0;
-    rep(i, n)
-    {
-      if (s[i] == 0)
-        continue;
-      bool x = true;
-      repauto(q, a[i])
-      {
-        if (s[q.F - 1] != q.S)
-          x = false;
-      }
-      if (x)
-        d++;
-    }
-    ans = max(ans, d);
-  }
-  prn(ans);
-  Ret;
+    Ret;
 }

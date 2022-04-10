@@ -30,38 +30,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -84,71 +86,40 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-struct Graph
-{
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-  V<LL> degree;
-  PQA<LL> next;
-
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-    degree.resize(n, 0);
-  }
-
-  void add_edge(LL u, LL v)
-  {
-    edges[u].PB(v);
-    degree[v]++;
-    if (!is_directed)
-    {
-      edges[v].PB(u);
-      degree[u]++;
-    }
-  }
-
-  // next ruu zuvhun garsan edge-teinnuudiig n ->
-  // degree n 0 baigaag n hiine.
-  V<LL> TopologicalSort()
-  {
-    V<LL> ans;
-    LL cur;
-    while (!next.empty())
-    {
-      cur = next.top();
-      next.pop();
-      ans.PB(cur);
-      repauto(x, edges[cur])
-      {
-        degree[x]--;
-        if (degree[x] == 0)
-          next.push(x);
-      }
-    }
-    return ans;
-  }
-};
-
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(n, m);
-  Graph G;
-  G.init(n, true);
-  while (m--)
-  {
-    LL rd(a, b);
-    G.add_edge(a - 1, b - 1);
-  }
-  rep(i, n) if (G.degree[i] == 0) G.next.push(i);
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    LL rd(n, mx, mn);
+    V<LL> rdv(a, n);
 
-  auto ts = G.TopologicalSort();
-  pr(ts);
-  Ret;
+    LL j = 0, ans = 0, mxlast = INF, mnlast = INF;
+
+    rep(i, n)
+    {
+        if (mn > a[i] || a[i] > mx)
+            continue;
+
+        j = i;
+
+        while (mn <= a[j] && a[j] <= mx && j < n)
+        {
+            if (a[j] == mx)
+                mxlast = j;
+            if (a[j] == mn)
+                mnlast = j;
+            if (mnlast <= j && mxlast <= j)
+                ans += min(mnlast, mxlast) - i + 1;
+            j++;
+        }
+        i = j;
+        mxlast = INF;
+        mnlast = INF;
+
+        if (j >= n - 1)
+            break;
+    }
+    prn(ans);
+    Ret;
 }

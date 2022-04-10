@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -84,100 +86,31 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+void solve()
+{
+  LL rd(n);
+  V<LL> a(n);
+  rep(i, n) a[i] = i + 1;
+  pr(a);
+  rep(i, n)
+  {
+    LL x;
+    cin >> x;
+    a.PB(x);
+  }
+  vsorta(a);
+  LL sum = 0;
+  rep(i, 2 * n) sum += a[i];
+
+  pr(a);
+}
+
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(h, w);
-  char a[h + 10][w + 10], b[h + 10][w + 10], c[h + 10][w + 10];
-  rep(i, h)
+  LL rd(T);
+  rep(i, T)
   {
-    rep(j, w) { cin >> a[i][j]; }
-  }
-
-  rep(i, h)
-  {
-    rep(j, w)
-    {
-      if (a[i][j] == '#')
-      {
-        if (j - 1 >= 0 && a[i][j - 1] == '.')
-          a[i][j] = '.';
-        if (i - 1 >= 0 && j - 1 >= 0)
-          b[i - 1][j - 1] = '.';
-        if (i - 1 >= 0)
-          b[i - 1][j] = '.';
-        if (i - 1 >= 0 && j + 1 < w)
-          b[i - 1][j + 1] = '.';
-      }
-      else
-      {
-        b[i][j] = a[i][j];
-      }
-    }
-  }
-  // rep(i, h)
-  // {
-  //   rep(j, w)
-  //   {
-  //     if (b[i][j] == '#')
-  //     {
-  //       if (i - 1 >= 0 && j - 1 >= 0)
-  //         c[i - 1][j - 1] = '#';
-  //       if (i - 1 >= 0)
-  //         c[i - 1][j] = '#';
-  //       if (i - 1 >= 0 && j + 1 < w)
-  //         c[i - 1][j + 1] = '#';
-  //       if (j < w - 1)
-  //         c[i][j + 1] = '#';
-  //       if (i + 1 < h && j + 1 < w)
-  //         c[i + 1][j + 1] = '#';
-  //       if (i + 1 < h)
-  //         c[i + 1][j] = '#';
-  //       if (i + 1 < h && j - 1 >= 0)
-  //         c[i + 1][j - 1] = '#';
-  //       if (j - 1 >= 0)
-  //         c[i][j - 1] = '#';
-  //     }
-  //     else
-  //       c[i][j] = b[i][j];
-  //   }
-  // }
-
-  rep(i, h)
-  {
-    rep(j, w) { pr(a[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(c[i][j]); }
-    PN;
-  }
-  rep(i, h)
-  {
-    rep(j, w)
-    {
-      if (a[i][j] != c[i][j])
-      {
-        pr("impossible\n");
-        Ret;
-      }
-    }
-  }
-  pr("possible\n");
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
+    solve();
   }
   Ret;
 }

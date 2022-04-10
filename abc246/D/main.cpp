@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -84,100 +86,31 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+LL fnc(LL a, LL b)
+{
+  return (a + b) * (a * a + b * b);
+}
+
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(h, w);
-  char a[h + 10][w + 10], b[h + 10][w + 10], c[h + 10][w + 10];
-  rep(i, h)
+  LL rd(n);
+  LL ans = 5 * 1e18;
+  rep(i, 1e6)
   {
-    rep(j, w) { cin >> a[i][j]; }
-  }
-
-  rep(i, h)
-  {
-    rep(j, w)
+    LL l = 0, r = 1e6;
+    while (l + 1 < r)
     {
-      if (a[i][j] == '#')
-      {
-        if (j - 1 >= 0 && a[i][j - 1] == '.')
-          a[i][j] = '.';
-        if (i - 1 >= 0 && j - 1 >= 0)
-          b[i - 1][j - 1] = '.';
-        if (i - 1 >= 0)
-          b[i - 1][j] = '.';
-        if (i - 1 >= 0 && j + 1 < w)
-          b[i - 1][j + 1] = '.';
-      }
+      LL mid = l + (r - l) / 2;
+      if (fnc(i + 1, mid + 1) >= n)
+        r = mid - 1;
       else
-      {
-        b[i][j] = a[i][j];
-      }
+        l = mid + 1;
     }
+    ans = min(ans, fnc(l, i + 1));
   }
-  // rep(i, h)
-  // {
-  //   rep(j, w)
-  //   {
-  //     if (b[i][j] == '#')
-  //     {
-  //       if (i - 1 >= 0 && j - 1 >= 0)
-  //         c[i - 1][j - 1] = '#';
-  //       if (i - 1 >= 0)
-  //         c[i - 1][j] = '#';
-  //       if (i - 1 >= 0 && j + 1 < w)
-  //         c[i - 1][j + 1] = '#';
-  //       if (j < w - 1)
-  //         c[i][j + 1] = '#';
-  //       if (i + 1 < h && j + 1 < w)
-  //         c[i + 1][j + 1] = '#';
-  //       if (i + 1 < h)
-  //         c[i + 1][j] = '#';
-  //       if (i + 1 < h && j - 1 >= 0)
-  //         c[i + 1][j - 1] = '#';
-  //       if (j - 1 >= 0)
-  //         c[i][j - 1] = '#';
-  //     }
-  //     else
-  //       c[i][j] = b[i][j];
-  //   }
-  // }
-
-  rep(i, h)
-  {
-    rep(j, w) { pr(a[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(c[i][j]); }
-    PN;
-  }
-  rep(i, h)
-  {
-    rep(j, w)
-    {
-      if (a[i][j] != c[i][j])
-      {
-        pr("impossible\n");
-        Ret;
-      }
-    }
-  }
-  pr("possible\n");
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
+  prn(ans);
   Ret;
 }

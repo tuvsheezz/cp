@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -89,95 +91,34 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(h, w);
-  char a[h + 10][w + 10], b[h + 10][w + 10], c[h + 10][w + 10];
-  rep(i, h)
-  {
-    rep(j, w) { cin >> a[i][j]; }
-  }
+  LL rd(n, m);
+  V<LL> rdv(a, n);
+  V<LL> rdv(b, n);
+  V<LL> rdv(c, m);
+  V<LL> rdv(d, m);
+  VV<LL> q;
+  rep(i, n) { q.PB({a[i], b[i], 0}); }
+  rep(i, m) { q.PB({c[i], d[i], 1}); }
 
-  rep(i, h)
-  {
-    rep(j, w)
-    {
-      if (a[i][j] == '#')
-      {
-        if (j - 1 >= 0 && a[i][j - 1] == '.')
-          a[i][j] = '.';
-        if (i - 1 >= 0 && j - 1 >= 0)
-          b[i - 1][j - 1] = '.';
-        if (i - 1 >= 0)
-          b[i - 1][j] = '.';
-        if (i - 1 >= 0 && j + 1 < w)
-          b[i - 1][j + 1] = '.';
-      }
-      else
-      {
-        b[i][j] = a[i][j];
-      }
-    }
-  }
-  // rep(i, h)
-  // {
-  //   rep(j, w)
-  //   {
-  //     if (b[i][j] == '#')
-  //     {
-  //       if (i - 1 >= 0 && j - 1 >= 0)
-  //         c[i - 1][j - 1] = '#';
-  //       if (i - 1 >= 0)
-  //         c[i - 1][j] = '#';
-  //       if (i - 1 >= 0 && j + 1 < w)
-  //         c[i - 1][j + 1] = '#';
-  //       if (j < w - 1)
-  //         c[i][j + 1] = '#';
-  //       if (i + 1 < h && j + 1 < w)
-  //         c[i + 1][j + 1] = '#';
-  //       if (i + 1 < h)
-  //         c[i + 1][j] = '#';
-  //       if (i + 1 < h && j - 1 >= 0)
-  //         c[i + 1][j - 1] = '#';
-  //       if (j - 1 >= 0)
-  //         c[i][j - 1] = '#';
-  //     }
-  //     else
-  //       c[i][j] = b[i][j];
-  //   }
-  // }
+  vsortd(q);
 
-  rep(i, h)
+  multiset<LL> ms;
+
+  rep(i, n + m)
   {
-    rep(j, w) { pr(a[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(c[i][j]); }
-    PN;
-  }
-  rep(i, h)
-  {
-    rep(j, w)
+    if (q[i][2] == 1)
+      ms.insert(q[i][1]);
+    else
     {
-      if (a[i][j] != c[i][j])
+      auto it = ms.lower_bound(q[i][1]);
+      if (it == ms.end())
       {
-        pr("impossible\n");
+        No;
         Ret;
       }
+      ms.erase(it);
     }
   }
-  pr("possible\n");
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
+  Yes;
   Ret;
 }

@@ -1,9 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
 using namespace std;
-template <class T>
-using IS = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 #define PI 3.141592653589793238462643383279502884L
 #define LL long long
 #define DD double
@@ -16,10 +12,8 @@ using VV = V<V<T>>;
 #define MLL map<LL, LL>
 #define MSL map<STR, LL>
 #define MLB map<LL, bool>
-template <class T>
-using PQA = priority_queue<T, V<T>, greater<T>>;
-template <class T>
-using PQD = priority_queue<T, V<T>, less<T>>;
+#define PQA priority_queue<LL, V<LL>, greater<LL>>
+#define PQD priority_queue<LL, V<LL>, less<LL>>
 #define IT iterator
 #define F first
 #define S second
@@ -30,38 +24,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -84,71 +78,72 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+V<LL> cyc;
+
 struct Graph
 {
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-  V<LL> degree;
-  PQA<LL> next;
+    LL vertices, ans;
+    V<V<LL>> edges;
+    bool is_directed;
+    V<bool> bfsv;
+    V<LL> outdegree;
+    queue<LL> next;
 
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-    degree.resize(n, 0);
-  }
-
-  void add_edge(LL u, LL v)
-  {
-    edges[u].PB(v);
-    degree[v]++;
-    if (!is_directed)
+    void init(LL n, bool dir = false)
     {
-      edges[v].PB(u);
-      degree[u]++;
+        vertices = n;
+        ans = n;
+        edges.resize(n);
+        is_directed = dir;
+        bfsv.resize(n);
+        outdegree.resize(n);
     }
-  }
 
-  // next ruu zuvhun garsan edge-teinnuudiig n ->
-  // degree n 0 baigaag n hiine.
-  V<LL> TopologicalSort()
-  {
-    V<LL> ans;
-    LL cur;
-    while (!next.empty())
+    void add_edge(LL u, LL v)
     {
-      cur = next.top();
-      next.pop();
-      ans.PB(cur);
-      repauto(x, edges[cur])
-      {
-        degree[x]--;
-        if (degree[x] == 0)
-          next.push(x);
-      }
+        edges[u].PB(v);
+        if (!is_directed)
+            edges[v].PB(u);
     }
-    return ans;
-  }
+
+    void deleteI()
+    {
+        while (!next.empty())
+        {
+            ans--;
+            LL q = next.front();
+            next.pop();
+            repauto(x, edges[q])
+            {
+                outdegree[x]--;
+                if (outdegree[x] == 0)
+                    next.push(x);
+            }
+        }
+    }
 };
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(n, m);
-  Graph G;
-  G.init(n, true);
-  while (m--)
-  {
-    LL rd(a, b);
-    G.add_edge(a - 1, b - 1);
-  }
-  rep(i, n) if (G.degree[i] == 0) G.next.push(i);
-
-  auto ts = G.TopologicalSort();
-  pr(ts);
-  Ret;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    LL rd(n, m);
+    Graph G;
+    G.init(n, true);
+    rep(i, m)
+    {
+        LL rd(u, v);
+        G.add_edge(v - 1, u - 1);
+        G.outdegree[u - 1]++;
+    }
+    rep(i, n)
+    {
+        if (G.outdegree[i] == 0)
+            G.next.push(i);
+    }
+    G.deleteI();
+    pr(G.ans);
+    PN;
+    Ret;
 }

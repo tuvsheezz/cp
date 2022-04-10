@@ -70,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -89,95 +91,40 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(h, w);
-  char a[h + 10][w + 10], b[h + 10][w + 10], c[h + 10][w + 10];
-  rep(i, h)
+  LL rd(n);
+  int ans = 0;
+  VV<PLL> a(n);
+  rep(i, n)
   {
-    rep(j, w) { cin >> a[i][j]; }
+    LL rd(p);
+    a[i].resize(p);
+    rep(j, p) cin >> a[i][j].F >> a[i][j].S;
   }
 
-  rep(i, h)
+  repa(bit, 1, (1 << n))
   {
-    rep(j, w)
+    V<LL> s;
+    rep(i, n)
     {
-      if (a[i][j] == '#')
-      {
-        if (j - 1 >= 0 && a[i][j - 1] == '.')
-          a[i][j] = '.';
-        if (i - 1 >= 0 && j - 1 >= 0)
-          b[i - 1][j - 1] = '.';
-        if (i - 1 >= 0)
-          b[i - 1][j] = '.';
-        if (i - 1 >= 0 && j + 1 < w)
-          b[i - 1][j + 1] = '.';
-      }
+      if (bit >> i & 1)
+        s.PB(1);
       else
-      {
-        b[i][j] = a[i][j];
-      }
+        s.PB(0);
     }
-  }
-  // rep(i, h)
-  // {
-  //   rep(j, w)
-  //   {
-  //     if (b[i][j] == '#')
-  //     {
-  //       if (i - 1 >= 0 && j - 1 >= 0)
-  //         c[i - 1][j - 1] = '#';
-  //       if (i - 1 >= 0)
-  //         c[i - 1][j] = '#';
-  //       if (i - 1 >= 0 && j + 1 < w)
-  //         c[i - 1][j + 1] = '#';
-  //       if (j < w - 1)
-  //         c[i][j + 1] = '#';
-  //       if (i + 1 < h && j + 1 < w)
-  //         c[i + 1][j + 1] = '#';
-  //       if (i + 1 < h)
-  //         c[i + 1][j] = '#';
-  //       if (i + 1 < h && j - 1 >= 0)
-  //         c[i + 1][j - 1] = '#';
-  //       if (j - 1 >= 0)
-  //         c[i][j - 1] = '#';
-  //     }
-  //     else
-  //       c[i][j] = b[i][j];
-  //   }
-  // }
-
-  rep(i, h)
-  {
-    rep(j, w) { pr(a[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
-  PN;
-  rep(i, h)
-  {
-    rep(j, w) { pr(c[i][j]); }
-    PN;
-  }
-  rep(i, h)
-  {
-    rep(j, w)
+    bool x = true;
+    rep(i, n)
     {
-      if (a[i][j] != c[i][j])
+      if (s[i] == 0)
+        continue;
+      repauto(q, a[i])
       {
-        pr("impossible\n");
-        Ret;
+        if (s[q.F - 1] != q.S)
+          x = false;
       }
     }
+    if (x)
+      ans = max(ans, __builtin_popcount(bit));
   }
-  pr("possible\n");
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
+  prn(ans);
   Ret;
 }
