@@ -127,24 +127,24 @@ LL euler_phi(LL n)
 
 struct UnionFind
 {
-  V<LL> parent, size;
-  LL size_max = 0, count;
+  vector<long long> parent, size;
+  long long size_max = 0, count;
 
-  void init(LL n)
+  void init(long long n)
   {
     parent.resize(n, -1);
     size.resize(n, 1);
     count = n;
     size_max = 1;
   }
-  LL root(LL x) { ret parent[x] == -1 ? x : parent[x] = root(parent[x]); }
-  bool same(LL x, LL y) { ret root(x) == root(y); }
-  void unite(LL x, LL y)
+  long long root(long long x) { return parent[x] == -1 ? x : parent[x] = root(parent[x]); }
+  bool same(long long x, long long y) { return root(x) == root(y); }
+  void unite(long long x, long long y)
   {
     x = root(x);
     y = root(y);
     if (x == y)
-      ret;
+      return;
 
     if (size[x] < size[y])
       swap(x, y);
@@ -153,12 +153,48 @@ struct UnionFind
     size_max = max(size[x], size_max);
     count--;
   }
-  LL count_of_sets() { ret count; }
-  LL get_union_size(LL x) { ret size[root(x)]; }
+  long long count_of_sets() { return count; }
+  long long get_union_size(long long x) { return size[root(x)]; }
 };
 
 template <class T>
-T fsum(T a, T b) { ret a + b; }
+struct BIT
+{
+  int N;
+  vector<T> bit;
+  void init(int n)
+  {
+    N = n;
+    bit.resize(n + 1, 0);
+  }
+
+  void add(int i, T x)
+  {
+    i++;
+    while (i <= N)
+    {
+      bit[i] += x;
+      i += i & -i;
+    }
+  }
+  T sum(int i)
+  {
+    T ans = 0;
+    while (i > 0)
+    {
+      ans += bit[i];
+      i -= i & -i;
+    }
+    return ans;
+  }
+  T sum(int L, int R) { return sum(R) - sum(L); }
+};
+
+template <class T>
+T fsum(T a, T b)
+{
+  ret a + b;
+}
 template <class T>
 T fmin(T a, T b) { ret min(a, b); }
 template <class T>

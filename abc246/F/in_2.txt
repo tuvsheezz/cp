@@ -1,5 +1,0 @@
-4 3
-abcdefg
-hijklmnop
-qrstuv
-wxyz

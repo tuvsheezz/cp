@@ -69,7 +69,8 @@
     "bit": "cpp",
     "barrier": "cpp",
     "latch": "cpp",
-    "semaphore": "cpp"
+    "semaphore": "cpp",
+    "memory": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

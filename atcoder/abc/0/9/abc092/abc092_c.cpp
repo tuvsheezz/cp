@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
 using namespace std;
+template <class T>
+using IS = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 #define PI 3.141592653589793238462643383279502884L
 #define LL long long
 #define DD double
@@ -12,8 +16,10 @@ using VV = V<V<T>>;
 #define MLL map<LL, LL>
 #define MSL map<STR, LL>
 #define MLB map<LL, bool>
-#define PQA priority_queue<LL, V<LL>, greater<LL>>
-#define PQD priority_queue<LL, V<LL>, less<LL>>
+template <class T>
+using PQA = priority_queue<T, V<T>, greater<T>>;
+template <class T>
+using PQD = priority_queue<T, V<T>, less<T>>;
 #define IT iterator
 #define F first
 #define S second
@@ -64,7 +70,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -78,68 +86,24 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-struct Graph
-{
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-  V<bool> bfsv;
-  LL ans = 0;
-  STR s;
-
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-    bfsv.resize(n);
-    s = "";
-  }
-  void set_s(STR q) { s = q; }
-  void add_edge(LL u, LL v)
-  {
-    edges[u].PB(v);
-    if (!is_directed)
-      edges[v].PB(u);
-  }
-
-  int DFS(LL root)
-  {
-    int c = (s[root] == 'B') ? 1 : -1;
-    bfsv[root] = true;
-
-    repauto(x, edges[root])
-    {
-      if (!bfsv[x])
-        c += DFS(x);
-    }
-    if (c == 0)
-      ans++;
-    return c;
-  }
-};
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
+  LL rd(n);
+  V<LL> a(n + 2, 0);
+  rep(i, n) { cin >> a[i + 1]; }
+  LL t = 0;
+  rep(i, n + 1) { t += abs(a[i + 1] - a[i]); }
+
+  rep(i, n)
   {
-    LL rd(n);
-    Graph G;
-    G.init(n);
-    rep(i, n - 1)
-    {
-      LL rd(u);
-      G.add_edge(u - 1, i + 1);
-    }
-    STR rd(s);
-    G.set_s(s);
-    G.DFS(0);
-    pr(G.ans);
-    PN;
+    LL q = abs(a[i + 1] - a[i]) +
+           abs(a[i + 2] - a[i + 1]) -
+           abs(a[i] - a[i + 2]);
+    prn(t - q);
   }
+
   Ret;
 }
