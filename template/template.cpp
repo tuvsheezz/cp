@@ -312,52 +312,49 @@ struct Sieve
   }
 };
 
-// combinatorics
-V<LL> inv(MAX_N), fact(MAX_N), finv(MAX_N);
-void set_inv(LL mod)
+// combinatorics: initFacts-g zaaval duudna. MAX_N-ee tohiruulna.
+LL fact[MAX_N], invfact[MAX_N], inv[MAX_N];
+void initFacts(LL m)
 {
-  inv[1] = 1;
-  repa(i, 2, MAX_N) { inv[i] = mod - ((mod / i) * inv[mod % i]) % mod; }
-}
-void set_fact(LL mod)
-{
-  set_inv(mod);
   fact[0] = 1;
-  finv[0] = 1;
+  invfact[0] = 1;
+  inv[0] = 1;
+  inv[1] = 1;
+
+  repa(i, 1, MAX_N) { fact[i] = (fact[i - 1] * i) % m; }
+  repa(i, 2, MAX_N)
+  {
+    inv[i] = -inv[m % i] * (m / i) % m;
+    if (inv[i] < 0)
+      inv[i] += m;
+  }
   repa(i, 1, MAX_N)
   {
-    fact[i] = (fact[i - 1] * i) % mod;
-    finv[i] = (finv[i - 1] * inv[i]) % mod;
+    invfact[i] = invfact[i - 1] * inv[i] % m;
   }
 }
-
-LL combination(LL n, LL k, LL mod)
+LL nCk(LL n, LL k, LL m)
 {
-  LL c = (((fact[n] * finv[k]) % mod) * finv[n - k]) % mod;
-  ret c;
+  if (k > n)
+    return 0;
+  if (k < 0)
+    return 0;
+  if (k == 0)
+    return 1;
+  return (((fact[n] * invfact[k]) % m) * invfact[n - k]) % m;
 }
 
-LL combination2(LL n, LL k, LL mod)
+LL big_pow(LL a, LL b, LL mod)
 {
-  LL c = 1;
-  repa(i, n - k, n)
+  LL d = 1;
+  while (b > 0)
   {
-    c = (c * (i + 1)) % mod;
+    if (b % 2 == 1)
+      d = d * a % mod;
+    b /= 2;
+    a = a * a % mod;
   }
-  ret(c * finv[k]) % mod;
-}
-
-LL big_pow(LL x, LL n, LL mod)
-{
-  x = x % mod;
-  if (x == 0)
-    ret 0;
-  if (n == 0)
-    ret 1;
-  LL z = big_pow(x * x % mod, n / 2, mod);
-  if (n & 1)
-    z = z * x % mod;
-  ret z;
+  return d;
 }
 
 bool is_prime_simple(LL n)
