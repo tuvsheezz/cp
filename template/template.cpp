@@ -312,32 +312,27 @@ struct Sieve
   }
 };
 
-// combinatorics: initFacts-g zaaval duudna. MAX_N-ee tohiruulna.
-LL fact[MAX_N], invfact[MAX_N], inv[MAX_N];
-void initFacts(LL m)
+// combinatorics: initFacts(m)-g zaaval duudna.
+// MAXN-ee tohiruulna. m: mod. 1e9 + 7 esvel nuguu 99...
+#define MAXN 100100
+long long fact[MAXN], invfact[MAXN], inv[MAXN];
+void initFacts(long long m)
 {
   fact[0] = 1;
   invfact[0] = 1;
   inv[0] = 1;
   inv[1] = 1;
 
-  repa(i, 1, MAX_N) { fact[i] = (fact[i - 1] * i) % m; }
-  repa(i, 2, MAX_N)
-  {
-    inv[i] = -inv[m % i] * (m / i) % m;
-    if (inv[i] < 0)
-      inv[i] += m;
-  }
-  repa(i, 1, MAX_N)
-  {
+  for (int i = 1; i < MAXN; i++)
+    fact[i] = (fact[i - 1] * i) % m;
+  for (int i = 2; i < MAXN; i++)
+    inv[i] = (-inv[m % i] * (m / i) % m + m) % m;
+  for (int i = 1; i < MAXN; i++)
     invfact[i] = invfact[i - 1] * inv[i] % m;
-  }
 }
-LL nCk(LL n, LL k, LL m)
+long long nCk(long long n, long long k, long long m)
 {
-  if (k > n)
-    return 0;
-  if (k < 0)
+  if (k > n || k < 0)
     return 0;
   if (k == 0)
     return 1;
