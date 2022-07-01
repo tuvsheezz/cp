@@ -17,4 +17,6 @@
     ene bodlogo shig 1 tiim niilber n heden ynz baigaa ve gedeg bodlog baival
     S - 1 gesn niilberiig hezee uusgej bolj baigaa ve, S + 1 niilberiig hezee uusgej chadaj baigaa ve geed
     bodvol amarhn bodoj bolno
-10. 
+10. Pigeon hole ashiglah
+    1. abc200_d shig bodlogo bol mod = 200 uchraas ehnii 8 element bhd l davhardah
+    ym zaaval baigaa gej bodoh heregtei.
