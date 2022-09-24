@@ -70,7 +70,8 @@
     "barrier": "cpp",
     "latch": "cpp",
     "semaphore": "cpp",
-    "memory": "cpp"
+    "memory": "cpp",
+    "__string": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

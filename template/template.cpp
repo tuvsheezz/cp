@@ -236,6 +236,17 @@ struct SegmentTree
       ret def;
     ret ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
   }
+
+  D get_node(T ind)
+  {
+    D rr = tree[ind += N];
+    while (ind / 2 >= 1)
+    {
+      rr = ope(rr, tree[ind /= 2]);
+    }
+    ret rr;
+  }
+
   void update_range(T ql, T qr, D v) { _update_range(1, 0, N - 1, ql, qr, v); }
   void _update_range(T node, T sl, T sr, T ql, T qr, D v)
   {
@@ -352,6 +363,41 @@ LL big_pow(LL a, LL b, LL mod)
   return d;
 }
 
+// NxM matrix. 2D-vector. ex: Matrix a(2, 3);
+struct Matrix
+{
+  vector<vector<long long>> m;
+  Matrix(int row, int col) { m.resize(row, vector<long long>(col, 0)); }
+};
+
+// urjij bolhoor A, B matrix, hervee heterhii tom too bolhoor bol mod.
+// ugui bol m-g arilgaad
+Matrix MatrixMultification(Matrix A, Matrix B, long long m)
+{
+  Matrix C(A.m.size(), B.m[0].size());
+  for (int i = 0; i < (int)A.m.size(); i++)
+    for (int j = 0; j < (int)B.m[0].size(); j++)
+      for (int k = 0; k < (int)B.m.size(); k++)
+        C.m[i][j] = (C.m[i][j] + A.m[i][k] * B.m[k][j]) % m;
+  return C;
+}
+
+// NxN hemjeetei matrix-iin tom zergiig big_pow-toi adilhan argaar.
+Matrix matrix_pow(Matrix A, long long b, long long mod)
+{
+  Matrix r(A.m.size(), A.m.size());
+  for (int i = 0; i < (int)A.m.size(); i++)
+    r.m[i][i] = 1;
+  while (b > 0)
+  {
+    if (b % 2 == 1)
+      r = MatrixMultification(r, A, mod);
+    b /= 2;
+    A = MatrixMultification(A, A, mod);
+  }
+  return r;
+}
+
 bool is_prime_simple(LL n)
 {
   if (n == 1)
@@ -466,7 +512,10 @@ size_t LIS(const V<T> &a, bool strict)
 }
 
 // Longest common subsequence
-int LCS(string a, string b)
+// LCSSeq<vector<int>>(a, b);
+// LCSSeq<string>(a, b);
+template <class D>
+int LCSSeq(D a, D b)
 {
   int n = a.size(), m = b.size();
   vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
@@ -478,6 +527,58 @@ int LCS(string a, string b)
         dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
   return n + m - 2 * dp[n][m];
 }
+
+// longest common subarray
+// LCSubArr<vector<int>>(a, b);
+// LCSubArr<string>(a, b);
+template <class D>
+int LCSubArr(D &a, D &b)
+{
+  int n = a.size(), m = b.size(), ans = 0;
+  vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+  for (int i = n - 1; i >= 0; i--)
+    for (int j = m - 1; j >= 0; j--)
+    {
+      if (a[i] == b[j])
+        dp[i][j] = dp[i + 1][j + 1] + 1;
+      ans = max(ans, dp[i][j]);
+    }
+  return ans;
+}
+
+template <class T>
+struct imos2D
+{
+  vector < vector >> <T> a;
+  long long h, w;
+  void init(long long hh, long long ww) { h = hh, w = ww, a.resize(hh, vector<long long>(ww, 0)); }
+
+  void add(long long x1, long long y1, long long x2, long long y2, T v)
+  {
+    a[x1][y1] += v;
+    a[x2 + 1][y2 + 1] += v;
+    a[x1][y2 + 1] -= v;
+    a[x2 + 1][y1] -= v;
+  }
+  void calc()
+  {
+    rep(y, w) rep(x, h - 1) a[x + 1][y] += a[x][y]; // horizontal
+    rep(x, h) rep(y, w - 1) a[x][y + 1] += a[x][y]; // vertical
+  }
+
+  T node_val(long long x, long long y) { ret a[x][y]; }
+
+  void check()
+  {
+    cout << h << " " << w << '\n';
+    rep(i, h)
+    {
+      rep(j, w) cout << a[i][j] << " ";
+      cout << '\n';
+    }
+    cout << '\n';
+  }
+};
 
 // BIT全検索
 // repa(i, 0, 1 << n) {

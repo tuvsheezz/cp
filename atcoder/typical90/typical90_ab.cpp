@@ -83,11 +83,11 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 template <class T>
 struct imos2D
 {
-  VV<T> a;
-  LL h, w;
-  void init(LL hh, LL ww) { h = hh, w = ww, a.resize(hh, V<LL>(ww)); }
+  vector < vector >> <T> a;
+  long long h, w;
+  void init(long long hh, long long ww) { h = hh, w = ww, a.resize(hh, vector<long long>(ww, 0)); }
 
-  void add(LL x1, LL y1, LL x2, LL y2, T v)
+  void add(long long x1, long long y1, long long x2, long long y2, T v)
   {
     a[x1][y1] += v;
     a[x2 + 1][y2 + 1] += v;
@@ -100,17 +100,17 @@ struct imos2D
     rep(x, h) rep(y, w - 1) a[x][y + 1] += a[x][y]; // vertical
   }
 
-  T node_val(LL x, LL y) { ret a[x][y]; }
+  T node_val(long long x, long long y) { ret a[x][y]; }
 
   void check()
   {
-    pr(h), pr(w), PN;
+    cout << h << " " << w << '\n';
     rep(i, h)
     {
-      rep(j, w) pr(a[i][j]), PS;
-      PN;
+      rep(j, w) cout << a[i][j] << " ";
+      cout << '\n';
     }
-    PN;
+    cout << '\n';
   }
 };
 

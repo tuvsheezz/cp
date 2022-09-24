@@ -18,6 +18,7 @@ using namespace std;
 #define MOD2 998244353
 #define MAX_N 100100
 #define INF 10e17
+
 ll memo[50][50][60];
 
 ll cut(ll n, ll m, ll k)

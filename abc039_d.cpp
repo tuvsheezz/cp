@@ -89,79 +89,80 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(h, w);
-  char a[h + 10][w + 10], b[h + 10][w + 10], c[h + 10][w + 10];
+  // LL rd(h, w);
+  // char a[h + 10][w + 10], b[h + 10][w + 10], c[h + 10][w + 10];
 
-  rep(i, h) rep(j, w) cin >> a[i][j];
+  // rep(i, h) rep(j, w) cin >> a[i][j];
 
-  rep(i, h)
-  {
-    rep(j, w)
-    {
-      if (a[i][j] == '#')
-      {
-        if (i - 1 >= 0 && j - 1 >= 0 && a[i - 1][j - 1] == '.')
-          b[i][j] = '.';
-        else if (i - 1 >= 0 && j >= 0 && a[i - 1][j] == '.')
-          b[i][j] = '.';
-        else if (i - 1 >= 0 && j + 1 < w && a[i - 1][j + 1] == '.')
-          b[i][j] = '.';
-        else if (j - 1 >= 0 && a[i][j - 1] == '.')
-          b[i][j] = '.';
-        else if (j + 1 < w && a[i][j + 1] == '.')
-          b[i][j] = '.';
-        else if (i + 1 < h && j - 1 >= 0 && a[i + 1][j - 1] == '.')
-          b[i][j] = '.';
-        else if (i + 1 < h && j >= 0 && a[i + 1][j] == '.')
-          b[i][j] = '.';
-        else if (i + 1 < h && j + 1 < w && a[i + 1][j + 1] == '.')
-          b[i][j] = '.';
-        else
-          b[i][j] = '#';
-      }
-      else
-      {
-        b[i][j] = '.';
-      }
-    }
-  }
-  rep(i, h)
-  {
-    rep(j, w)
-    {
-      if (c[i][j] != '#')
-        c[i][j] = b[i][j];
+  // rep(i, h)
+  // {
+  //   rep(j, w)
+  //   {
+  //     if (a[i][j] == '#')
+  //     {
+  //       if (i - 1 >= 0 && j - 1 >= 0 && a[i - 1][j - 1] == '.')
+  //         b[i][j] = '.';
+  //       else if (i - 1 >= 0 && j >= 0 && a[i - 1][j] == '.')
+  //         b[i][j] = '.';
+  //       else if (i - 1 >= 0 && j + 1 < w && a[i - 1][j + 1] == '.')
+  //         b[i][j] = '.';
+  //       else if (j - 1 >= 0 && a[i][j - 1] == '.')
+  //         b[i][j] = '.';
+  //       else if (j + 1 < w && a[i][j + 1] == '.')
+  //         b[i][j] = '.';
+  //       else if (i + 1 < h && j - 1 >= 0 && a[i + 1][j - 1] == '.')
+  //         b[i][j] = '.';
+  //       else if (i + 1 < h && j >= 0 && a[i + 1][j] == '.')
+  //         b[i][j] = '.';
+  //       else if (i + 1 < h && j + 1 < w && a[i + 1][j + 1] == '.')
+  //         b[i][j] = '.';
+  //       else
+  //         b[i][j] = '#';
+  //     }
+  //     else
+  //     {
+  //       b[i][j] = '.';
+  //     }
+  //   }
+  // }
+  // rep(i, h)
+  // {
+  //   rep(j, w)
+  //   {
+  //     if (c[i][j] != '#')
+  //       c[i][j] = b[i][j];
 
-      if (b[i][j] == '#')
-      {
-        repa(k, -1, 2)
-        {
-          repa(l, -1, 2)
-          {
-            if (i + k >= 0 && i + k < h && j + l >= 0 && j + l < w)
-              c[i + k][j + l] = '#';
-          }
-        }
-      }
-    }
-  }
+  //     if (b[i][j] == '#')
+  //     {
+  //       repa(k, -1, 2)
+  //       {
+  //         repa(l, -1, 2)
+  //         {
+  //           if (i + k >= 0 && i + k < h && j + l >= 0 && j + l < w)
+  //             c[i + k][j + l] = '#';
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
-  rep(i, h)
-  {
-    rep(j, w)
-    {
-      if (a[i][j] != c[i][j])
-      {
-        pr("impossible\n");
-        Ret;
-      }
-    }
-  }
-  pr("possible\n");
-  rep(i, h)
-  {
-    rep(j, w) { pr(b[i][j]); }
-    PN;
-  }
+  // rep(i, h)
+  // {
+  //   rep(j, w)
+  //   {
+  //     if (a[i][j] != c[i][j])
+  //     {
+  //       pr("impossible\n");
+  //       Ret;
+  //     }
+  //   }
+  // }
+  // pr("possible\n");
+  // rep(i, h)
+  // {
+  //   rep(j, w) { pr(b[i][j]); }
+  //   PN;
+  // }
+  pr(6 / -132);
   Ret;
 }

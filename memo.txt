@@ -20,3 +20,13 @@
 10. Pigeon hole ashiglah
     1. abc200_d shig bodlogo bol mod = 200 uchraas ehnii 8 element bhd l davhardah
     ym zaaval baigaa gej bodoh heregtei.
+11. 0, 0-oos X, Y ruu ochih bolomjiin too (deeshee, baruun 1-ee hudluud) n nCk(x + y, x, mod).
+12. shatriin morior 0,0-oos a,b deer ochih bolomjiin too
+    if ((2 * a - b) % 3 != 0 || (2 * b - a) % 3 != 0)
+    {
+        cout << 0 << endl;
+        return 0;
+    }
+    long long aa = (2 * a - b) / 3, bb = (2 * b - a) / 3;
+    cout << nCk(aa + bb, aa, mod) << endl;
+13. 
