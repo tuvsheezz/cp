@@ -82,47 +82,47 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 struct Graph
 {
-  LL vertices;
-  VV<PLL> edges; // PLL: (destination, cost)
+  int vertices;
+  vector<vector<pair<int, int>>> edges; // PT: (destination, cost)
   bool is_directed;
 
-  void init(LL n, bool dir = false)
+  void init(int n, bool dir = false)
   {
     vertices = n;
     edges.resize(n);
     is_directed = dir;
   }
 
-  void add_edge(LL u, LL v, LL cost)
+  void add_edge(int u, int v, int cost)
   {
-    edges[u].PB(MP(v, cost));
+    edges[u].push_back({v, cost});
     if (!is_directed)
-      edges[v].PB(MP(u, cost));
+      edges[v].push_back({u, cost});
   }
 
-  V<LL> Dijkstra(LL s)
+  vector<int> Dijkstra(int s)
   {
-    V<LL> dist(vertices, INF);
+    vector<int> dist(vertices, );
     dist[s] = 0;
 
-    PQA<PLL> next_to_visit;
-    next_to_visit.push(MP(0LL, s));
+    priority_queue<pair<int, int>, V<pair<int, int>>, greater<pair<int, int>>> next_to_visit;
+    next_to_visit.push({0, s});
 
     while (!next_to_visit.empty())
     {
-      PLL current_node = next_to_visit.top();
+      pair<int, int> current_node = next_to_visit.top();
       next_to_visit.pop();
-      LL v = current_node.S;
+      int v = current_node.second;
 
-      if (dist[v] < current_node.F)
+      if (dist[v] < current_node.first)
         continue;
 
-      repauto(edge, edges[v])
+      for (auto &edge : edges[v])
       {
-        if (dist[edge.F] > dist[v] + edge.S)
+        if (dist[edge.first] > dist[v] + edge.second)
         {
-          dist[edge.F] = dist[v] + edge.S;
-          next_to_visit.push(MP(dist[edge.F], edge.F));
+          dist[edge.first] = dist[v] + edge.second;
+          next_to_visit.push({dist[edge.first], edge.first});
         }
       }
     }

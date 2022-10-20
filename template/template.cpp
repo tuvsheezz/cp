@@ -350,9 +350,9 @@ long long nCk(long long n, long long k, long long m)
   return (((fact[n] * invfact[k]) % m) * invfact[n - k]) % m;
 }
 
-LL big_pow(LL a, LL b, LL mod)
+long long big_pow(long long a, long long b, long long mod)
 {
-  LL d = 1;
+  long long d = 1;
   while (b > 0)
   {
     if (b % 2 == 1)
