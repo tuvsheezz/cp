@@ -30,38 +30,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -81,48 +81,36 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define PS cout << ' '
 #define Ret return 0
 #define ret return
-#define INF (1LL << 60)
+#define INF (1LL << 32)
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(n, m);
-  V<LL> rdv(a, n);
-  V<LL> rdv(b, m);
-  vsorta(a);
-  vsorta(b);
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    LL rd(n, m);
+    V<LL> rdv(a, n);
+    V<V<V<LL>>> dp(n + 1, V<V<LL>>(m + 1, V<LL>(2, INF)));
+    dp[0][0][0] = 0LL;
 
-  V<LL> q(n + 1, 0);
+    rep(i, n) rep(j, m + 1) rep(k, 2)
+    {
+        LL x = j + a[i];
 
-  rep(i, n - 1)
-  {
-    if (i == 0)
-      q[i + 2] = a[i + 1] - a[i];
-    else if (i % 2 == 0)
-      q[i + 2] = q[i] + a[i + 1] - a[i];
-  }
-  repd(i, n - 1, 1)
-  {
-    if (i == n - 1)
-      q[i - 1] = a[i] - a[i - 1];
-    else if (i % 2 == 0)
-      q[i - 1] = q[i + 1] + a[i] - a[i - 1];
-  }
+        if (x <= m)
+            dp[i + 1][x][0] = min(dp[i + 1][x][0], dp[i][j][k]);
+        dp[i + 1][j][1] = min(dp[i + 1][j][1], dp[i][j][k] + 1 - k);
+    }
 
-  LL ans = INF;
-  rep(i, m)
-  {
-    auto it = lower_bound(a.begin(), a.end(), b[i]) - a.begin();
-    if (it & 1)
-      it ^= 1;
-    ans = min(ans, q[(it + 1) / 2] + q[it / 2] + abs(b[it] - a[i]));
-  }
-
-  prn(ans);
-  Ret;
+    rep(i, m)
+    {
+        LL x = min(dp[n][i + 1][0], dp[n][i + 1][1]);
+        if (x == INF)
+            x = -1;
+        prn(x);
+    }
+    Ret;
 }
