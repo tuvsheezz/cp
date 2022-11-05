@@ -20,8 +20,6 @@ template <class T>
 using PQA = priority_queue<T, V<T>, greater<T>>;
 template <class T>
 using PQD = priority_queue<T, V<T>, less<T>>;
-template <class T>
-#define chmin(T &x, T y) x = min(x, y)
 #define IT iterator
 #define F first
 #define S second
