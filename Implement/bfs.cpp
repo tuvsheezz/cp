@@ -198,7 +198,10 @@ int main()
       repauto(m, move0)
       {
         if (0 <= j + m.S && j + m.S < w && 0 <= i + m.F && i + m.F < h && c[i][j] == '.' && c[i + m.F][j + m.S] == '.')
+        {
           G.add_edge(i * w + j, (i + m.F) * w + j + m.S);
+          cout << i * w + j << " " << (i + m.F) * w + j + m.S << endl;
+        }
       }
     }
   }
