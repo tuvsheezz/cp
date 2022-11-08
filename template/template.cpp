@@ -85,7 +85,7 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-
+vector<pair<long long, long long>> move = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 LL ssize(STR s)
 {
   ret(LL) s.size();
@@ -131,13 +131,14 @@ struct UnionFind
   vector<long long> parent, size;
   long long size_max = 0, count;
 
-  void init(long long n)
+  UnionFind(long long n)
   {
     parent.resize(n, -1);
     size.resize(n, 1);
     count = n;
     size_max = 1;
   }
+
   long long root(long long x) { return parent[x] == -1 ? x : parent[x] = root(parent[x]); }
   bool same(long long x, long long y) { return root(x) == root(y); }
   void unite(long long x, long long y)
@@ -547,14 +548,14 @@ int LCSubArr(D &a, D &b)
   return ans;
 }
 
-template <class T>
+template <class T, class D>
 struct imos2D
 {
-  vector < vector >> <T> a;
-  long long h, w;
-  void init(long long hh, long long ww) { h = hh, w = ww, a.resize(hh, vector<long long>(ww, 0)); }
+  vector<vector<T>> a;
+  D h, w;
+  imos2D(D hh, D ww) { h = hh, w = ww, a.assign(hh, vector<D>(ww, 0)); }
 
-  void add(long long x1, long long y1, long long x2, long long y2, T v)
+  void add(D x1, D y1, D x2, D y2, T v)
   {
     a[x1][y1] += v;
     a[x2 + 1][y2 + 1] += v;
@@ -567,7 +568,7 @@ struct imos2D
     rep(x, h) rep(y, w - 1) a[x][y + 1] += a[x][y]; // vertical
   }
 
-  T node_val(long long x, long long y) { ret a[x][y]; }
+  T node_val(D x, D y) { return a[x][y]; }
 
   void check()
   {
