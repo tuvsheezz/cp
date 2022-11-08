@@ -13,7 +13,7 @@ Atcoder Tenkei 90 problem
 | [009 Three Point Angle](https://atcoder.jp/contests/typical90/tasks/typical90_i) | ⭐️6 | | |
 | [010 Score Sum Queries](https://atcoder.jp/contests/typical90/tasks/typical90_j) | ⭐️2 | Prefix sum | [Cpp](p010.cpp) |
 | [011 Gravy Jobs](https://atcoder.jp/contests/typical90/tasks/typical90_k) | ⭐️6 | |
-| [012 Red Painting](https://atcoder.jp/contests/typical90/tasks/typical90_l) | ⭐️4 | |
+| [012 Red Painting](https://atcoder.jp/contests/typical90/tasks/typical90_l) | ⭐️4 | Data structure, dsu | [Cpp](p012.cpp) |
 | [013 Passing](https://atcoder.jp/contests/typical90/tasks/typical90_m) | ⭐️5 | |
 | [014 We Used to Sing a Song Together](https://atcoder.jp/contests/typical90/tasks/typical90_n) | ⭐️3 | Sort | [Cpp](p014.cpp) |
 | [015 Don&#39;t be too close](https://atcoder.jp/contests/typical90/tasks/typical90_o) | ⭐️6 | | |
@@ -27,15 +27,15 @@ Atcoder Tenkei 90 problem
 | [023 Avoid War](https://atcoder.jp/contests/typical90/tasks/typical90_w) | ⭐️7 ||
 | [024 Select &#43;／- One](https://atcoder.jp/contests/typical90/tasks/typical90_x) | ⭐️2 | Math | [Cpp](p024.cpp) |
 | [025 Digit Product Equation](https://atcoder.jp/contests/typical90/tasks/typical90_y) | ⭐️7 | | |
-| [026 Independent Set on a Tree](https://atcoder.jp/contests/typical90/tasks/typical90_z) | ⭐️4 | | |
-| [027 Sign Up Requests ](https://atcoder.jp/contests/typical90/tasks/typical90_aa) | ⭐️2 ||[Cpp](p027.cpp) |
-| [028 Cluttered Paper](https://atcoder.jp/contests/typical90/tasks/typical90_ab) | ⭐️4 |||
+| [026 Independent Set on a Tree](https://atcoder.jp/contests/typical90/tasks/typical90_z) | ⭐️4 | Graph, Bipartite graph | [Cpp](p026.cpp) |
+| [027 Sign Up Requests ](https://atcoder.jp/contests/typical90/tasks/typical90_aa) | ⭐️2 | Data structure, set|[Cpp](p027.cpp) |
+| [028 Cluttered Paper](https://atcoder.jp/contests/typical90/tasks/typical90_ab) | ⭐️4 | imos(2D) | [Cpp](p028.cpp) |
 | [029 Long Bricks](https://atcoder.jp/contests/typical90/tasks/typical90_ac) | ⭐️5 |||
 | [030 K Factors](https://atcoder.jp/contests/typical90/tasks/typical90_ad) | ⭐️5 |||
 | [031 VS AtCoder](https://atcoder.jp/contests/typical90/tasks/typical90_ae) | ⭐️6 |||
 | [032 AtCoder Ekiden](https://atcoder.jp/contests/typical90/tasks/typical90_af) | ⭐️3 | Math, next_permutation | [Cpp](p032.cpp) | 
 | [033 Not Too Bright](https://atcoder.jp/contests/typical90/tasks/typical90_ag) | ⭐️2 | Hogiin bodlogo, Greedy | [Cpp](p033.cpp) | 
-| [034 There are few types of elements](https://atcoder.jp/contests/typical90/tasks/typical90_ah) | ⭐️4 ||
+| [034 There are few types of elements](https://atcoder.jp/contests/typical90/tasks/typical90_ah) | ⭐️4 | 2 pointer | [Cpp](p034.cpp) |
 | [035 Preserve Connectivity](https://atcoder.jp/contests/typical90/tasks/typical90_ai) | ⭐️7 ||
 | [036 Max Manhattan Distance](https://atcoder.jp/contests/typical90/tasks/typical90_aj) | ⭐️5 ||
 | [037 Don&#39;t Leave the Spice](https://atcoder.jp/contests/typical90/tasks/typical90_ak) | ⭐️5 ||
