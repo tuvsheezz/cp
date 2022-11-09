@@ -39,11 +39,11 @@ Atcoder Tenkei 90 problem
 | [035 Preserve Connectivity](https://atcoder.jp/contests/typical90/tasks/typical90_ai) | ⭐️7 ||
 | [036 Max Manhattan Distance](https://atcoder.jp/contests/typical90/tasks/typical90_aj) | ⭐️5 ||
 | [037 Don&#39;t Leave the Spice](https://atcoder.jp/contests/typical90/tasks/typical90_ak) | ⭐️5 ||
-| [038 Large LCM](https://atcoder.jp/contests/typical90/tasks/typical90_al) | ⭐️3 | Math | [Cpp](p038.cpp) |
+| [038 Large LCM](https://atcoder.jp/contests/typical90/tasks/typical90_al) | ⭐️3 | Math |  [Cpp](p038.cpp) |
 | [039 Tree Distance](https://atcoder.jp/contests/typical90/tasks/typical90_am) | ⭐️5 |||
 | [040 Get More Money](https://atcoder.jp/contests/typical90/tasks/typical90_an) | ⭐️7 |||
 | [041 Piles in AtCoder Farm](https://atcoder.jp/contests/typical90/tasks/typical90_ao) | ⭐️7 |||
-| [042 Multiple of 9](https://atcoder.jp/contests/typical90/tasks/typical90_ap) | ⭐️4 |||
+| [042 Multiple of 9](https://atcoder.jp/contests/typical90/tasks/typical90_ap) | ⭐️4 | DP | [Cpp](p042.cpp) |
 | [043 Maze Challenge with Lack of Sleep](https://atcoder.jp/contests/typical90/tasks/typical90_aq) | ⭐️4 |||
 | [044 Shift and Swapping](https://atcoder.jp/contests/typical90/tasks/typical90_ar) | ⭐️3 | Data structure | [Cpp](p044.cpp) |
 | [045 Simple Grouping](https://atcoder.jp/contests/typical90/tasks/typical90_as) | ⭐️6 ||
