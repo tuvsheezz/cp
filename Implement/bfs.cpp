@@ -176,7 +176,7 @@ struct Graph
     ret r;
   }
 };
-
+vector<pair<long long, long long>> move = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 V<PLL> move0 = {{-1, 0}, {0, -1}};
 
 int main()
