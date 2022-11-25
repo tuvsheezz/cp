@@ -79,103 +79,53 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-struct Graph2
+
+struct Graph
 {
-  ll vertices;
-  vector<vector<ll>> edges;
+  int vertices;
+  vector<vector<int>> edges;
   bool is_directed;
 
-  void init(ll n, bool dir = false)
+  Graph(int n, bool dir = false)
   {
     vertices = n;
     edges.resize(n);
     is_directed = dir;
   }
 
-  void add_edge(ll u, ll v)
+  void add_edge(int u, int v)
   {
     edges[u].push_back(v);
     if (!is_directed)
       edges[v].push_back(u);
   }
-
-  ll BFS(ll root, ll target)
+  vector<int> BFS(int root)
   {
     vector<bool> visited(vertices, false);
-    queue<ll> next_to_visit;
-
-    next_to_visit.push(root);
-    vector<pair<ll, ll>> dist(vertices, make_pair(INT64_MAX, 0));
-    dist[root] = make_pair(0LL, 1LL);
-
-    while (!next_to_visit.empty())
-    {
-      ll current_node = next_to_visit.front();
-      next_to_visit.pop();
-      if (visited[current_node])
-        continue;
-
-      visited[current_node] = true;
-
-      for (auto &x : edges[current_node])
-      {
-        if (dist[x].first == dist[current_node].first + 1)
-          dist[x].second = (dist[x].second + dist[current_node].second) % 1000000007;
-        if (dist[x].first > dist[current_node].first + 1)
-          dist[x] = make_pair(dist[current_node].first + 1, dist[current_node].second);
-        next_to_visit.push(x);
-      }
-    }
-    return dist[target].second;
-  }
-};
-struct Graph
-{
-  LL vertices;
-  V<V<LL>> edges;
-  bool is_directed;
-
-  void init(LL n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
-  }
-
-  void add_edge(LL u, LL v)
-  {
-    edges[u].PB(v);
-    if (!is_directed)
-      edges[v].PB(u);
-  }
-  LL BFS(LL root)
-  {
-    LL r = 0;
-    V<bool> visited(vertices, false);
-    queue<LL> next_to_visit;
+    queue<int> next_to_visit;
 
     visited[root] = true;
     next_to_visit.push(root);
-    V<LL> dist(vertices, INF);
+    vector<int> dist(vertices, 1e8);
     dist[root] = 0;
     while (!next_to_visit.empty())
     {
-      LL current_node = next_to_visit.front();
+      int current_node = next_to_visit.front();
       next_to_visit.pop();
-      repauto(x, edges[current_node])
+      for (auto &x : edges[current_node])
       {
         if (!visited[x])
         {
           dist[x] = dist[current_node] + 1;
           visited[x] = true;
           next_to_visit.push(x);
-          r = max(r, dist[x]);
         }
       }
     }
-    ret r;
+    return dist;
   }
 };
+
 vector<pair<long long, long long>> move = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 V<PLL> move0 = {{-1, 0}, {0, -1}};
 
@@ -187,8 +137,7 @@ int main()
   LL rd(h, w);
   char c[h + 10][w + 10];
   LL ans = 0;
-  Graph G;
-  G.init(h * w);
+  Graph G(h * w);
 
   rep(i, h)
   {

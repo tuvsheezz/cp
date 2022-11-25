@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 template <class T>
-using IS = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 #define PI 3.141592653589793238462643383279502884L
 #define LL long long
 #define DD double
@@ -444,54 +441,6 @@ V<pair<char, LL>> run_length_encoding(STR s)
   rle.PB(MP(pre, count));
   ret rle;
 }
-
-struct Treap
-{
-  LL len, ADD = 1000010, MAXVAL = 1000000010;
-  unordered_map<LL, LL> mp; /// Change to LL if only LL in treap
-  IS<LL> T;
-
-  Treap() { len = 0, T.clear(), mp.clear(); }
-  void clear() { len = 0, T.clear(), mp.clear(); }
-
-  void insert(LL x)
-  {
-    len++, x += MAXVAL;
-    LL c = mp[x]++;
-    T.insert((x * ADD) + c);
-  }
-
-  void erase(LL x)
-  {
-    x += MAXVAL;
-    LL c = mp[x];
-    if (c)
-    {
-      c--, mp[x]--, len--;
-      T.erase((x * ADD) + c);
-    }
-  }
-
-  /// 1-based index, returns the K'th element in the treap, -1 if none exists
-  LL kth(LL k)
-  {
-    if (k < 1 || k > len)
-      return -1;
-    auto it = T.find_by_order(--k);
-    return ((*it) / ADD) - MAXVAL;
-  }
-
-  /// Count of value < x in treap
-  LL count(LL x)
-  {
-    x += MAXVAL;
-    LL c = mp[--x];
-    return (T.order_of_key((x * ADD) + c));
-  }
-
-  /// Number of elements in treap
-  LL size() { return len; }
-};
 
 // LIS<LL>(a, false) ntr gej hereglene shu!
 template <typename T>
