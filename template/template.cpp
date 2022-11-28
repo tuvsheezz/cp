@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-template <class T>
 #define PI 3.141592653589793238462643383279502884L
 #define LL long long
 #define DD double
