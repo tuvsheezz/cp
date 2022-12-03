@@ -82,12 +82,47 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+LL fff(LL m, LL x)
+{
+    LL r = 0, q = 1;
+    while (q * x <= m)
+    {
+        q *= x;
+        r += m / q;
+    }
+    ret r;
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
     LL rd(n);
-
+    LL k = n;
+    MLL mp;
+    for (LL i = 2; i * i <= n; i++)
+    {
+        while (n % i == 0)
+        {
+            mp[i]++;
+            n /= i;
+        }
+    }
+    if (n > 1)
+        mp[n]++;
+    LL l = 1, r = k + 1;
+    while (l < r - 1)
+    {
+        LL m = l + (r - l) / 2;
+        bool f = true;
+        repauto(x, mp)
+        {
+            if (x.S > fff(m, x.F))
+                f = false;
+        }
+        f ? r = m : l = m;
+    }
+    prn(r);
     Ret;
 }
