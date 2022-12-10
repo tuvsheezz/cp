@@ -89,13 +89,73 @@ int main()
     cout.tie(0);
     LL rd(n, m, k);
     V<LL> rdv(a, n);
-    PQA<PLL> now;
+    PQD<PLL> now;
     PQA<PLL> waiting;
+    V<LL> ans;
     V<bool> in_pq(n, false), oor(n, false);
 
-    rep(i, m)
+    rep(i, m) waiting.push(MP(a[i], i));
+    LL cur_sum = 0, cc = 0;
+    rep(i, k)
     {
+        now.push(waiting.top());
+        cur_sum += waiting.top().F;
+        in_pq[waiting.top().S] = true;
+        waiting.pop();
+        cc++;
     }
+    prn(a);
+    prn(now.size());
+    prn(in_pq);
+    ans.PB(cur_sum);
+    repa(i, 1, n - m + 1)
+    {
+        while (!waiting.empty() && waiting.top().S < i)
+            waiting.pop();
 
+        while (!now.empty() && now.top().S < i)
+        {
+            in_pq[now.top().S] = false;
+            now.pop();
+        }
+
+        waiting.push(MP(a[i + m - 1], i));
+        prn(a[i + m - 1]);
+        if (in_pq[i - 1] == true)
+        {
+            cur_sum -= a[i - 1];
+            in_pq[i - 1] = false;
+            cc--;
+            now.push(waiting.top());
+            cur_sum += waiting.top().F;
+            in_pq[waiting.top().S] = true;
+            waiting.pop();
+        }
+        while (cc < k)
+        {
+            now.push(waiting.top());
+            cur_sum += waiting.top().F;
+            in_pq[waiting.top().S] = true;
+            waiting.pop();
+            cc++;
+        }
+        if (waiting.top().F < now.top().F)
+        {
+            in_pq[now.top().S] = false;
+            in_pq[waiting.top().S] = true;
+
+            cur_sum += waiting.top().F;
+            cur_sum -= now.top().F;
+
+            waiting.push(now.top());
+            now.pop();
+
+            now.push(waiting.top());
+            waiting.pop();
+        }
+        ans.push_back(cur_sum);
+        prn(in_pq);
+    }
+    prn(ans);
     Ret;
 }

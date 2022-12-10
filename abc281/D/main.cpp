@@ -92,23 +92,15 @@ int main()
     V<V<V<LL>>> dp(n + 1, V<V<LL>>(k + 1, V<LL>(d, -INF)));
 
     rep(i, n + 1) dp[i][0][0] = 0;
-    rep(i, n)
+    rep(i, n) rep(j, k) rep(q, d) rep(ii, i + 1)
     {
-        rep(j, k)
-        {
-            rep(q, d)
-            {
-                rep(ii, i + 1)
-                {
-                    if (dp[ii][j][q] == -INF)
-                        continue;
-                    LL g = dp[ii][j][q] + a[i];
+        if (dp[ii][j][q] == -INF)
+            continue;
+        LL g = dp[ii][j][q] + a[i];
 
-                    dp[i + 1][j + 1][g % d] = max(dp[i + 1][j + 1][g % d], g);
-                }
-            }
-        }
+        dp[i + 1][j + 1][g % d] = max(dp[i + 1][j + 1][g % d], g);
     }
+
     LL ans = -INF;
     rep(i, n) ans = max(ans, dp[i + 1][k][0]);
 
