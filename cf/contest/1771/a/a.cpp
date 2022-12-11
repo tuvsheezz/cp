@@ -66,7 +66,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -78,46 +80,81 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 33333
+
+// Sieve of Eratosthenes
+struct Sieve
+{
+  V<LL> f, primes;
+  Sieve(int n)
+  {
+    f.resize(n + 1, 0);
+    f[0] = f[1] = -1;
+    repa(i, 2, n + 1)
+    {
+      if (f[i] > 0)
+        continue;
+      primes.PB(i);
+      f[i] = i;
+      for (LL j = i * i; j <= n; j += i)
+      {
+        if (f[j] == 0)
+          f[j] = i;
+      }
+    }
+  }
+  bool is_prime(LL n) { ret f[n] == n; }
+  V<LL> prime_factors(LL n)
+  {
+    V<LL> r;
+    while (n != 1)
+    {
+      r.PB(f[n]);
+      n /= f[n];
+    }
+    ret r;
+  }
+  V<PLL> prime_factors_count(LL n)
+  {
+    V<LL> l = prime_factors(n);
+    if (l.size() == 0)
+      ret{};
+    V<PLL> r(1, MP(l[0], 0));
+    repauto(x, l)
+    {
+      if (r.back().F == x)
+        r.back().S++;
+      else
+        r.emplace_back(x, 1);
+    }
+    ret r;
+  }
+};
+
+void solve()
+{
+}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(h, w, sx, sy, gx, gy);
-  LL goal = (gx - 1) * w + gy - 1;
-  char c[h + 10][w + 10];
-  Graph G;
-  G.init(h * w);
-
-  V<PLL> move0 = {{-1, 0}, {0, -1}},
-         move1 = {{-2, -2}, {-2, -1}, {-2, 0}, {-2, 1}, {-2, 2}, {-1, -2}, {-1, -1}, {-1, 1}, {-1, 2}, {0, -2}};
-
-  rep(i, h)
+  Sieve sv(MAX_N);
+  V<LL> x;
+  repa(i, 2, MAX_N) if (sv.is_prime(i)) x.PB(i);
+  LL rd(T);
+  while (T--)
   {
-    rep(j, w)
+    LL rd(n);
+    V<LL> rdv(a, n);
+    MLL mp;
+    rep(i, n)
     {
-      cin >> c[i][j];
-      repauto(m, move0)
+      repauto(y, x)
       {
-        if (0 <= j + m.S && j + m.S < w && 0 <= i + m.F && i + m.F < h && c[i][j] == '.' && c[i + m.F][j + m.S] == '.')
-          G.add_edge(i * w + j, (i + m.F) * w + j + m.S, 0);
-      }
-      repauto(m, move1)
-      {
-        if (0 <= j + m.S && j + m.S < w && 0 <= i + m.F && i + m.F < h && c[i][j] == '.' && c[i + m.F][j + m.S] == '.')
-          G.add_edge(i * w + j, (i + m.F) * w + j + m.S, 1);
       }
     }
   }
-
-  V<LL> q = G.Dijkstra((sx - 1) * w + sy - 1);
-
-  if (q[goal] == INF)
-    pr("-1");
-  else
-    pr(q[goal]);
-  PN;
   Ret;
 }
