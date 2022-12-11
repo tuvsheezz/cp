@@ -82,57 +82,20 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 33333
 
-// Sieve of Eratosthenes
-struct Sieve
-{
-  V<LL> f, primes;
-  Sieve(int n)
-  {
-    f.resize(n + 1, 0);
-    f[0] = f[1] = -1;
-    repa(i, 2, n + 1)
-    {
-      if (f[i] > 0)
-        continue;
-      primes.PB(i);
-      f[i] = i;
-      for (LL j = i * i; j <= n; j += i)
-      {
-        if (f[j] == 0)
-          f[j] = i;
-      }
-    }
-  }
-  bool is_prime(LL n) { ret f[n] == n; }
-  V<LL> prime_factors(LL n)
-  {
-    V<LL> r;
-    while (n != 1)
-    {
-      r.PB(f[n]);
-      n /= f[n];
-    }
-    ret r;
-  }
-  V<PLL> prime_factors_count(LL n)
-  {
-    V<LL> l = prime_factors(n);
-    if (l.size() == 0)
-      ret{};
-    V<PLL> r(1, MP(l[0], 0));
-    repauto(x, l)
-    {
-      if (r.back().F == x)
-        r.back().S++;
-      else
-        r.emplace_back(x, 1);
-    }
-    ret r;
-  }
-};
-
 void solve()
 {
+  LL rd(n);
+  V<LL> rdv(a, n);
+  vsorta(a);
+  LL p = 0, q = 0;
+  if (a[0] == a[n - 1])
+  {
+    prn(n * (n - 1));
+    ret;
+  }
+  rep(i, n) if (a[i] == a[0]) p++;
+  rep(i, n) if (a[i] == a[n - 1]) q++;
+  prn(p * q * 2);
 }
 
 int main()
@@ -140,21 +103,10 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  Sieve sv(MAX_N);
-  V<LL> x;
-  repa(i, 2, MAX_N) if (sv.is_prime(i)) x.PB(i);
   LL rd(T);
   while (T--)
   {
-    LL rd(n);
-    V<LL> rdv(a, n);
-    MLL mp;
-    rep(i, n)
-    {
-      repauto(y, x)
-      {
-      }
-    }
+    solve();
   }
   Ret;
 }
