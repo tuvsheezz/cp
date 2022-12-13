@@ -275,49 +275,51 @@ struct SegmentTree
 // Sieve of Eratosthenes
 struct Sieve
 {
-  V<LL> f, primes;
-  void init(int n)
+  vector<long long> f, primes;
+  Sieve(int n)
   {
     f.resize(n + 1, 0);
     f[0] = f[1] = -1;
-    repa(i, 2, n + 1)
+    for (long long i = 2; i <= n; i++)
     {
       if (f[i] > 0)
         continue;
-      primes.PB(i);
+      primes.push_back(i);
       f[i] = i;
-      for (LL j = i * i; j <= n; j += i)
+      for (long long j = i * i; j <= n; j += i)
       {
         if (f[j] == 0)
           f[j] = i;
       }
     }
   }
-  bool is_prime(LL n) { ret f[n] == n; }
-  V<LL> prime_factors(LL n)
+  bool is_prime(long long n) { return f[n] == n; }
+
+  vector<long long> prime_factors(long long n)
   {
-    V<LL> r;
+    vector<long long> r;
     while (n != 1)
     {
-      r.PB(f[n]);
+      r.push_back(f[n]);
       n /= f[n];
     }
-    ret r;
+    return r;
   }
-  V<PLL> prime_factors_count(LL n)
+
+  vector<pair<long long, long long>> prime_factors_count(long long n)
   {
-    V<LL> l = prime_factors(n);
+    vector<long long> l = prime_factors(n);
     if (l.size() == 0)
-      ret{};
-    V<PLL> r(1, MP(l[0], 0));
-    repauto(x, l)
+      return {};
+    vector<pair<long long, long long>> r(1, {l[0], 0});
+    for (auto &x : l)
     {
       if (r.back().F == x)
         r.back().S++;
       else
         r.emplace_back(x, 1);
     }
-    ret r;
+    return r;
   }
 };
 
