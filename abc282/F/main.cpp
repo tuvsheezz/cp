@@ -4,11 +4,10 @@ using namespace std;
 int main()
 {
     int n = 4000, x = 0;
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < 4000; j += 2)
-            if (i + j < n)
-                x++;
+        x += (n - i) / (i + 1);
     }
-    prn(x);
+    cout << x;
+    return 0;
 }
