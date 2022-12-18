@@ -85,7 +85,36 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 void solve()
 {
   LL rd(n);
-  V<LL> rdv(a, n);
+  V<LL> rdv(x, n);
+  LL d = -INF, c = 0;
+  repa(i, 1, n)
+  {
+    if (x[i] < x[i - 1])
+    {
+      LL g = (x[i] + x[i - 1] + 1) / 2;
+      d = max(g, d);
+      c++;
+    }
+  }
+  if (d == -INF)
+    prn(0);
+  else if (c == n - 1)
+    prn(x[0]);
+  else
+  {
+    rep(i, n) x[i] = abs(x[i] - d);
+    repa(i, 1, n)
+    {
+      if (x[i] < x[i - 1])
+      {
+        {
+          prn(-1);
+          ret;
+        }
+      }
+    }
+    prn(d);
+  }
 }
 
 int main()
