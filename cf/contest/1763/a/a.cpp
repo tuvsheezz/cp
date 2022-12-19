@@ -92,29 +92,21 @@ void solve()
   {
     dp[i + 1] = dp[i] + a[i];
     pq.push({i, a[i]});
-    while (pq.top().first < i)
+    while (pq.top().second == a[pq.top().first])
     {
       LL x = abs(pq.top().second - a[i]);
       LL ind = pq.top().first;
       pq.pop();
-      if (dp[ind] + (i - ind + 1) * x < dp[i + 1])
-      {
-        pq.push({ind, x});
-        break;
-      }
+      pq.push({ind, x});
     }
     pq2.push({i, a[i]});
-    while (pq2.top().first < i)
+    while (pq2.top().second == a[pq2.top().first])
     {
       LL x = abs(pq2.top().second - a[i]);
       LL ind = pq2.top().first;
       pq2.pop();
-      if (dp[ind] + (i - ind + 1) * x >= dp[i + 1])
-      {
-        dp[i + 1] = max(dp[ind] + (i - ind + 1) * x, dp[i + 1]);
-        pq2.push({ind, x});
-        break;
-      }
+      dp[i + 1] = max(dp[ind] + (i - ind + 1) * x, dp[i + 1]);
+      pq2.push({ind, x});
     }
   }
   pr(dp);
