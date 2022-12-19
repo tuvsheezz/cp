@@ -84,7 +84,41 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 void solve()
 {
-  LL rd(n, i, j, x, y);
+  LL rd(n);
+  V<LL> rdv(a, n);
+  V<LL> dp(n + 1, 0);
+  PQA<PLL> pq, pq2;
+  rep(i, n)
+  {
+    dp[i + 1] = dp[i] + a[i];
+    pq.push({i, a[i]});
+    while (pq.top().first < i)
+    {
+      LL x = abs(pq.top().second - a[i]);
+      LL ind = pq.top().first;
+      pq.pop();
+      if (dp[ind] + (i - ind + 1) * x < dp[i + 1])
+      {
+        pq.push({ind, x});
+        break;
+      }
+    }
+    pq2.push({i, a[i]});
+    while (pq2.top().first < i)
+    {
+      LL x = abs(pq2.top().second - a[i]);
+      LL ind = pq2.top().first;
+      pq2.pop();
+      if (dp[ind] + (i - ind + 1) * x >= dp[i + 1])
+      {
+        dp[i + 1] = max(dp[ind] + (i - ind + 1) * x, dp[i + 1]);
+        pq2.push({ind, x});
+        break;
+      }
+    }
+  }
+  pr(dp);
+  prn(dp[n]);
 }
 
 int main()
