@@ -92,16 +92,17 @@ int main()
     V<LL> ans(n);
     rep(i, n)
     {   
-        LL mini = n;
-        repa(j, 1, mini + 1)
+        LL x = 2 * (n + 1);        
+        repa(j, 1, x)
         {
             if(i - j >= 0)
-                mini = min(mini, abs(a[i - j] - a[i]));
+                x = min(x, abs(a[i - j] - a[i]) + j);
+
             if(i + j < n)
-                mini = min(mini, abs(a[i + j] - a[i]));
+                x = min(x, abs(a[i + j] - a[i]) + j);
         }
-        a[i] = mini;
+        ans[i] = x;
     }
-    prn(a);
+    prn(ans);
     Ret;
 }
