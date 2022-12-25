@@ -87,24 +87,8 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    LL rd(n, m);
-    VV<LL> a(n + 2, V<LL>(m + 2, INF));
-    bool inv = false;
-    repa(i, 1, n + 1) repa(j, 1, m + 1) cin >> a[i][j];
-    V<bool> b(n + 2, false);
-    LL ans = 0;
-    repa(i, 1, n + 1)
-    {
-        if(b[i] == true) repa(j, 1, m + 1) a[i][j] = 1 - a[i][j];
-
-        LL x = -1;
-        repa(j, 1, m + 1)
-        {
-            if(a[i][j] == a[i][j - 1] || a[i][j] == a[i][j + 1])
-                continue;
-            if(a[i])
-        }
-    }
-
+    LL rd(k);
+    rep(i, k) pr(char('A' + i));
+    PN;
     Ret;
 }
