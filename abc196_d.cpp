@@ -88,9 +88,10 @@ LL dfs(LL h, LL w, LL a, LL b, LL i, LL j, VV<bool> &vis)
     j = 0;
     i++;
   }
-  if(i == h) return 0;
+  if(i == h) return 1;
 
-  if(vis[i][j]) return dfs(h, w, a, b, i, j + 1, vis);
+  if(vis[i][j] == true) return dfs(h, w, a, b, i, j + 1, vis);
+
   LL r = 0;
   vis[i][j] = true;
   // 1 x 1
@@ -98,16 +99,16 @@ LL dfs(LL h, LL w, LL a, LL b, LL i, LL j, VV<bool> &vis)
     r += dfs(h, w, a, b - 1, i, j + 1, vis);
   
   // 2 x 1
-  if(j + 1 < w && !vis[i][j + 1] && a > 0) {
+  if(j + 1 < w && vis[i][j + 1] == false && a > 0) {
     vis[i][j + 1] = true;
     r += dfs(h, w, a - 1, b, i, j + 1, vis);
     vis[i][j + 1] = false;
   }
   
   // 1 x 2
-  if(i + 1 < h && !vis[i + 1][j] && a > 0) {
+  if(i + 1 < h && vis[i + 1][j] == false && a > 0) {
     vis[i + 1][j] = true;
-    r += dfs(h, w, a - 1, b, i + 1, j, vis);
+    r += dfs(h, w, a - 1, b, i, j + 1, vis);
     vis[i + 1][j] = false;
   }
   vis[i][j] = false;
