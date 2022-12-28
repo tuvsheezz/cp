@@ -88,5 +88,28 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL rd(n);
+  PQA<PLL> b, r;
+  PQD<PLL> now;
+  rep(i, n) {
+    LL rd(x, y);
+    b.push({x, y});
+  }
+  rep(i, n) {
+    LL rd(x, y);
+    r.push({x, y});
+  }
+  LL ans = 0;
+  while(!r.empty()) {
+    while(!b.empty() && b.top().first < r.top().first && b.top().second < r.top().second) {
+      now.push({b.top().second, b.top().first});
+      r.pop();
+    }
+    if(!now.empty()) {
+      ans++;
+      now.pop();
+    }
+    r.pop();
+  }
+  prn(ans);
   Ret;
 }
