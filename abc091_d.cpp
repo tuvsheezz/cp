@@ -104,7 +104,7 @@ int main()
       now.push({b.top().second, b.top().first});
       r.pop();
     }
-    if(!now.empty()) {
+    if(!now.empty() && now.) {
       ans++;
       now.pop();
     }
