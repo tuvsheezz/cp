@@ -92,24 +92,35 @@ int main()
   PQD<PLL> now;
   rep(i, n) {
     LL rd(x, y);
-    b.push({x, y});
+    r.push({x, y});
   }
   rep(i, n) {
     LL rd(x, y);
-    r.push({x, y});
+    b.push({x, y});
   }
   LL ans = 0;
-  while(!r.empty()) {
-    while(!b.empty() && b.top().first < r.top().first && b.top().second < r.top().second) {
-      now.push({b.top().second, b.top().first});
+
+  while(!b.empty()) {
+    while(!r.empty() && r.top().first < b.top().first) {
+      now.push({r.top().second, r.top().first});
       r.pop();
     }
-    if(!now.empty() && now.) {
-      ans++;
-      now.pop();
+    PQD<PLL> tmp;
+    bool ff = false;
+    while(!now.empty()) {
+      if(!ff && now.top().first < b.top().second) {
+        ff = true;
+        now.pop();
+        ans++;
+      } else {
+        tmp.push(now.top());
+        now.pop();
+      }
     }
-    r.pop();
+    now = tmp;
+    b.pop();
   }
+  
   prn(ans);
   Ret;
 }
