@@ -93,17 +93,14 @@ int main()
   V<LL> rdv(b, m);
   V<LL> a;
   rep(i, X) rep(j, Y) a.push_back(A[i] + B[j]);
-  vsorta(a);
-  vsorta(b);
+  vsortd(a);
+  vsortd(b);
   LL n = X * Y;
   PQD<V<LL>> pq;
   pq.push({-INF, n, m});
-  repa(i, 1, m) {
-    pq.push({a[0] + b[i], 0, i});
-  }
+  repa(i, 1, m) pq.push({a[0] + b[i], 0, i});
 
   LL ia = 0, ib = 0;
-
   while(K--)
   {
     if(ia == n) {
@@ -112,13 +109,13 @@ int main()
       pq.pop();
     }
 
-    if(a[ia] + b[ib] >= pq.top()[0]) {
+    if(pq.empty() || a[ia] + b[ib] >= pq.top()[0]) {
       prn(a[ia] + b[ib]);
       ia++;
-      ib++;
     } else {
+      pq.push({a[ia] + b[ib], ia, ib});
       prn(pq.top()[0]);
-      ia = pq.top()[1];
+      ia = pq.top()[1] + 1;
       ib = pq.top()[2];
       pq.pop();
     }
