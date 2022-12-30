@@ -88,16 +88,17 @@ int main()
   cin.tie(0);
   cout.tie(0);
   STR rd(s);
-  map<char, bool> mp;
-  rep(i, s.size()) mp[s[i]] = true;
-  LL x = 0, y = 0;
-  if(mp.find('W') != mp.end()) x++;
-  if(mp.find('E') != mp.end()) x--;
-  if(mp.find('N') != mp.end()) y++;
-  if(mp.find('S') != mp.end()) y--;
-  if(x == 0 && y == 0)
-    Yes;
-  else
-    No;
+  LL ans = 0, prev_len = 2, n = s.size();
+  rep(i, n) {
+    if(prev_len == 2) {
+      ans++;
+      prev_len = 1;
+    }
+    else {
+      if(s[i] == s[i - 1]) prev_len = 2;
+      else ans++;
+    }
+  }
+  prn(ans);
   Ret;
 }
