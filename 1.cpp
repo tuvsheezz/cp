@@ -12,10 +12,8 @@ using VV = V<V<T>>;
 #define MLL map<LL, LL>
 #define MSL map<STR, LL>
 #define MLB map<LL, bool>
-template <class T>
-using PQA = priority_queue<T, V<T>, greater<T>>;
-template <class T>
-using PQD = priority_queue<T, V<T>, less<T>>;
+#define PQA priority_queue<LL, V<LL>, greater<LL>>
+#define PQD priority_queue<LL, V<LL>, less<LL>>
 #define IT iterator
 #define F first
 #define S second
@@ -66,9 +64,7 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prs(x) cout << x << ' '
-#define prn(x) cout << x << '\n'
-#define prd() cout << fixed << setprecision(50);
+#define prd(x) cout << fixed << setprecision(50) << x
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -82,21 +78,69 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+struct Graph
+{
+  int vertices;
+  vector<vector<int>> edges;
+  vector<bool> visited;
+  int ans, target, count;
+
+  Graph(int n, bool dir = false)
+  {
+    vertices = n;
+    edges.resize(n);
+    visited.resize(n);
+  }
+
+  void set_t_c(int tt, int cc)
+  {
+    target = tt;
+    count = cc;
+  }
+
+  void add_edge(int u, int v)
+  {
+    edges[u].push_back(v);
+    edges[v].push_back(u);
+  }
+
+  void DFS(int node, int path_len)
+  {
+    visited[root] = true;
+    if (path_len == count && node == target) {
+      ans++;
+      return;
+    }
+
+    for(auto &x: edges[root])
+    {
+      if (!visited[x])
+        c += DFS(x, path_len + 1);
+    }
+  }
+};
+
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(a, b);
-  if(a > 0 && b > 0)
-    prn("Positive");
-  else if(a <= 0 && b >= 0)
-    prn("Zero");
-  else {
-    if((b - a + 1) & 1)
-      prn("Negative");
-    else 
-      prn("Positive");
+  int rd(T);
+  while (T--)
+  {
+    int rd(n);
+    Graph G;
+    G.init(n);
+    rep(i, n - 1)
+    {
+      int rd(u);
+      G.add_edge(u - 1, i + 1);
+    }
+    STR rd(s);
+    G.set_s(s);
+    G.DFS(0);
+    pr(G.ans);
+    PN;
   }
   Ret;
 }
