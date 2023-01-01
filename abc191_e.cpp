@@ -84,15 +84,13 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 struct Graph
 {
-  LL vertices;
-  V<V<LL>> edges;
-  V<V<LL>> t_edges;
-  V<bool> visited, t_visited;
-  stack<LL> order;
-  VV<LL> scc;
-  V<LL> tmp;
+  long long vertices;
+  vector<vector<long long>> edges, t_edges, scc;
+  vector<bool> visited, t_visited;
+  stack<long long> order;
+  vector<long long> tmp;
 
-  void init(LL n)
+  Graph(long long n)
   {
     vertices = n;
     edges.resize(n);
@@ -101,16 +99,16 @@ struct Graph
     t_visited.resize(n, false);
   }
 
-  void add_edge(LL u, LL v)
+  void add_edge(long long u, long long v)
   {
-    edges[u].PB(v);
-    t_edges[v].PB(u);
+    edges[u].push_back(v);
+    t_edges[v].push_back(u);
   }
 
-  void fill_order(LL root)
+  void fill_order(long long root)
   {
     visited[root] = true;
-    repauto(x, edges[root])
+    for(auto &x: edges[root])
     {
       if (!visited[x])
         fill_order(x);
@@ -118,11 +116,11 @@ struct Graph
     order.push(root);
   }
 
-  void DFS(LL root)
+  void DFS(long long root)
   {
-    tmp.PB(root);
+    tmp.push_back(root);
     t_visited[root] = true;
-    repauto(x, t_edges[root])
+    for(auto &x: t_edges[root])
     {
       if (!t_visited[x])
         DFS(x);
@@ -133,28 +131,45 @@ struct Graph
   {
     while (!order.empty())
     {
-      LL x = order.top();
+      long long x = order.top();
       order.pop();
       if (!t_visited[x])
       {
         tmp.clear();
         DFS(x);
-        scc.PB(tmp);
+        scc.push_back(tmp);
       }
     }
   }
 };
-
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
+  LL rd(n, m);
+  Graph G(n);
+
+  LL ans = 0;
+  rep(i, m)
   {
-    solve();
+    LL rd(u, v, c);
+    G.add_edge(u - 1, v - 1);
   }
+
+  rep(i, n)
+  {
+    if (!G.visited[i])
+      G.fill_order(i);
+  }
+
+  G.SCC();
+
+  repauto(x, G.scc) {
+    pr(x);
+  }
+
+  PN;
   Ret;
 }
