@@ -1,3 +1,4 @@
+// https://atcoder.jp/contests/abc191/tasks/abc191_e
 #include <bits/stdc++.h>
 using namespace std;
 #define PI 3.141592653589793238462643383279502884L
@@ -66,7 +67,9 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define sort_arr(v, n) sort(v, v + n)
 #define rev(v) reverse(v.begin(), v.end())
 #define pr(x) cout << x
-#define prd(x) cout << fixed << setprecision(50) << x
+#define prs(x) cout << x << ' '
+#define prn(x) cout << x << '\n'
+#define prd() cout << fixed << setprecision(50);
 #define Yes cout << "Yes\n"
 #define YES cout << "YES\n"
 #define No cout << "No\n"
@@ -80,44 +83,96 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+struct Graph
+{
+  long long vertices;
+  vector<vector<pair<long long, long long>>> edges; // PLL: (destination, cost)
+  bool is_directed;
+
+  Graph(long long n, bool dir = false)
+  {
+    vertices = n;
+    edges.resize(n);
+    is_directed = dir;
+  }
+
+  void add_edge(long long u, long long v, long long cost)
+  {
+    edges[u].push_back({v, cost});
+    if (!is_directed)
+      edges[v].push_back({u, cost});
+  }
+
+  vector<long long> Dijkstra(long long s)
+  {
+    vector<long long> dist(vertices, INF);
+    dist[s] = 0;
+    priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> next_to_visit;
+    
+    next_to_visit.push({0LL, s});
+
+    while (!next_to_visit.empty())
+    {
+      pair<long long, long long> current_node = next_to_visit.top();
+      next_to_visit.pop();
+      long long v = current_node.second;
+
+      if (dist[v] < current_node.first)
+        continue;
+
+      for(auto &edge: edges[v])
+      {
+        if (dist[edge.first] > dist[v] + edge.second)
+        {
+          dist[edge.first] = dist[v] + edge.second;
+          next_to_visit.push({dist[edge.first], edge.first});
+        }
+      }
+    }
+    return dist;
+  }
+};
+
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(h, w, sx, sy, gx, gy);
-  LL goal = (gx - 1) * w + gy - 1;
-  char c[h + 10][w + 10];
-  Graph G;
-  G.init(h * w);
-
-  V<PLL> move0 = {{-1, 0}, {0, -1}},
-         move1 = {{-2, -2}, {-2, -1}, {-2, 0}, {-2, 1}, {-2, 2}, {-1, -2}, {-1, -1}, {-1, 1}, {-1, 2}, {0, -2}};
-
-  rep(i, h)
+  LL rd(n, m);
+  V<LL> ans(n, INF);
+  Graph g(n, true);
+  while (m--)
   {
-    rep(j, w)
+    LL rd(a, b, c);
+    a--, b--;
+    if(a == b)
+      ans[a] = min(ans[a], c);
+    else
+      g.add_edge(a, b, c);
+  }
+  VV<LL> D(n, V<LL>(n, INF));
+  rep(i, n)
+  {
+    auto dist = g.Dijkstra(i);
+    rep(j, n)
     {
-      cin >> c[i][j];
-      repauto(m, move0)
-      {
-        if (0 <= j + m.S && j + m.S < w && 0 <= i + m.F && i + m.F < h && c[i][j] == '.' && c[i + m.F][j + m.S] == '.')
-          G.add_edge(i * w + j, (i + m.F) * w + j + m.S, 0);
-      }
-      repauto(m, move1)
-      {
-        if (0 <= j + m.S && j + m.S < w && 0 <= i + m.F && i + m.F < h && c[i][j] == '.' && c[i + m.F][j + m.S] == '.')
-          G.add_edge(i * w + j, (i + m.F) * w + j + m.S, 1);
-      }
+      if (i == j)
+        continue;
+      D[i][j] = dist[j];
     }
   }
-
-  V<LL> q = G.Dijkstra((sx - 1) * w + sy - 1);
-
-  if (q[goal] == INF)
-    pr("-1");
-  else
-    pr(q[goal]);
-  PN;
+  rep(i, n) rep(j, n)
+  {
+    if (i == j)
+      continue;
+    ans[i] = min(ans[i], D[i][j] + D[j][i]);
+  }
+  rep(i, n)
+  {
+    if (ans[i] == INF)
+      prn(-1);
+    else
+      prn(ans[i]);
+  }
   Ret;
 }

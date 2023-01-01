@@ -85,61 +85,50 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 struct Graph
 {
   long long vertices;
-  vector<vector<long long>> edges, t_edges, scc;
-  vector<bool> visited, t_visited;
-  stack<long long> order;
-  vector<long long> tmp;
+  vector<vector<pair<long long, long long>>> edges; // PLL: (destination, cost)
+  bool is_directed;
 
-  Graph(long long n)
+  Graph(long long n, bool dir = false)
   {
     vertices = n;
     edges.resize(n);
-    t_edges.resize(n);
-    visited.resize(n, false);
-    t_visited.resize(n, false);
+    is_directed = dir;
   }
 
-  void add_edge(long long u, long long v)
+  void add_edge(long long u, long long v, long long cost)
   {
-    edges[u].push_back(v);
-    t_edges[v].push_back(u);
+    edges[u].push_back({v, cost});
+    if (!is_directed)
+      edges[v].push_back({u, cost});
   }
 
-  void fill_order(long long root)
+  vector<long long> Dijkstra(long long s)
   {
-    visited[root] = true;
-    for(auto &x: edges[root])
+    vector<long long> dist(vertices, INF);
+    dist[s] = 0;
+    priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> next_to_visit;
+    
+    next_to_visit.push({0LL, s});
+
+    while (!next_to_visit.empty())
     {
-      if (!visited[x])
-        fill_order(x);
-    }
-    order.push(root);
-  }
+      pair<long long, long long> current_node = next_to_visit.top();
+      next_to_visit.pop();
+      long long v = current_node.second;
 
-  void DFS(long long root)
-  {
-    tmp.push_back(root);
-    t_visited[root] = true;
-    for(auto &x: t_edges[root])
-    {
-      if (!t_visited[x])
-        DFS(x);
-    }
-  }
+      if (dist[v] < current_node.first)
+        continue;
 
-  void SCC()
-  {
-    while (!order.empty())
-    {
-      long long x = order.top();
-      order.pop();
-      if (!t_visited[x])
+      for(auto &edge: edges[v])
       {
-        tmp.clear();
-        DFS(x);
-        scc.push_back(tmp);
+        if (dist[edge.first] > dist[v] + edge.second)
+        {
+          dist[edge.first] = dist[v] + edge.second;
+          next_to_visit.push({dist[edge.first], edge.first});
+        }
       }
     }
+    return dist;
   }
 };
 
@@ -149,27 +138,40 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL rd(n, m);
-  Graph G(n);
-
-  LL ans = 0;
-  rep(i, m)
+  V<LL> ans(n, INF);
+  Graph g(n, true);
+  while (m--)
   {
-    LL rd(u, v, c);
-    G.add_edge(u - 1, v - 1);
+    LL rd(a, b, c);
+    a--, b--;
+    if(a == b)
+      ans[a] = min(ans[a], c);
+    else
+      g.add_edge(a, b, c);
   }
-
+  VV<LL> D(n, V<LL>(n, INF));
   rep(i, n)
   {
-    if (!G.visited[i])
-      G.fill_order(i);
+    auto dist = g.Dijkstra(i);
+    rep(j, n)
+    {
+      if (i == j)
+        continue;
+      D[i][j] = dist[j];
+    }
   }
-
-  G.SCC();
-
-  repauto(x, G.scc) {
-    pr(x);
+  rep(i, n) rep(j, n)
+  {
+    if (i == j)
+      continue;
+    ans[i] = min(ans[i], D[i][j] + D[j][i]);
   }
-
-  PN;
+  rep(i, n)
+  {
+    if (ans[i] == INF)
+      prn(-1);
+    else
+      prn(ans[i]);
+  }
   Ret;
 }
