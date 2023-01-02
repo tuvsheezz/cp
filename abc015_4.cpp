@@ -85,5 +85,19 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
+  LL rd(w, n, k);
+  V<LL> a(n), b(n);
+  rep(i, n) cin >> a[i] >> b[i];
+
+  VV<LL> dp(n + 1, V<LL>(k + 1, -1));
+  dp[0][0] = 0;
+  
+  rep(i, n) rep(j, k) {
+    
+  }
+
+  LL ans = 0;
+  rep(i, k + 1) rep(j, n + 1) ans = max(ans, dp[j][i]);
+  prn(ans);
   return 0;
 }
