@@ -75,6 +75,8 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define NO cout << "NO\n"
 #define PN cout << '\n'
 #define PS cout << ' '
+#define Ret return 0
+#define ret return
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
@@ -99,13 +101,23 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, k);
-  V<LL> rdv(h, n);
-  V<LL> dp(n, INF);
+  LL rd(n);
+  V<LL> dp(n + 1, INF), a;
   dp[0] = 0;
-  repa(i, 1, n) repa(j, 1, k + 1) {
-    if(i >= j) chmin(dp[i], dp[i - j] + abs(h[i] - h[i - j]));
+  a.push_back(1);
+  LL x = 6;
+  while(x <= n) {
+    a.push_back(x);
+    x *= 6;
   }
-  prn(dp[n - 1]);
-  return 0;
+  x = 9;
+  while(x <= n) {
+    a.push_back(x);
+    x *= 9;
+  }
+  rep(i, n) for(auto &y: a) {
+    if(i >= y - 1) chmin(dp[i + 1], dp[i - y + 1] + 1);
+  }
+  prn(dp[n]);
+  Ret;
 }
