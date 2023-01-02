@@ -88,15 +88,15 @@ int main()
   LL rd(n);
   V<LL> rdv(a, n);
 
-  VV<LL> dp(n + 1, V<LL>(21, 0));
-  dp[0][0] = 1;
+  VV<LL> dp(n, V<LL>(21, 0));
+  dp[1][a[0]] = 1;
 
-  rep(i, n) rep(j, 21) {
+  repa(i, 1, n - 1) rep(j, 21) {
     if(j - a[i] >= 0)
       dp[i + 1][j] += dp[i][j - a[i]];
     if(j + a[i] <= 20)
       dp[i + 1][j] += dp[i][j + a[i]];
   }
-  prn(dp[n][0]);
+  prn(dp[n - 1][a[n - 1]]);
   return 0;
 }
