@@ -85,30 +85,23 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(w, n, k);
-  V<LL> a(n), b(n);
-  rep(i, n) cin >> a[i] >> b[i];
-  VV<V<LL>> dp(n + 1, VV<LL>(k + 1, V<LL>(w + 1, -1)));
-  dp[0][0][0] = 0;
+  LL rd(W, N, K);
+  V<LL> a(N), b(N);
+  rep(i, N) cin >> a[i] >> b[i];
+  VV<V<LL>> dp(N + 1, VV<LL>(K + 1, V<LL>(W + 1, -1)));
+  rep(i, N) dp[i][0][0] = 0;
+  LL ans = 0;
 
-  rep(i, n) rep(j, k) {
-    repa(ii, 1, w + 1) {
-      if(ii >= a[i] && dp[i][j][w - a[i]] != -1)
-        dp[i + 1][j + 1][ii] = max(dp[i + 1][j + 1][ii], dp[i][j][ii - a[i]] + b[i]);
-      else
-        dp[i + 1][j + 1][ii] = max(dp[i + 1][j + 1][ii], dp[i + 1][j][ii]);
+  rep(i, N) rep(j, K) {
+    if(i < j) continue;
+    rep(w, W + 1) {
+      dp[i + 1][j + 1][w] = dp[i][j + 1][w];
+      if(w >= a[i] && dp[i][j][w - a[i]] != -1)
+        dp[i + 1][j + 1][w] = max(dp[i + 1][j + 1][w], dp[i][j][w - a[i]] + b[i]);
+      ans = max(ans, dp[i + 1][j + 1][w]);
     }
   }
-  prn(dp[n][k][w]);
-  rep(i, n + 1) {
-    rep(j, k + 1) {
-      rep(ii, w + 1) {
-        cout << dp[i][j][ii] << " ";
-      }
-      cout << endl;
-    }
-    cout << endl;
-    cout << endl;
-  }
+
+  prn(ans);
   return 0;
 }
