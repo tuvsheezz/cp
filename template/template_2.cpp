@@ -75,8 +75,6 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define NO cout << "NO\n"
 #define PN cout << '\n'
 #define PS cout << ' '
-#define Ret return 0
-#define ret return
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
@@ -104,13 +102,13 @@ LL vsum(V<T> v)
 {
   T s = 0;
   rep(i, (LL)v.size()) { s += v[i]; }
-  ret s;
+  return s;
 }
 
 struct MYM
 {
-  DD distance_between_2_points(DD x1, DD y1, DD x2, DD y2) { ret sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); }
-  DD area_of_triangle_with_3_sides(DD a, DD b, DD c) { ret sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c)) / 4.0; }
+  DD distance_between_2_points(DD x1, DD y1, DD x2, DD y2) { return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)); }
+  DD area_of_triangle_with_3_sides(DD a, DD b, DD c) { return sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c)) / 4.0; }
 };
 
 LL euler_phi(LL n)
@@ -132,7 +130,7 @@ LL euler_phi(LL n)
   {
     res--;
   }
-  ret res;
+  return res;
 }
 
 struct UnionFind
@@ -204,14 +202,14 @@ struct BIT
 template <class T>
 T fsum(T a, T b)
 {
-  ret a + b;
+  return a + b;
 }
 template <class T>
-T fmin(T a, T b) { ret min(a, b); }
+T fmin(T a, T b) { return min(a, b); }
 template <class T>
-T fmax(T a, T b) { ret max(a, b); }
+T fmax(T a, T b) { return max(a, b); }
 template <class T>
-T fxor(T a, T b) { ret a ^ b; }
+T fxor(T a, T b) { return a ^ b; }
 template <class T, class D>
 struct SegmentTree
 {
@@ -238,14 +236,14 @@ struct SegmentTree
       repd(i, n - 1, 1) { tree[i] = ope(tree[2 * i], tree[2 * i + 1]); }
   }
 
-  D get_range(T ql, T qr) { ret _get_range(1, 0, N - 1, ql, qr); }
+  D get_range(T ql, T qr) { return _get_range(1, 0, N - 1, ql, qr); }
   D _get_range(T node, T sl, T sr, T ql, T qr)
   {
     if (ql <= sl && sr <= qr)
-      ret tree[node];
+      return tree[node];
     if (sr < ql || qr < sl)
-      ret def;
-    ret ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
+      return def;
+    return ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
   }
 
   D get_node(T ind)
@@ -255,7 +253,7 @@ struct SegmentTree
     {
       rr = ope(rr, tree[ind /= 2]);
     }
-    ret rr;
+    return rr;
   }
 
   void update_range(T ql, T qr, D v) { _update_range(1, 0, N - 1, ql, qr, v); }
@@ -281,7 +279,7 @@ struct SegmentTree
       tree[ind] = ope(tree[2 * ind], tree[2 * ind + 1]);
     }
   }
-  D get_leaf(LL x) { ret tree[x + N]; }
+  D get_leaf(LL x) { return tree[x + N]; }
   void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
 };
 
@@ -414,25 +412,25 @@ Matrix matrix_pow(Matrix A, long long b, long long mod)
 bool is_prime_simple(LL n)
 {
   if (n == 1)
-    ret false;
+    return false;
   for (LL i = 2; i * i <= n; i++)
   {
     if (n % i == 0)
-      ret false;
+      return false;
   }
-  ret true;
+  return true;
 }
 
 LL single_fact(LL n, LL mod)
 {
   LL r = 1;
   if (n < 2)
-    ret r;
+    return r;
   repa(i, 1, n + 1)
   {
     r = (r * i) % mod;
   }
-  ret r;
+  return r;
 }
 
 V<pair<char, LL>> run_length_encoding(STR s)
@@ -453,7 +451,7 @@ V<pair<char, LL>> run_length_encoding(STR s)
       count++;
   }
   rle.PB(MP(pre, count));
-  ret rle;
+  return rle;
 }
 
 // LIS<LL>(a, false) ntr gej hereglene shu!
@@ -572,11 +570,11 @@ struct imos2D
 bool comp(PLL &p1, PLL &p2)
 {
   if (p1.F > p2.F)
-    ret false;
+    return false;
   else if (p1.F < p2.F)
-    ret true;
+    return true;
   else
-    ret p1.S > p2.S;
+    return p1.S > p2.S;
 }
 
 void solve()
@@ -593,5 +591,5 @@ int main()
   {
     solve();
   }
-  Ret;
+  return 0;
 }
