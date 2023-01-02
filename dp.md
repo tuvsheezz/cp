@@ -1,0 +1,22 @@
+### 1/1:
+- https://qiita.com/drken/items/dc53c683d6de8aeacf5a
+
+### 1/2:
+- https://atcoder.jp/contests/dp/tasks/dp_a
+  - https://atcoder.jp/contests/dp/submissions/37688838
+- https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/0168
+- https://atcoder.jp/contests/abc129/tasks/abc129_c
+- https://atcoder.jp/contests/abc040/tasks/abc040_c
+- https://atcoder.jp/contests/dp/tasks/dp_b
+- https://atcoder.jp/contests/abc099/tasks/abc099_c
+- https://atcoder.jp/contests/tdpc/tasks/tdpc_contest
+- https://atcoder.jp/contests/tdpc/tasks/tdpc_dice
+- https://atcoder.jp/contests/abc015/tasks/abc015_4
+- https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_d
+- https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_d
+- https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d
+- https://atcoder.jp/contests/joi2011ho/tasks/joi2011ho2
+- https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/2566
+- https://atcoder.jp/contests/arc057/tasks/arc057_b
+- https://atcoder.jp/contests/abc032/tasks/abc032_d
+- https://atcoder.jp/contests/abc060/tasks/arc073_b
