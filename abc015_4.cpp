@@ -88,16 +88,9 @@ int main()
   LL rd(w, n, k);
   V<LL> a(n), b(n);
   rep(i, n) cin >> a[i] >> b[i];
+  VV<V<LL> > dp(n + 1, VV<LL>(k + 1, V<LL>(w + 1, 0)));
 
-  VV<LL> dp(n + 1, V<LL>(k + 1, -1));
-  dp[0][0] = 0;
-  
-  rep(i, n) rep(j, k) {
-    
-  }
-
-  LL ans = 0;
-  rep(i, k + 1) rep(j, n + 1) ans = max(ans, dp[j][i]);
-  prn(ans);
   return 0;
 }
+
+i dah-g n k dah bolgood songohod w deerh max
