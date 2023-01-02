@@ -75,34 +75,38 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define NO cout << "NO\n"
 #define PN cout << '\n'
 #define PS cout << ' '
-#define Ret return 0
-#define ret return
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
+template<class T> inline bool chmin(T& a, T b) {
+    if (a > b) {
+        a = b;
+        return true;
+    }
+    return false;
+}
+template<class T> inline bool chmax(T& a, T b) {
+    if (a < b) {
+        a = b;
+        return true;
+    }
+    return false;
+}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  V<LL> dp(32, 0);
-  dp[0] = 1;
-  rep(i, 31) {
-    dp[i + 1] = dp[i];
-    if(i > 1)
-      dp[i + 1] += dp[i - 1];
-    if(i > 2)
-      dp[i + 1] += dp[i - 2];
+  LL rd(n);
+  V<LL> rdv(h, n);
+  V<LL> dp(n, INF);
+  dp[0] = 0;
+  repa(i, 1, n) {
+    chmin(dp[i], dp[i - 1] + abs(h[i] - h[i - 1]));
+    if(i > 1) chmin(dp[i], dp[i - 2] + abs(h[i] - h[i - 2]));
   }
-  rep(i, 32) dp[i] = (dp[i] + 3649) / 3650;
-  pr(dp);
-  while(1) {
-    LL rd(n);
-    if(n == 0)
-      break;
-    prn(dp[n + 1]);
-  }
-  Ret;
+  prn(dp[n - 1]);
+  return 0;
 }

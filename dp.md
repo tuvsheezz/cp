@@ -5,8 +5,11 @@
 - https://atcoder.jp/contests/dp/tasks/dp_a
   - https://atcoder.jp/contests/dp/submissions/37688838
 - https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/0168
+  - https://onlinejudge.u-aizu.ac.jp/status/users/togi/submissions/1/0168/judge/7280130/C++17
 - https://atcoder.jp/contests/abc129/tasks/abc129_c
+  - https://atcoder.jp/contests/abc129/submissions/37689711
 - https://atcoder.jp/contests/abc040/tasks/abc040_c
+  - https://atcoder.jp/contests/abc040/submissions/37689901
 - https://atcoder.jp/contests/dp/tasks/dp_b
 - https://atcoder.jp/contests/abc099/tasks/abc099_c
 - https://atcoder.jp/contests/tdpc/tasks/tdpc_contest
