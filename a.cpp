@@ -85,18 +85,12 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n);
-  V<LL> rdv(a, n);
-
-  VV<LL> dp(n, V<LL>(21, 0));
-  dp[1][a[0]] = 1;
-
-  repa(i, 1, n - 1) rep(j, 21) {
-    if(j - a[i] >= 0)
-      dp[i + 1][j] += dp[i][j - a[i]];
-    if(j + a[i] <= 20)
-      dp[i + 1][j] += dp[i][j + a[i]];
+  LL rd(n, k);
+  MLL mp;
+  rep(i, k) {
+    LL rd(x, y);
+    mp[x] = y;
   }
-  prn(dp[n - 1][a[n - 1]]);
+  VV<PLL> dp(n, V<PLL>(3, {0, 0});
   return 0;
 }
