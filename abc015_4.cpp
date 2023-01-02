@@ -88,9 +88,27 @@ int main()
   LL rd(w, n, k);
   V<LL> a(n), b(n);
   rep(i, n) cin >> a[i] >> b[i];
-  VV<V<LL> > dp(n + 1, VV<LL>(k + 1, V<LL>(w + 1, 0)));
+  VV<V<LL>> dp(n + 1, VV<LL>(k + 1, V<LL>(w + 1, -1)));
+  dp[0][0][0] = 0;
 
+  rep(i, n) rep(j, k) {
+    repa(ii, 1, w + 1) {
+      if(ii >= a[i] && dp[i][j][w - a[i]] != -1)
+        dp[i + 1][j + 1][ii] = max(dp[i + 1][j + 1][ii], dp[i][j][ii - a[i]] + b[i]);
+      else
+        dp[i + 1][j + 1][ii] = max(dp[i + 1][j + 1][ii], dp[i + 1][j][ii]);
+    }
+  }
+  prn(dp[n][k][w]);
+  rep(i, n + 1) {
+    rep(j, k + 1) {
+      rep(ii, w + 1) {
+        cout << dp[i][j][ii] << " ";
+      }
+      cout << endl;
+    }
+    cout << endl;
+    cout << endl;
+  }
   return 0;
 }
-
-i dah-g n k dah bolgood songohod w deerh max
