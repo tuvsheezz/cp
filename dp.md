@@ -11,14 +11,17 @@
 | [4](https://atcoder.jp/contests/abc040/tasks/abc040_c) | [Cpp](https://atcoder.jp/contests/abc040/submissions/37689901) |
 | [5](https://atcoder.jp/contests/dp/tasks/dp_b) | [Cpp](https://atcoder.jp/contests/dp/submissions/37690703) |
 | [6](https://atcoder.jp/contests/abc099/tasks/abc099_c) | [Cpp](https://atcoder.jp/contests/abc099/submissions/37690824) |
-| [6](https://atcoder.jp/contests/tdpc/tasks/tdpc_contest) | [Cpp]() |
-| [7](https://atcoder.jp/contests/tdpc/tasks/tdpc_dice) | [Cpp]() |
-| [8](https://atcoder.jp/contests/abc015/tasks/abc015_4) | [Cpp]() |
-| [9](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_d) | [Cpp]() |
-| [10](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_d) | [Cpp]() |
-| [11](https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d) | [Cpp]() |
-| [12](https://atcoder.jp/contests/joi2011ho/tasks/joi2011ho2) | [Cpp]() |
-| [13](https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/2566) | [Cpp]() |
-| [14](https://atcoder.jp/contests/arc057/tasks/arc057_b) | [Cpp]() |
-| [15](https://atcoder.jp/contests/abc032/tasks/abc032_d) | [Cpp]() |
-| [16](https://atcoder.jp/contests/abc060/tasks/arc073_b) | [Cpp]() |
+| [7](https://atcoder.jp/contests/dp/tasks/dp_c) | [Cpp]() |
+| [8](https://atcoder.jp/contests/tdpc/tasks/tdpc_contest) | [Cpp](https://atcoder.jp/contests/tdpc/submissions/37692610) |
+| [9](https://atcoder.jp/contests/tdpc/tasks/tdpc_dice) | [Cpp]() |
+| [10](https://atcoder.jp/contests/abc015/tasks/abc015_4) | [Cpp]() |
+| [11](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_d) | [Cpp]() |
+| [12](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_d) | [Cpp]() |
+| [13](https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d) | [Cpp]() |
+| [14](https://atcoder.jp/contests/joi2011ho/tasks/joi2011ho2) | [Cpp]() |
+| [15](https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/2566) | [Cpp]() |
+| [16](https://atcoder.jp/contests/arc057/tasks/arc057_b) | [Cpp]() |
+| [17](https://atcoder.jp/contests/abc032/tasks/abc032_d) | [Cpp]() |
+| [18](https://atcoder.jp/contests/abc060/tasks/arc073_b) | [Cpp]() |
+
+### 1/3:
