@@ -87,26 +87,32 @@ int main()
   cout.tie(0);
   LL M = 10000;
   LL rd(n, k);
-  V<LL> c(n + 1, 0);
+  V<LL> c(n + 1, -1);
   rep(i, k) {
     LL rd(x, y);
-    c[x] = y;
+    c[x] = y - 1;
   }
 
-  VV<V<LL>> dp(n + 1, VV<LL>(3, V<LL>(3, 0)));
-  if(c[1] == 0) {
+  VV<PLL> dp(n + 1, V<PLL>(3, {0, 0}));
+  if(c[1] == -1) {
     dp[1][0] = {1, 0};
     dp[1][1] = {1, 0};
     dp[1][2] = {1, 0};
   } else {
-    dp[1][c[1] - 1] = {1, 1};
+    dp[1][c[1]] = {1, 0};
   }
   repa(i, 1, n) {
-    if(c[i + 1] == 0) {
-
+    LL x = 0;
+    rep(j, 3) x = (x + dp[i][j].F) % M;
+    if(c[i + 1] == -1) {
+      rep(j, 3) dp[i + 1][j] = { (x - dp[i][j].S + M) % M, (dp[i][j].F - dp[i][j].S + M) % M };
     } else {
-      
+      LL j = c[i + 1];
+      dp[i + 1][j] = { (x - dp[i][j].S + M) % M, (dp[i][j].F - dp[i][j].S + M) % M };
     }
   }
+  LL ans = 0;
+  rep(j, 3) ans = (ans + dp[n][j].F) % M;
+  prn(ans);
   return 0;
 }
