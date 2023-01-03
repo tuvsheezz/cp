@@ -86,6 +86,27 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL M = 10000;
-  
+  LL rd(n, k);
+  V<LL> c(n + 1, 0);
+  rep(i, k) {
+    LL rd(x, y);
+    c[x] = y;
+  }
+
+  VV<V<LL>> dp(n + 1, VV<LL>(3, V<LL>(3, 0)));
+  if(c[1] == 0) {
+    dp[1][0] = {1, 0};
+    dp[1][1] = {1, 0};
+    dp[1][2] = {1, 0};
+  } else {
+    dp[1][c[1] - 1] = {1, 1};
+  }
+  repa(i, 1, n) {
+    if(c[i + 1] == 0) {
+
+    } else {
+      
+    }
+  }
   return 0;
 }
