@@ -21,7 +21,7 @@
 |---|---|
 | [1](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_d) | [Cpp](https://atcoder.jp/contests/joi2012yo/submissions/37710417) |
 | [2](https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d) | [Cpp](https://atcoder.jp/contests/joi2013yo/submissions/37711622) |
-| [3](https://atcoder.jp/contests/abc032/tasks/abc032_d) | [Cpp]() |
+| [3](https://atcoder.jp/contests/abc032/tasks/abc032_d) | [Cpp](https://atcoder.jp/contests/abc032/submissions/37717656) |
 | [4](https://atcoder.jp/contests/abc060/tasks/arc073_b) | [Cpp]() |
 
 ### 
