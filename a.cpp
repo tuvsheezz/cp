@@ -86,34 +86,6 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL M = 10000;
-  LL rd(n, k);
-  MLL mp;
-  rep(i, k) {
-    LL rd(x, y);
-    mp[x - 1] = y - 1;
-  }
-  VV<PLL> dp(n, V<PLL>(3, {0, 0}));
-
-  if(mp.find(0) != mp.end()) dp[0][mp[0]] = {1, 0};
-  else rep(i, 3) dp[0][i] = {1, 0};
-
-  repa(i, 1, n) {
-    if(mp.find(i) != mp.end()) {
-      LL j = mp[i];
-      dp[i][j] = { (dp[i - 1][0].F + dp[i - 1][1].F + dp[i - 1][2].F + M) % M, dp[i - 1][j].F };
-    } else
-      rep(j, 3) dp[i][j] = { (dp[i - 1][0].F + dp[i - 1][1].F + dp[i - 1][2].F + M) % M, dp[i - 1][j].F };
-  }
-  LL ans = 0;
-  rep(i, 3) ans = (dp[n - 1][i].F + M - dp[n - 1][i].S + ans) % M;
-  prn(ans % M);
-
-  rep(i, n) {
-    rep(j, 3) {
-      cout << dp[i][j].F << " " << dp[i][j].S << " ";
-    }
-    cout << endl;
-  }
-
+  
   return 0;
 }
