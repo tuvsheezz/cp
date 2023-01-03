@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "*.yaml": "yaml",
+    "*.css": "css",
     "ostream": "cpp",
     "iostream": "cpp",
     "valarray": "cpp",
@@ -71,7 +72,8 @@
     "latch": "cpp",
     "semaphore": "cpp",
     "memory": "cpp",
-    "__string": "cpp"
+    "__string": "cpp",
+    "stacktrace": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
