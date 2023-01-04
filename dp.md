@@ -28,7 +28,7 @@
 |---|---|---|
 | [1. Simple Knapsack](https://atcoder.jp/contests/abc060/tasks/arc073_b) | [Cpp](https://atcoder.jp/contests/abc060/submissions/37724782) | Greedy |
 | [2. LCS](https://atcoder.jp/contests/dp/submissions/37730395) | [Cpp](https://atcoder.jp/contests/dp/submissions/37730395) | Longest common subsequence, DP |
-| [3. Edit Distance (Levenshtein Distance)](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_E&lang=jp) | [Cpp]() |
+| [3. Edit Distance (Levenshtein Distance)](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_E&lang=jp) | [Cpp](https://onlinejudge.u-aizu.ac.jp/status/users/togi/submissions/1/DPL_1_E/judge/7290903/C++17) [Cpp](https://leetcode.com/problems/edit-distance/submissions/871105964/)|
 
 - [Educational DP Contest の F ～ J 問題の解説と類題集](https://qiita.com/drken/items/03c7db44ccd27820ea0d)
 
