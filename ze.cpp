@@ -79,35 +79,87 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
 
-
-void solve()
+struct Graph
 {
-}
+  long long vertices;
+  vector<vector<pair<long long, long long>>> edges; // PLL: (destination, cost)
+  bool is_directed;
+
+  Graph(long long n, bool dir = false)
+  {
+    vertices = n;
+    edges.resize(n);
+    is_directed = dir;
+  }
+
+  void add_edge(long long u, long long v, long long cost)
+  {
+    edges[u].push_back({v, cost});
+    if (!is_directed)
+      edges[v].push_back({u, cost});
+  }
+
+  vector<long long> Dijkstra(long long s)
+  {
+    vector<long long> dist(vertices, INF);
+    dist[s] = 0;
+    priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> next_to_visit;
+    
+    next_to_visit.push({0LL, s});
+
+    while (!next_to_visit.empty())
+    {
+      pair<long long, long long> current_node = next_to_visit.top();
+      next_to_visit.pop();
+      long long v = current_node.second;
+
+      if (dist[v] < current_node.first)
+        continue;
+
+      for(auto &edge: edges[v])
+      {
+        if (dist[edge.first] > dist[v] + edge.second)
+        {
+          dist[edge.first] = dist[v] + edge.second;
+          next_to_visit.push({dist[edge.first], edge.first});
+        }
+      }
+    }
+    return dist;
+  }
+};
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
+  LL rd(n, m);
+  LL rd(s, g);
+  s--, g--;
+  VV<PLL> p(n);
+  VV<PLL> e(n);
+  Graph P(n), E(n, true);
+  
+  rep(i, m) {
+    LL rd(u, v, d);
+    u--, v--;
+    P.add_edge(u, v, d);
   }
+  rep(i, n) {
+    LL rd(d, c);
+    auto dst = P.Dijkstra(i);
+    rep(j, n) {
+      if(i != j && dst[j] <= d)
+        E.add_edge(i, j, c);
+    }
+  }
+
+  auto dist = E.Dijkstra(s);
+  if(dist[g] == INF)
+    prn(-1);
+  else
+    prn(dist[g]);
   return 0;
 }
