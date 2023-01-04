@@ -31,9 +31,6 @@
 - [Educational DP Contest の F ～ J 問題の解説と類題集](https://qiita.com/drken/items/03c7db44ccd27820ea0d)
 
 
-
-
-
 ### TO-DO
 | Problem | Submission |
 |---|---|
