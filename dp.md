@@ -3,7 +3,7 @@
 ](https://qiita.com/drken/items/dc53c683d6de8aeacf5a)
 
 ### 1/2:
-| Problem | Submission |
+| | |
 |---|---|
 | [1](https://atcoder.jp/contests/dp/tasks/dp_a) | [Cpp](https://atcoder.jp/contests/dp/submissions/37688838) |
 | [2](https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/0168) | [Cpp](https://onlinejudge.u-aizu.ac.jp/status/users/togi/submissions/1/0168/judge/7280130/C++17) |
@@ -17,18 +17,27 @@
 | [10](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_d) | [Cpp](https://atcoder.jp/contests/joi2011yo/submissions/37702795) |
 
 ### 1/3:
-| Problem | Submission |
+| | |
 |---|---|
 | [1](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_d) | [Cpp](https://atcoder.jp/contests/joi2012yo/submissions/37710417) |
 | [2](https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d) | [Cpp](https://atcoder.jp/contests/joi2013yo/submissions/37711622) |
 | [3](https://atcoder.jp/contests/abc032/tasks/abc032_d) | [Cpp](https://atcoder.jp/contests/abc032/submissions/37717656) |
-| [4](https://atcoder.jp/contests/abc060/tasks/arc073_b) | [Cpp]() |
 
-### 
+### 1/4:
+| | |
+|---|---|
+| [1](https://atcoder.jp/contests/abc060/tasks/arc073_b) | [Cpp](https://atcoder.jp/contests/abc060/submissions/37724782) |
 
+- [Educational DP Contest の F ～ J 問題の解説と類題集](https://qiita.com/drken/items/03c7db44ccd27820ea0d)
+
+
+
+
+
+### TO-DO
 | Problem | Submission |
 |---|---|
-| [1](https://atcoder.jp/contests/tdpc/tasks/tdpc_dice) | [Cpp]() |
-| [2](https://atcoder.jp/contests/joi2011ho/tasks/joi2011ho2) | [Cpp]() |
-| [3](https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/2566) | [Cpp]() |
-| [4](https://atcoder.jp/contests/arc057/tasks/arc057_b) | [Cpp]() |
+| [1](https://atcoder.jp/contests/tdpc/tasks/tdpc_dice) | |
+| [2](https://atcoder.jp/contests/joi2011ho/tasks/joi2011ho2) | |
+| [3](https://onlinejudge.u-aizu.ac.jp/challenges/search/titles/2566) | |
+| [4](https://atcoder.jp/contests/arc057/tasks/arc057_b) | |

@@ -94,10 +94,7 @@ int main()
     if(i == 0) {
       wb = x;
       a[0].PB(y);
-    }
-    else {
-      a[x - wb].PB(y);
-    }
+    } else a[x - wb].PB(y);
   }
   VV<LL> b(4);
   rep(i, 4) {
@@ -107,10 +104,14 @@ int main()
   }
   LL ans = 0;
   rep(i0, b[0].size()) rep(i1, b[1].size()) rep(i2, b[2].size()) rep(i3, b[3].size()) {
-    LL vv = b[0][b[0].size()] - b[0][i0] +
-            b[1][b[1].size()] - b[1][i1] +
-            b[2][b[2].size()] - b[2][i2] +
-            b[3][b[3].size()] - b[3][i3];
+    LL l0 = b[0].size() - 1;
+    LL l1 = b[1].size() - 1;
+    LL l2 = b[2].size() - 1;
+    LL l3 = b[3].size() - 1;
+    LL vv = b[0][l0] - b[0][l0 - i0] +
+            b[1][l1] - b[1][l1 - i1] +
+            b[2][l2] - b[2][l2 - i2] +
+            b[3][l3] - b[3][l3 - i3];
     LL ww = i0 * wb + i1 * (wb + 1) + i2 * (wb + 2) + i3 * (wb + 3);
     if(ww <= w) ans = max(ans, vv);
   }
