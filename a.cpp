@@ -84,12 +84,21 @@ void solve()
 {
   LL rd(n, k);
   V<LL> rdv(a, n);
-  LL ans = 0;
-  PQD<PLL> pq, pq2;
-  V<LL> b(n + 1, 0);
-  rep(i, n) b[i + 1] = b[i] + a[i];
-  LL K = b[k], cur = 0;
-  rep(i, k) { if(a[i] > 0) pq.push(MP(a[i], i)); }
+
+  PQD<PLL> pq;
+  PQA<PLL> pq2;
+
+  LL K = 0, cur = 0, ans = 0;
+  
+  if(k > 1 && a[k - 1] > 0) {
+    ans++;
+    a[k - 1] *= -1;
+  }
+
+  rep(i, k) { 
+    K += a[i];
+    if(a[i] > 0) pq.push(MP(a[i], i));
+  }
   
   rep(i, k) {
     cur += a[i];
@@ -98,26 +107,23 @@ void solve()
       if(pq.top().second <= i)
         cur -= pq.top().first * 2;
       a[pq.top().second] *= -1;
-      pq.pop();
       ans++;
+      pq.pop();
     }
   }
+  cur = 0;
   repa(i, k, n) {
-    if(a[i] < 0) pq2.push({ -a[i], i });
+    if(a[i] < 0) pq2.push({ a[i], i });
     cur += a[i];
-    while(!pq2.empty() && cur < K) {
-      K -= pq2.top().first * 2;
-      if(pq2.top().second <= i)
-        cur += pq2.top().first * 2;
+    while(!pq2.empty() && cur < 0) {
+      cur -= pq2.top().first * 2;
       a[pq2.top().second] *= -1;
       pq2.pop();
       ans++;
     }
   }
-  rep(i, n) b[i + 1] = b[i] + a[i];
   prn(ans);
-  prn(b);
-  // prn(a);
+
 }
 
 int main()
