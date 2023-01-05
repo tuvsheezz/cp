@@ -35,7 +35,7 @@
 ### 1/5
 | | | |
 |---|---|---|
-| [1. Optimal Recommendations](https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_c) | [Cpp]() | 3D dp |
+| [1. Optimal Recommendations](https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_c) | [Cpp](https://atcoder.jp/contests/indeednow-finala-open/submissions/37752821) | 3D dp |
 
 
 ### TO-DO

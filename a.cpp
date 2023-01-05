@@ -85,17 +85,16 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  string rd(s);
   LL rd(n, m);
   VV<V<LL>> dp(110, VV<LL>(110, V<LL>(110, 0)));
   rep(i, n) {
     LL rd(a, b, c, w);
     dp[a][b][c] = max(dp[a][b][c], w);
   }
-  rep(i, 110) rep(j, 110) rep(k, 110) {
-    dp[i + 1][j][k] = max(dp[i + 1][j][k], dp[i][j][k]);
-    dp[i][j + 1][k] = max(dp[i][j + 1][k], dp[i][j][k]);
-    dp[i][j][k + 1] = max(dp[i][j][k + 1], dp[i][j][k]);
+  rep(i, 101) rep(j, 101) rep(k, 101) {
+    rep(ii, 2) rep(jj, 2) rep(kk, 2) {
+      dp[i + ii][j + jj][k + kk] = max(dp[i + ii][j + jj][k + kk], dp[i][j][k]);  
+    }
   }
 
   rep(i, m) {
