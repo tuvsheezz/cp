@@ -86,17 +86,21 @@ int main()
   cin.tie(0);
   cout.tie(0);
   string rd(s);
-  int n = s.size();
-  stack<pair<char, int>> st;
+  LL rd(n, m);
+  VV<V<LL>> dp(110, VV<LL>(110, V<LL>(110, 0)));
   rep(i, n) {
-    if(st.empty() || s[i] == '(')
-      st.push({s[i], 1});
-    else {
-      if(st.top().first == '(') {
-        auto x = st.top().first + 1;
-        st.pop();
-      }
-    }
+    LL rd(a, b, c, w);
+    dp[a][b][c] = max(dp[a][b][c], w);
+  }
+  rep(i, 110) rep(j, 110) rep(k, 110) {
+    dp[i + 1][j][k] = max(dp[i + 1][j][k], dp[i][j][k]);
+    dp[i][j + 1][k] = max(dp[i][j + 1][k], dp[i][j][k]);
+    dp[i][j][k + 1] = max(dp[i][j][k + 1], dp[i][j][k]);
+  }
+
+  rep(i, m) {
+    LL rd(a, b, c);
+    prn(dp[a][b][c]);
   }
   return 0;
 }

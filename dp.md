@@ -32,6 +32,11 @@
 
 - [Educational DP Contest の F ～ J 問題の解説と類題集](https://qiita.com/drken/items/03c7db44ccd27820ea0d)
 
+### 1/5
+| | | |
+|---|---|---|
+| [1. Optimal Recommendations](https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_c) | [Cpp]() | 3D dp |
+
 
 ### TO-DO
 | Problem | Submission |
