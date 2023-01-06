@@ -80,76 +80,27 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-struct Graph
-{
-  long long vertices;
-  vector<vector<pair<long long, long long>>> edges; // PLL: (destination, cost)
-  bool is_directed;
-
-  Graph(long long n, bool dir = false)
-  {
-    vertices = n;
-    edges.resize(n);
-    is_directed = dir;
+void solve(LL n) {
+  V<PLL> a(n);
+  rep(i, n) {
+    LL rd(b, x, y);
+    a[b] = {x, y};
   }
-
-  void add_edge(long long u, long long v, long long cost)
-  {
-    edges[u].push_back({v, cost});
-    if (!is_directed)
-      edges[v].push_back({u, cost});
+  LL rd(m);
+  while(m--) {
+    LL rd(s, g);
   }
-
-  vector<long long> Dijkstra(long long s)
-  {
-    vector<long long> dist(vertices, INF);
-    dist[s] = 0;
-    priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> next_to_visit;
-    
-    next_to_visit.push({0LL, s});
-
-    while (!next_to_visit.empty())
-    {
-      pair<long long, long long> current_node = next_to_visit.top();
-      next_to_visit.pop();
-      long long v = current_node.second;
-
-      if (dist[v] < current_node.first)
-        continue;
-
-      for(auto &edge: edges[v])
-      {
-        if (dist[edge.first] > dist[v] + edge.second)
-        {
-          dist[edge.first] = dist[v] + edge.second;
-          next_to_visit.push({dist[edge.first], edge.first});
-        }
-      }
-    }
-    return dist;
-  }
-};
+}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, m);
-  VV<V<LL>> dp(110, VV<LL>(110, V<LL>(110, 0)));
-  rep(i, n) {
-    LL rd(a, b, c, w);
-    dp[a][b][c] = max(dp[a][b][c], w);
-  }
-  rep(i, 101) rep(j, 101) rep(k, 101) {
-    rep(ii, 2) rep(jj, 2) rep(kk, 2) {
-      dp[i + ii][j + jj][k + kk] = max(dp[i + ii][j + jj][k + kk], dp[i][j][k]);  
-    }
-  }
-
-  rep(i, m) {
-    LL rd(a, b, c);
-    prn(dp[a][b][c]);
+  while(1) {
+    LL rd(n);
+    if(n == 0) break;
+    else solve(n);
   }
   return 0;
 }
