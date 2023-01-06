@@ -84,36 +84,47 @@ void solve()
 {
   LL rd(n);
   V<LL> rdv(a, n);
-  LL x = 0, z = 0;
-  V<bool> q(n, false), p(n, false);
+  V<PLL> x(n);
+  rep(i, n) x[i] = {a[i], i};
+  vsortd(x);
+  V<bool> f(n, false), f2(n, false);
+  V<LL> p(n), q(n);
+  PQA<PLL> pqp, pqq;
   rep(i, n) {
-    a[i]--;
-    if (a[i] == i) {
-      x++;
-      q[i] = true;
-    }
-    if(a[a[i]] == i && a[i] != i && p[i] == false) {
-      z++;
-      p[i] = true;
-      p[a[i]] = true;
+    if(!f[x[i].F - 1]) {
+      p[x[i].S] = x[i].F;
+      f[x[i].F - 1] = true;
+      pqp.push(x[i]);
+    } else if(!f2[x[i].F - 1]) {
+      q[x[i].S] = x[i].F;
+      f2[x[i].F - 1] = true;
+      pqq.push(x[i]);
+    } else {
+      NO;
+      return;
     }
   }
-  LL ans = n - 1;
-  rep(i, n - 1) {
-    LL y = x, zz = z;
-    if(a[i] == i + 1) y++;
-    if(a[i + 1] == i) y++;
-    
-    if(p[i]) zz--;
-    if(p[i + 1]) zz--;
-    if(a[i] == i + 1 && a[i + 1] == i) zz++;
-
-    if(q[i]) y--;
-    if(q[i + 1]) y--;
-
-    ans = min(ans, zz + max((n - zz * 2 - y - 1), 0LL));
+  rep(i, n) {
+    if(f[i]) continue;
+    if(pqq.empty() || pqq.top().F - 1 < i) {
+      NO;
+      return;
+    }
+    p[pqq.top().S] = i + 1;
+    pqq.pop();
   }
-  prn(ans);
+  rep(i, n) {
+    if(f2[i]) continue;
+    if(pqp.empty() || pqp.top().F - 1 < i) {
+      NO;
+      return;
+    }
+    q[pqp.top().S] = i + 1;
+    pqp.pop();
+  }
+  YES;
+  pr(p);
+  pr(q);
 }
 
 int main()
