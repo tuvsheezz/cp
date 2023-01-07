@@ -78,7 +78,7 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 5001000
+#define MAX_N 4004004
 
 struct Sieve
 {
@@ -114,7 +114,7 @@ int main()
     LL rd(n);
     for(int i = 2; i < MAX_N; i++) {
       if(sv.is_prime(i) && n % i == 0) {
-        auto x = (LL)sqrtl(n / i);
+        auto x = (LL)sqrt(n / i);
         if(x * x == n / i) {
           cout << x << ' ' << i << '\n';
           break;
