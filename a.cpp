@@ -78,29 +78,71 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 3001000
 
-void solve(LL n) {
-  V<PLL> a(n);
-  rep(i, n) {
-    LL rd(b, x, y);
-    a[b] = {x, y};
+// Sieve of Eratosthenes
+struct Sieve
+{
+  vector<long long> f, primes;
+  Sieve(int n)
+  {
+    f.resize(n + 1, 0);
+    f[0] = f[1] = -1;
+    for (long long i = 2; i <= n; i++)
+    {
+      if (f[i] > 0)
+        continue;
+      primes.push_back(i);
+      f[i] = i;
+      for (long long j = i * i; j <= n; j += i)
+      {
+        if (f[j] == 0)
+          f[j] = i;
+      }
+    }
   }
-  LL rd(m);
-  while(m--) {
-    LL rd(s, g);
+  bool is_prime(long long n) { return f[n] == n; }
+
+  vector<long long> prime_factors(long long n)
+  {
+    vector<long long> r;
+    while (n != 1)
+    {
+      r.push_back(f[n]);
+      n /= f[n];
+    }
+    return r;
   }
-}
+
+  vector<pair<long long, long long>> prime_factors_count(long long n)
+  {
+    vector<long long> l = prime_factors(n);
+    if (l.size() == 0)
+      return {};
+    vector<pair<long long, long long>> r(1, {l[0], 0});
+    for (auto &x : l)
+    {
+      if (r.back().F == x)
+        r.back().S++;
+      else
+        r.emplace_back(x, 1);
+    }
+    return r;
+  }
+};
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  while(1) {
+  LL rd(T);
+  Sieve sv(MAX_N);
+  while(T--) {
     LL rd(n);
-    if(n == 0) break;
-    else solve(n);
-  }
+    auto x = sv.prime_factors(n);
+    pr(x);
+
+  };
   return 0;
 }
