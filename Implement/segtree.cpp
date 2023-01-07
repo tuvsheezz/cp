@@ -3,18 +3,18 @@ using namespace std;
 
 struct SegmentTree
 {
-  vector<pair<long long, long long>> tree;
+  vector<long long> tree;
   long long N, defv;
   void init(vector<long long> a, long long n, long long def, bool set_parent = true)
   {
     N = 1;
     while (N < n)
       N *= 2;
-    tree.resize(2 * N, make_pair(def, 1));
+    tree.resize(2 * N, 0);
     defv = def;
 
     for (long long i = 0; i < n; i++)
-      tree[N + i] = make_pair(a[i], 1);
+      tree[N + i] = a[i];
     if (set_parent)
       for (long long i = N - 1; i >= 1; i--)
       {
@@ -25,21 +25,6 @@ struct SegmentTree
         else
           tree[i] = tree[2 * i];
       }
-  }
-
-  void update_point(long long i, long long v)
-  {
-    tree[i += N] = make_pair(v, 1);
-    while (i / 2 >= 1)
-    {
-      i /= 2;
-      if (tree[2 * i].first == tree[2 * i + 1].first)
-        tree[i] = make_pair(tree[2 * i].first, tree[2 * i].second + tree[2 * i + 1].second);
-      else if (tree[2 * i].first > tree[2 * i + 1].first)
-        tree[i] = tree[2 * i + 1];
-      else
-        tree[i] = tree[2 * i];
-    }
   }
 
   pair<long long, long long> get_range(long long ql, long long qr) { return _get_range(1, 0, N - 1, ql, qr); }

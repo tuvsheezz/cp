@@ -42,6 +42,12 @@
 |---|---|---|
 | [1. Spider man](https://onlinejudge.u-aizu.ac.jp/problems/0155) | [Cpp]() | |
 
+### 1/7
+AC: ABC284, LC: Biweekly 95
+
+### 1/8
+
+
 
 ### TO-DO
 | Problem | Submission |
