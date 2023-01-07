@@ -80,51 +80,39 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 5001000
 
-struct Sieve
+long long big_pow(long long a, long long b, long long mod)
 {
-  vector<long long> f, primes;
-  Sieve(int n)
+  long long d = 1;
+  while (b > 0)
   {
-    f.resize(n + 1, 0);
-    f[0] = f[1] = -1;
-    for (long long i = 2; i <= n; i++)
-    {
-      if (f[i] > 0)
-        continue;
-      primes.push_back(i);
-      f[i] = i;
-      for (long long j = i * i; j <= n; j += i)
-      {
-        if (f[j] == 0)
-          f[j] = i;
-      }
-    }
+    if (b % 2 == 1)
+      d = d * a % mod;
+    b /= 2;
+    a = a * a % mod;
   }
-  bool is_prime(long long n) { return f[n] == n; }
-};
+  return d;
+}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  Sieve sv(MAX_N);
-  LL rd(T);
-  while(T--) {
-    LL rd(n);
-    for(int i = 2; i < MAX_N; i++) {
-      if(sv.is_prime(i) && n % i == 0) {
-        auto x = (LL)sqrtl(n / i);
-        if(x * x == n / i) {
-          cout << x << ' ' << i << '\n';
-          break;
-        }
-      }
-      if(sv.is_prime(i) && n % (i * i) == 0) {
-        cout << i << ' ' << n / (i * i) << '\n';
-        break;
-      }
-    }
-  };
+  LL x = 23;
+  LL rd(n);
+  STR rd(s);
+  deque<char> a(n), b(n);
+
+  rep(i, n) {
+    a.push_back(s[i]);
+    b.push_back(s[i + n]);
+  }
+  
+  prn(a);
+  prn(b);
+
   return 0;
 }
+abcbac
+cbabac
+abccab
