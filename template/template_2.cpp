@@ -173,6 +173,10 @@ struct BIT
   vector<T> bit;
   void init(int n)
   {
+    while (__builtin_popcount(n) != 1)
+    {
+      n++;
+    }
     N = n;
     bit.resize(n + 1, 0);
   }
