@@ -82,19 +82,25 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 void solve()
 {
-  LL rd(n);
+  LL rd(n, m);
   V<LL> rdv(a, n);
-  vsortd(a);
-  if(a[0] == a[n - 1]) {
-    NO;
-    return;
+  V<PLL> b(n);
+  rep(i, n) b[i] = MP(a[i], i);
+  vsorta(b);
+  LL mx = -1, ans = n + 1;
+  rep(i, n) {
+    if(m >= b[i].first) {
+      m -= b[i].first;
+      mx = b[i].first;
+      ans--;
+    } else {
+      if(m + mx >= b[i].first) {
+        m -= b[i].first;
+        ans--;
+      }
+    }
   }
-  YES;
-  cout << a[n - 1];
-  for(int i = 0; i < n - 1; i++) {
-    cout << ' ' << a[i];
-  }
-  PN;
+  prn(ans);
 }
 
 int main()
@@ -105,7 +111,8 @@ int main()
   LL rd(T);
   while (T--)
   {
-    solve();
+          solve();
   }
   return 0;
 }
+                              
