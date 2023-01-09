@@ -79,35 +79,47 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
 
-
-void solve()
+struct Graph
 {
-}
+  long long vertices;
+  vector<vector<long long>> edges;
+  vector<long long> cnt;
+
+  Graph(long long n)
+  {
+    vertices = n;
+    edges.resize(n);
+    cnt.resize(n, -1);
+  }
+
+  void add_edge(long long u, long long v) { edges[u].push_back(v); }
+
+  long long DFS(long long node)
+  {
+    if(cnt[node] != -1)
+      return cnt[node];
+    long long c = 0;
+    for(auto &x: edges[node]) { c = max(c, 1 + DFS(x)); }
+    return cnt[node] = c;
+  }
+};
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
+  LL rd(n, m);
+
+  Graph G(n);
+  while(m--) {
+    LL rd(u, v);
+    G.add_edge(u - 1, v - 1);
   }
+
+  LL ans = 0;
+  rep(i, n) ans = max(ans, G.DFS(i));
+  prn(ans);
   return 0;
 }

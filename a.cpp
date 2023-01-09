@@ -78,41 +78,48 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 5001000
+#define MAX_N 100100
 
-long long big_pow(long long a, long long b, long long mod)
+struct Graph
 {
-  long long d = 1;
-  while (b > 0)
+  long long vertices;
+  vector<vector<PLL>> edges;
+  vector<long long> cnt;
+
+  Graph(long long n)
   {
-    if (b % 2 == 1)
-      d = d * a % mod;
-    b /= 2;
-    a = a * a % mod;
+    vertices = n;
+    edges.resize(n);
+    cnt.resize(n, -1);
   }
-  return d;
-}
+
+  void add_edge(long long u, long long v, long long w) { edges[u].push_back({v, w}); }
+
+  long long DFS(long long node)
+  {
+    if(cnt[node] != -1)
+      return cnt[node];
+    long long c = 0;
+    for(auto &x: edges[node]) { c = max(c, x.S + DFS(x.F)); }
+    return cnt[node] = c;
+  }
+};
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL x = 23;
-  LL rd(n);
-  STR rd(s);
-  deque<char> a(n), b(n);
+  LL rd(n, m);
 
-  rep(i, n) {
-    a.push_back(s[i]);
-    b.push_back(s[i + n]);
+  Graph G(n);
+  while(m--) {
+    LL rd(u, v, w);
+    G.add_edge(u, v, w);
   }
-  
-  prn(a);
-  prn(b);
 
+  LL ans = 0;
+  rep(i, n) ans = max(ans, G.DFS(i));
+  prn(ans);
   return 0;
 }
-abcbac
-cbabac
-abccab

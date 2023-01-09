@@ -40,14 +40,24 @@
 ### 1/6
 
 ### 1/7
-AC, LC
+| | | |
+|---|---|---|
+| AC | | |
+| LC | | |
 
-### 1/8
-LC, CF
+### 1/7
+| | | |
+|---|---|---|
+| LC | | |
+| CF | | |
 
 ### 1/9
 
 ### 1/10
+| | | |
+|---|---|---|
+| [1. G - Longest Path](https://atcoder.jp/contests/dp/tasks/dp_g) | [Cpp](https://atcoder.jp/contests/dp/submissions/37910852) | DAG, DFS, memo |
+
 
 ### TO-DO
 | Problem | Submission |
