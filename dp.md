@@ -38,16 +38,16 @@
 | [1. Optimal Recommendations](https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_c) | [Cpp](https://atcoder.jp/contests/indeednow-finala-open/submissions/37752821) | 3D dp |
 
 ### 1/6
-| | | |
-|---|---|---|
-| [1. Spider man](https://onlinejudge.u-aizu.ac.jp/problems/0155) | [Cpp]() | |
 
 ### 1/7
-AC: ABC284, LC: Biweekly 95
+AC, LC
 
 ### 1/8
+LC, CF
 
+### 1/9
 
+### 1/10
 
 ### TO-DO
 | Problem | Submission |
