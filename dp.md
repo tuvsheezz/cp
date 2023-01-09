@@ -38,17 +38,11 @@
 | [1. Optimal Recommendations](https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_c) | [Cpp](https://atcoder.jp/contests/indeednow-finala-open/submissions/37752821) | 3D dp |
 
 ### 1/6
-![---](https://media.tenor.com/mQP0zbO4_mgAAAAC/garfield-lazy.gif)
+:
 
 ### 1/7
-| | |
-|---|---|
-| AC | LC |
 
-### 1/7
-| | |
-|---|---|
-| LC | CF |
+### 1/8
 
 ### 1/9
 
@@ -63,6 +57,7 @@
 | [2. 経路](https://atcoder.jp/contests/abc037/tasks/abc037_d) | [Cpp](https://atcoder.jp/contests/abc037/submissions/37681591) | DFS, memoization |
 | [3. H - Grid](https://atcoder.jp/contests/dp/tasks/dp_h) | [Cpp](https://atcoder.jp/contests/dp/submissions/37911431) | 数え上げDP |
 | [4. 通学経路](https://onlinejudge.u-aizu.ac.jp/problems/0515) | [Cpp](https://onlinejudge.u-aizu.ac.jp/status/users/togi/submissions/1/0515/judge/7316148/C++17) | 数え上げDP |
+| [5. I - Coins](https://atcoder.jp/contests/dp/tasks/dp_i) | [Cpp](https://atcoder.jp/contests/dp/submissions/37913498) | 確率DP |
 
 
 ### TO-DO
