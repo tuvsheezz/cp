@@ -78,29 +78,34 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 1001001
 
 void solve() {
-  LL rd(n, x);
-  LL a = n, b = x;
-  if(n == x) {
-    prn(x);
-    return;
-  }
-  rep(i, 63) {
-    if(a % 2 == 0 && b % 2 == 1) {
-      prn(-1);
-      return;
+  LL rd(n);
+  VV<LL> a(n);
+  MLL mp;
+  rep(i, n) {
+    LL rd(c);
+    rep(j, c) {
+      LL rd(x);
+      a[i].PB(x);
+      mp[x]++;
     }
-    if(a % 2 == 1 && b % 2 == 0) {
-      if(((a + 1) & a) == b) {
-        prn(((a + 1) << i));
-        return;
+  }
+  rep(i, n) {
+    bool f = true;
+    repauto(x, a[i]) {
+      if(mp[x] == 1) { 
+        f = false;
+        break;
       }
     }
-    a /= 2;
-    b /= 2;
+    if(f) {
+      Yes;
+      return;
+    }
   }
+  No;
 }
 
 int main()

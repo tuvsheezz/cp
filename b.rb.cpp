@@ -79,28 +79,24 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
+template<class T> inline bool chmin(T& a, T b) {
+    if (a > b) {
+        a = b;
+        return true;
+    }
+    return false;
+}
+template<class T> inline bool chmax(T& a, T b) {
+    if (a < b) {
+        a = b;
+        return true;
+    }
+    return false;
+}
 
-void solve() {
-  LL rd(n, x);
-  LL a = n, b = x;
-  if(n == x) {
-    prn(x);
-    return;
-  }
-  rep(i, 63) {
-    if(a % 2 == 0 && b % 2 == 1) {
-      prn(-1);
-      return;
-    }
-    if(a % 2 == 1 && b % 2 == 0) {
-      if(((a + 1) & a) == b) {
-        prn(((a + 1) << i));
-        return;
-      }
-    }
-    a /= 2;
-    b /= 2;
-  }
+
+void solve()
+{
 }
 
 int main()
