@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define PI 3.141592653589793238462643383279502884L
-#define LL long long
+#define LL unsigned long long
 #define DD double
 #define ULL unsigned long long
 #define STR string
@@ -78,28 +78,67 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 300300
 
-void solve() {
-  LL rd(n, x);
-  LL a = n, b = x;
-  if(n == x) {
-    prn(x);
-    return;
-  }
-  rep(i, 63) {
-    if(a % 2 == 0 && b % 2 == 1) {
-      prn(-1);
-      return;
-    }
-    if(a % 2 == 1 && b % 2 == 0) {
-      if(((a + 1) & a) == b) {
-        prn(((a + 1) << i));
-        return;
+struct Sieve
+{
+  vector<long long> f, primes;
+  Sieve(int n)
+  {
+    f.resize(n + 1, 0);
+    f[0] = f[1] = -1;
+    for (long long i = 2; i <= n; i++)
+    {
+      if (f[i] > 0)
+        continue;
+      primes.push_back(i);
+      f[i] = i;
+      for (long long j = i * i; j <= n; j += i)
+      {
+        if (f[j] == 0)
+          f[j] = i;
       }
     }
-    a /= 2;
-    b /= 2;
+  }
+  bool is_prime(long long n) { return f[n] == n; }
+
+  vector<long long> prime_factors(long long n)
+  {
+    vector<long long> r;
+    while (n != 1)
+    {
+      r.push_back(f[n]);
+      n /= f[n];
+    }
+    return r;
+  }
+
+  vector<pair<long long, long long>> prime_factors_count(long long n)
+  {
+    vector<long long> l = prime_factors(n);
+    if (l.size() == 0)
+      return {};
+    vector<pair<long long, long long>> r(1, {l[0], 0});
+    for (auto &x : l)
+    {
+      if (r.back().F == x)
+        r.back().S++;
+      else
+        r.emplace_back(x, 1);
+    }
+    return r;
+  }
+};
+
+void solve() {
+  Sieve sv.max(n);
+  MLL sv()
+  LL rd(n);
+  V<LL> rdv(a, n);
+  V<LL> MAX_N(a);
+  rep(i, n) {
+    
+
   }
 }
 
@@ -108,10 +147,10 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
-  }
+  // LL rd(T);
+  // while (T--)
+  // {
+  solve();
+  // }
   return 0;
 }
