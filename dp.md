@@ -37,12 +37,8 @@
 |---|---|---|
 | [1. Optimal Recommendations](https://atcoder.jp/contests/indeednow-finala-open/tasks/indeednow_2015_finala_c) | [Cpp](https://atcoder.jp/contests/indeednow-finala-open/submissions/37752821) | 3D dp |
 
-### 1/6
-:
-
-### 1/7
-
-### 1/8
+### 1/6 ~ 1/8
+![---](https://media.tenor.com/mQP0zbO4_mgAAAAC/garfield-lazy.gif)
 
 ### 1/9
 
