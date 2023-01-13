@@ -55,6 +55,11 @@
 | [4. 通学経路](https://onlinejudge.u-aizu.ac.jp/problems/0515) | [Cpp](https://onlinejudge.u-aizu.ac.jp/status/users/togi/submissions/1/0515/judge/7316148/C++17) | 数え上げDP |
 | [5. I - Coins](https://atcoder.jp/contests/dp/tasks/dp_i) | [Cpp](https://atcoder.jp/contests/dp/submissions/37913498) | 確率DP |
 
+### 1/11 ~ 1/13
+![---](https://cdn.drawception.com/drawings/p1K6MsWtkP.png)
+
+### 1/14
+
 
 ### TO-DO
 | Problem | Submission |
