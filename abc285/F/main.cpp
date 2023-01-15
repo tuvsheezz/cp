@@ -86,13 +86,13 @@ struct BoolTree
   LL tree_size, N;
   bool def;
 
-  void init(LL n)
+  BoolTree(LL n)
   {
     while (__builtin_popcount(n) != 1)
     {
       n++;
     }
-    tree.resize(2 * n, v);
+    tree.resize(2 * n, false);
     tree_size = 2 * n;
     N = n;
     def = true;
@@ -187,31 +187,69 @@ int main()
     bool ll, rr;
     if(i == 0) ll = true;
     else {
-      ll = s[i] > s[i - 1];
+      ll = s[i] >= s[i - 1];
     }
-    if(n - 1 == 0) rr = true;
+    if(n - 1 == i) rr = true;
     else {
-      rr = s[i] < s[i + 1];
+      rr = s[i] <= s[i + 1];
     }
     bt.update_node(i, rr && ll);
-  }
-
-  rep(i, n) {
-    prn(bt.get_leaf(i));
   }
 
   while(Q--) {
     LL rd(com);
     if(com == 1) {
       LL rd(ind);
+      ind--;
       char rd(c);
+      s[ind] = c;
       V<LL> x(26, 0);
       x[c - 'a']++;
-      st.update_node(ind - 1, x);
+      st.update_node(ind, x);
+      
+      bool ll, rr;
+      
+      if(ind == 0) ll = true;
+      else {
+        ll = s[ind] >= s[ind - 1];
+      }
+
+      if(n - 1 == ind) rr = true;
+      else {
+        rr = s[ind] <= s[ind + 1];
+      }
+      bt.update_node(ind, rr && ll);
+
+      if(ind > 0) {
+        LL ind2 = ind - 1;
+        if(ind2 == 0) ll = true;
+        else {
+          ll = s[ind2] >= s[ind2 - 1];
+        }
+        if(n - 1 == ind2) rr = true;
+        else {
+          rr = s[ind2] <= s[ind2 + 1];
+        }
+        bt.update_node(ind2, rr && ll);
+        ind2++;
+      }
+      if(ind < n - 1) {
+        LL ind3 = ind + 1;
+        if(ind3 == 0) ll = true;
+        else {
+          ll = s[ind3] >= s[ind3 - 1];
+        }
+        if(n - 1 == ind3) rr = true;
+        else {
+          rr = s[ind3] <= s[ind3 + 1];
+        }
+        bt.update_node(ind3, rr && ll);
+      }
     } else {
       LL rd(l, r);
+      l--, r--;
       auto all = st.get_range(0, n);
-      auto range = st.get_range(l - 1, r - 1);
+      auto range = st.get_range(l, r);
       LL L = 0, R = 25;
       while(range[L] == 0) L++;
       while(range[R] == 0) R--;
@@ -219,7 +257,33 @@ int main()
       repa(i, L + 1, R) {
         if(all[i] != range[i]) f = false;
       }
-      f ? Yes : No;
+      bool ff = true;
+      if(l < r) {
+        bool tmpL = bt.get_leaf(l);
+        bool tmpR = bt.get_leaf(r);
+
+        bool ll, rr;
+        if(n - 1 == l) rr = true;
+        else {
+          rr = s[l] <= s[l + 1];
+        }
+
+        bt.update_node(l, rr);
+
+        if(r == 0) ll = true;
+        else {
+          ll = s[r] >= s[r - 1];
+        }
+        bt.update_node(r, ll);
+
+        ff = bt.get_range(l, r);
+
+        bt.update_node(l, tmpL);
+        bt.update_node(r, tmpR);
+      }
+
+
+      (f && ff) ? Yes : No;
     }
   }
   return 0;
