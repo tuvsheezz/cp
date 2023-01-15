@@ -79,35 +79,85 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
 
-
-void solve()
+struct SegmentTree
 {
-}
+  vector<vector<LL>> tree;
+  LL tree_size, N;
+  V<LL> def;
+
+  SegmentTree(LL n)
+  {
+    while (__builtin_popcount(n) != 1)
+    {
+      n++;
+    }
+    def.resize(26, 0);
+    tree.resize(2 * n, def);
+    tree_size = 2 * n;
+    N = n;
+  }
+
+  V<LL> get_range(LL ql, LL qr) { return _get_range(1, 0, N - 1, ql, qr); }
+  V<LL> _get_range(LL node, LL sl, LL sr, LL ql, LL qr)
+  {
+    if (ql <= sl && sr <= qr)
+      return tree[node];
+    if (sr < ql || qr < sl)
+      return def;
+    auto xx = _get_range(2 * node, sl, (sl + sr) / 2, ql, qr);
+    auto yy = _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr);
+    rep(i, 26) xx[i] += yy[i];
+    return xx;
+  }
+
+  void update_node(LL ind, V<LL> val)
+  {
+    tree[ind += N] = val;
+    while (ind / 2 >= 1)
+    {
+      ind /= 2;
+      auto xx = tree[2 * ind];
+      auto yy = tree[2 * ind + 1];
+      rep(i, 26) xx[i] += yy[i];
+      tree[ind] = xx;
+    }
+  }
+  V<LL> get_leaf(LL x) { return tree[x + N]; }
+};
+
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
+  LL rd(n);
+  STR rd(s);
+  LL rd(Q);
+  SegmentTree st(n);
+  
+  rep(i, n) {
+    V<LL> x(26, 0);
+    x[s[i] - 'a']++;
+    st.update_node(i, x);
+  }
+
+  while(Q--) {
+    LL rd(com);
+    if(com == 1) {
+      LL rd(ind);
+      char rd(c);
+      V<LL> x(26, 0);
+      x[c - 'a']++;
+      st.update_node(ind - 1, x);
+    } else {
+      LL rd(l, r);
+      auto all = st.get_range(0, n);
+      auto range = st.get_range(l, r);
+      pr(all);
+      pr(range);
+    }
   }
   return 0;
 }

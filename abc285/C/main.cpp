@@ -88,7 +88,7 @@ int main()
   STR rd(s);
   LL n = s.size(), ans = 0;
   rep(i, n) {
-    ans = ans * 26 + s[i] - 'A';
+    ans = ans * 26 + s[i] - 'A' + 1;
   }
   prn(ans);
   return 0;
