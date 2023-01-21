@@ -19,6 +19,11 @@ struct Graph
     edges[u].push_back({v, w});
     edges[v].push_back({u, w});
   }
+
+  void Prim() {
+    
+  }
+
 };
 
 
