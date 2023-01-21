@@ -79,24 +79,11 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
 
-
-void solve()
+string rotate(string s, int n)
 {
+    string tmp = s + s;
+    return tmp.substr(n, s.size());
 }
 
 int main()
@@ -104,10 +91,18 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
+  LL rd(n, a, b);
+  STR rd(s);
+  LL ans = INF;
+  rep(i, n) {
+    string t = rotate(s, i);
+    LL tmp = a * i;
+    rep(j, n / 2) {
+      if(t[j] != t[n - 1 - j])
+        tmp += b;
+    }
+    ans = min(ans, tmp);
   }
+  prn(ans);
   return 0;
 }

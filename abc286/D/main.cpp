@@ -86,10 +86,21 @@ int main()
   cin.tie(0);
   cout.tie(0);
   LL rd(n, x);
-  vector<LL> dp(x + 1, 0);
-  dp[0] = 1;
+  V<bool> dp(x + 1, false);
+  dp[0] = true;
   rep(i, n) {
-    LL rd(x, y);
+    LL rd(a, b);
+    repd(k, x, 0) {
+      repa(j, 1, b + 1) {
+        LL g = k - j * a;
+        if(g >= 0 && dp[g] == true)
+          dp[k] = true;
+      }
+    }
   }
+  if(dp[x] == true)
+    Yes;
+  else
+    No;
   return 0;
 }

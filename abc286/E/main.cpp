@@ -79,35 +79,83 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
 
-
-void solve()
+struct Graph
 {
-}
+  LL vertices;
+  vector<vector<LL>> edges;
+  V<LL> sou;
+  Graph(LL n)
+  {
+    vertices = n;
+    edges.resize(n);
+    sou.resize(n);
+  }
+
+  void add_edge(LL u, LL v)
+  {
+    edges[u].push_back(v);
+  }
+
+  void set_A(V<LL> x)
+  {
+    rep(i, vertices) sou[i] = x[i];
+  }
+
+  vector<PLL> BFS(LL root)
+  {
+    vector<bool> visited(vertices, false);
+    queue<LL> next_to_visit;
+
+    visited[root] = true;
+    next_to_visit.push(root);
+    vector<PLL> dist(vertices, {INF, -INF});
+    dist[root] = {0, sou[root]};
+    while (!next_to_visit.empty())
+    {
+      LL cn = next_to_visit.front();
+      next_to_visit.pop();
+      for (auto &x : edges[cn])
+      {
+        if (!visited[x])
+        {
+          dist[x] = {dist[cn].F + 1, dist[cn].S + sou[x]};
+          visited[x] = true;
+          next_to_visit.push(x);
+        } else if(dist[x].F == dist[cn].F + 1 && dist[x].S < dist[cn].S + sou[x]) {
+            dist[x].S = dist[cn].S + sou[x];
+        }
+      }
+    }
+    return dist;
+  }
+};
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
+  LL rd(n);
+  Graph G(n);
+  V<LL> rdv(a, n);
+  G.set_A(a);
+  rep(i, n) {
+    STR rd(s);
+    rep(j, n) {
+      if(s[j] == 'Y')
+        G.add_edge(i, j);
+    }
+  }
+  VV<PLL> x(n);
+  rep(i, n) { x[i] = G.BFS(i); }
+  LL rd(Q);
+  while(Q--) {
+    LL rd(s, t);
+    if(x[s - 1][t - 1].F == INF)
+      prn("Impossible");
+    else
+      cout << x[s - 1][t - 1].F << " " << x[s - 1][t - 1].S << endl; 
   }
   return 0;
 }
