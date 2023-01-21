@@ -106,13 +106,8 @@ struct Graph
   }
   void FloydWarshal()
   {
-    rep(k, vertices)
-    {
-      rep(i, vertices)
-      {
-        rep(j, vertices) { dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]); }
-      }
-    }
+    rep(k, vertices) rep(i, vertices) rep(j, vertices)
+      dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
   }
 };
 
