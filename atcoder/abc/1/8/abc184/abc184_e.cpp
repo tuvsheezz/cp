@@ -82,41 +82,58 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 struct Graph
 {
-  int vertices;
-  vector<vector<int>> edges;
-  bool is_directed;
+  LL vertices;
+  vector<vector<LL>> edges;
+  vector<queue<LL>> alp;
+  vector<LL> a;
 
-  Graph(int n, bool dir = false)
+  Graph(LL n, bool dir = false)
   {
     vertices = n;
     edges.resize(n);
-    is_directed = dir;
+    alp.resize(26);
+    a.resize(n, -1);
   }
 
-  void add_edge(int u, int v)
+  void add_edge(LL u, LL v)
   {
     edges[u].push_back(v);
-    if (!is_directed)
-      edges[v].push_back(u);
+    edges[v].push_back(u);
   }
-  vector<int> BFS(int root)
+  void set_alp(LL u, LL w) {
+    a[u] = w;
+    alp[w].push(u);
+  }
+
+  vector<LL> BFS(LL root)
   {
     vector<bool> visited(vertices, false);
-    queue<int> next_to_visit;
+    queue<LL> next_to_visit;
 
     visited[root] = true;
     next_to_visit.push(root);
-    vector<int> dist(vertices, 1e8);
+    vector<LL> dist(vertices, 1e8);
     dist[root] = 0;
     while (!next_to_visit.empty())
     {
-      int current_node = next_to_visit.front();
+      LL current_node = next_to_visit.front();
       next_to_visit.pop();
-      for (auto &x : edges[current_node])
+      if(a[current_node] != -1) {
+        while(!alp[a[current_node]].empty()) {
+          auto x = alp[a[current_node]].front();
+          if(x != current_node) {
+            dist[x] = min(dist[x], dist[current_node] + 1);
+            visited[x] = true;
+            next_to_visit.push(x);
+          } 
+          alp[a[current_node]].pop();
+        }
+      }
+      for (auto &x: edges[current_node])
       {
         if (!visited[x])
         {
-          dist[x] = dist[current_node] + 1;
+          dist[x] = min(dist[x], dist[current_node] + 1);
           visited[x] = true;
           next_to_visit.push(x);
         }
@@ -126,12 +143,36 @@ struct Graph
   }
 };
 
+V<PLL> move0 = {{-1, 0}, {0, -1}};
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
+  LL rd(h, w);
+  LL start, goal;
+  V<STR> rdv(a, h);
   
+  Graph G(h * w);
+  rep(i, h) {
+    rep(j, w) {
+      repauto(m, move0)
+      {
+        if (0 <= j + m.S && j + m.S < w && 0 <= i + m.F && i + m.F < h && a[i][j] != '#' && a[i + m.F][j + m.S] != '#')
+        {
+          G.add_edge(i * w + j, (i + m.F) * w + j + m.S);
+        }
+      }
+      if('a' <= a[i][j] && a[i][j] <= 'z') G.set_alp(i * w + j, a[i][j] - 'a');
+      if(a[i][j] == 'S') start = i * w + j;
+      if(a[i][j] == 'G') goal = i * w + j;
+    }
+  }
+  auto dist = G.BFS(start);
+  if(dist[goal] != 1e8)
+    prn(dist[goal]);
+  else
+    prn(-1);
   return 0;
 }
