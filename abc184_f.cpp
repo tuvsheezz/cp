@@ -80,6 +80,20 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+V<LL> FUN(V<LL> &a) {
+  V<LL> A;
+  LL na = a.size();
+  rep(bit, (1 << na)) {
+    LL tmp = 0;
+    rep(i, na) {
+      if(bit & (1 << i))
+        tmp += a[i];
+    }
+    A.push_back(tmp);
+  }
+  return A;
+}
+
 int main()
 {
   ios_base::sync_with_stdio(false);
@@ -91,5 +105,19 @@ int main()
     LL rd(x);
     (i & 1) ? a.PB(x) : b.PB(x);
   }
+  V<LL> A = FUN(a), B = FUN(b);
+  vsorta(A);
+  vsorta(B);
+  LL ans = 0;
+  repauto(x, A) {
+    if(T - x >= 0) {
+      auto it = lower_bound(B.begin(), B.end(), T - x);
+      if(it == B.end() || *it > T - x) {
+        --it;
+      }
+      ans = max(ans, *it + x);
+    }
+  }
+  prn(ans);
   return 0;
 }
