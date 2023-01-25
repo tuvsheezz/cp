@@ -137,6 +137,7 @@ int main()
   col.update_range(0, 0, 0);
   row.update_range(n - 1, n - 1, 0);
   col.update_range(n - 1, n - 1, 0);
+  
   while(Q--) {
     LL rd(c);
     if(c == 1) {
@@ -150,6 +151,12 @@ int main()
       ans -= y;
       row.update_range(0, y, max(0LL, y - 2));
     }
+    prn(ans);
+    rep(i, n) cout << row.get_point(i) << " ";
+    PN;
+    rep(i, n) cout << col.get_point(i) << " ";
+    PN;
+    prn("----------------------------");
   }
   prn(ans);
   return 0;
