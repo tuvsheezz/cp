@@ -85,7 +85,7 @@ struct SegmentTree
   V<LL> tree;
   LL tree_size, N, def;
 
-  void init(LL n)
+  SegmentTree(LL n)
   {
     while (__builtin_popcount(n) != 1)
     {
@@ -101,7 +101,7 @@ struct SegmentTree
   {
     if (ql <= sl && sr <= qr)
     {
-      tree[node] += v;
+      tree[node] = min(tree[node], v);
       ret;
     }
     if (sr < ql || qr < sl)
@@ -116,11 +116,10 @@ struct SegmentTree
     while (ind / 2 >= 1)
     {
       ind /= 2;
-      tree[ind] = ope(tree[2 * ind], tree[2 * ind + 1]);
+      ret = min(ret, tree[2 * ind]);
     }
+    return ret;
   }
-  void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
-  LL get_leaf(LL x) { ret tree[x + N]; }
 };
 
 int main()
@@ -131,6 +130,6 @@ int main()
   
   LL rd(n, Q);
   LL ans = (n - 2) * (n - 2);
-
+  SegmentTree row(n), col(n);
   return 0;
 }
