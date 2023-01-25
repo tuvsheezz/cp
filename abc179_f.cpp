@@ -91,7 +91,7 @@ struct SegmentTree
     {
       n++;
     }
-    tree.resize(2 * n, 0);
+    tree.resize(2 * n, INF);
     tree_size = 2 * n;
     N = n;
   }
@@ -102,23 +102,23 @@ struct SegmentTree
     if (ql <= sl && sr <= qr)
     {
       tree[node] = min(tree[node], v);
-      ret;
+      return;
     }
     if (sr < ql || qr < sl)
-      ret;
+      return;
     _update_range(2 * node, sl, (sl + sr) / 2, ql, qr, v);
     _update_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr, v);
   }
 
   LL get_point(LL ind)
   {
-    LL ret = tree[ind += N]
+    LL x = tree[ind += N];
     while (ind / 2 >= 1)
     {
       ind /= 2;
-      ret = min(ret, tree[2 * ind]);
+      x = min(x, tree[ind]);
     }
-    return ret;
+    return x;
   }
 };
 
@@ -131,5 +131,26 @@ int main()
   LL rd(n, Q);
   LL ans = (n - 2) * (n - 2);
   SegmentTree row(n), col(n);
+  row.update_range(0, n, n - 2);
+  col.update_range(0, n, n - 2);
+  row.update_range(0, 0, 0);
+  col.update_range(0, 0, 0);
+  row.update_range(n - 1, n - 1, 0);
+  col.update_range(n - 1, n - 1, 0);
+  while(Q--) {
+    LL rd(c);
+    if(c == 1) {
+      LL rd(y);
+      auto x = row.get_point(y - 1);
+      ans -= x;
+      col.update_range(0, x, max(x - 2, 0LL));
+    } else {
+      LL rd(x);
+      auto y = col.get_point(x - 1);
+      ans -= y;
+      row.update_range(0, y, max(0LL, y - 2));
+    }
+  }
+  prn(ans);
   return 0;
 }
