@@ -1,3 +1,4 @@
+// https://atcoder.jp/contests/abc179/tasks/abc179_f
 #include <bits/stdc++.h>
 using namespace std;
 #define PI 3.141592653589793238462643383279502884L
@@ -131,32 +132,25 @@ int main()
   LL rd(n, Q);
   LL ans = (n - 2) * (n - 2);
   SegmentTree row(n), col(n);
-  row.update_range(0, n, n - 2);
-  col.update_range(0, n, n - 2);
+  row.update_range(0, n, n - 1);
+  col.update_range(0, n, n - 1);
   row.update_range(0, 0, 0);
   col.update_range(0, 0, 0);
   row.update_range(n - 1, n - 1, 0);
   col.update_range(n - 1, n - 1, 0);
   
   while(Q--) {
-    LL rd(c);
+    LL rd(c, d);
+    d--;
     if(c == 1) {
-      LL rd(y);
-      auto x = row.get_point(y - 1);
-      ans -= x;
-      col.update_range(0, x, max(x - 2, 0LL));
+      auto f = row.get_point(d);
+      ans -= f - 1;
+      col.update_range(0, f - 1, d);
     } else {
-      LL rd(x);
-      auto y = col.get_point(x - 1);
-      ans -= y;
-      row.update_range(0, y, max(0LL, y - 2));
+      auto f = col.get_point(d);
+      ans -= f - 1;
+      row.update_range(0, f - 1, d);
     }
-    prn(ans);
-    rep(i, n) cout << row.get_point(i) << " ";
-    PN;
-    rep(i, n) cout << col.get_point(i) << " ";
-    PN;
-    prn("----------------------------");
   }
   prn(ans);
   return 0;
