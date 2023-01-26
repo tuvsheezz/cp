@@ -138,5 +138,46 @@ int main()
   LL rd(h, w, t);
   LL start, goal;
   V<STR> rdv(s, h);
+  rep(i, h) rep(j, w) {
+    if(s[i][j] == 'S') {
+      start = i * w + j;
+      s[i][j] = '.';
+    }
+    if(s[i][j] == 'G') {
+      goal = i * w + j;
+      s[i][j] = '.';
+    }
+  }
+  LL l = 1, r = 1e9 + 1, m;
+  while(l + 1 < r) {
+    m = l + (r - l) / 2;
+    Graph G(h * w, true);
+    rep(i, h) {
+      rep(j, w) {
+        if(i > 0 && s[i - 1][j] == '#')
+          G.add_edge(i * w + j, (i - 1) * w + j, m);
+        if(i > 0 && s[i - 1][j] == '.')
+          G.add_edge(i * w + j, (i - 1) * w + j, 1);
+        if(i > 0 && s[i][j] == '#')
+          G.add_edge((i - 1) * w + j, i * w + j, m);
+        if(i > 0 && s[i][j] == '.')
+          G.add_edge((i - 1) * w + j, i * w + j, 1);
+        if(j > 0 && s[i][j - 1] == '#')
+          G.add_edge(i * w + j, i * w + j - 1, m);
+        if(j > 0 && s[i][j - 1] == '.')
+          G.add_edge(i * w + j, i * w + j - 1, 1);
+        if(j > 0 && s[i][j] == '#')
+          G.add_edge(i * w + j - 1, i * w + j, m);
+        if(j > 0 && s[i][j] == '.')
+          G.add_edge(i * w + j - 1, i * w + j, 1);
+      }
+    }
+    auto x = G.Dijkstra(start, goal);
+    if(x <= t)
+      l = m;
+    else
+      r = m;
+  }
+  prn(l);
   return 0;
 }
