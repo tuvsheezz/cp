@@ -79,35 +79,72 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
 
-
-void solve()
+template <class T>
+struct SegmentTree
 {
-}
+  V<T> tree;
+  T tree_size, N, def;
+
+  SegmentTree(T n, T v = 0)
+  {
+    while (__builtin_popcount(n) != 1)
+    {
+      n++;
+    }
+    tree.resize(2 * n, v);
+    tree_size = 2 * n;
+    N = n;
+    def = v;
+  }
+
+  T get_range(T ql, T qr) { ret _get_range(1, 0, N - 1, ql, qr); }
+  T _get_range(T node, T sl, T sr, T ql, T qr)
+  {
+    if (ql <= sl && sr <= qr)
+      ret tree[node];
+    if (sr < ql || qr < sl)
+      ret def;
+    ret _get_range(2 * node, sl, (sl + sr) / 2, ql, qr) + _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr);
+  }
+
+  void update_node(T ind, T val)
+  {
+    tree[ind += N] = val;
+    while (ind / 2 >= 1)
+    {
+      ind /= 2;
+      tree[ind] = (tree[2 * ind] + tree[2 * ind + 1]);
+    }
+  }
+  LL get_leaf(LL x) { ret tree[x + N]; }
+};
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
+  LL rd(n, Q);
+  SegmentTree st(n), st2(n);
+  rep(i, n) {
+    LL rd(x, y);
+    st.update_node(i, x * y);
+    st2.update_node(i, y);
+  }
+  while(Q--) {
+    LL rd(com);
+    if(com == 1) {
+      LL rd(x, y);
+      st.update_node(x - 1, st2.get_leaf(x - 1) * y);
+    }
+    else if(com == 2) {
+      LL rd(x, y);
+      st.update_node(x - 1, st.get_leaf(x - 1) / st2.get_leaf(x - 1) * y);
+      st2.update_node(x - 1, y);
+    } else {
+      LL rd(y);
+    }
   }
   return 0;
 }
