@@ -87,18 +87,21 @@ int main()
   cout.tie(0);
   LL rd(n, m, k);
   V<LL> rdv(a, n);
-  V<bool> in(n, false);
+  V<LL> in(n, 0);
   LL sum = 0;
-  PQA<PLL> b, c;
+  PQD<PLL> b;
+  PQA<PLL> c;
   rep(i, m) c.push({a[i], i});
   rep(i, k) {
     sum += c.top().first;
+    in[c.top().second] = 1;
     b.push(c.top());
     c.pop();
   }
-  repa(i, m, n) {
-
-  }
   prn(sum);
+  repa(i, m, n) {
+    
+    prn(sum);
+  }
   return 0;
 }
