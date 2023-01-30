@@ -85,6 +85,20 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, m);
+  LL rd(n, m, k);
   V<LL> rdv(a, n);
+  V<bool> in(n, false);
+  LL sum = 0;
+  PQA<PLL> b, c;
+  rep(i, m) c.push({a[i], i});
+  rep(i, k) {
+    sum += c.top().first;
+    b.push(c.top());
+    c.pop();
+  }
+  repa(i, m, n) {
+
+  }
+  prn(sum);
+  return 0;
 }
