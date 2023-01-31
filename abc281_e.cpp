@@ -87,7 +87,6 @@ int main()
   cout.tie(0);
   LL rd(n, m, k);
   V<LL> rdv(a, n);
-  V<LL> in(n, 0);
   LL sum = 0;
   PQD<PLL> b;
   PQA<PLL> c;
