@@ -85,15 +85,8 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  STR rd(s);
-  vector<char> x;
-  repauto(c, s) {
-    if('0' <= c && c <= '9')
-      continue;
-    else
-      x.push_back(c);
-  }
-  repauto(c, x) cout << c;
-  PN;
+
+  
+
   return 0;
 }
