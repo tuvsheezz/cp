@@ -105,10 +105,10 @@ struct Graph
       edges[v].push_back(u);
   }
 
-  ans DFS(long long node)
+  void DFS(long long node)
   {
     if(visited[node] == true)
-      return cnt[node];
+      return;
 
     visited[node] = true;
     for(auto &x: edges[node]) {
@@ -130,7 +130,10 @@ int main()
     LL rd(u, v);
     G.add_edge(u - 1, v - 1);
   }
-  G.DFS(0);
+  rep(i, n) {
+    if(!G.visited[i])
+      G.DFS(i);
+  }
   prn(G.ans - m);
   return 0;
 }
