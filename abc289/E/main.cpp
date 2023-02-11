@@ -83,13 +83,18 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 struct Graph
 {
   int N;
-  vector<vector<pair<int, int>>> edges;
+  vector<vector<int>> edges;
+  vector<vector<int>> eee;
+  vector<vector<bool>> visited;
   vector<int> color;
+
   Graph(int n)
   {
     N = n;
     edges.resize(n);
     color.resize(n);
+    eee.resize(n * n);
+    visited.resize(n, vector<bool>(n, false));
   }
   void set_color(int u, int c)
   {
@@ -100,22 +105,39 @@ struct Graph
     edges[u].push_back(v);
     edges[v].push_back(u);
   }
-  LL BFS()
+  void DFS(LL r1, LL r2)
   {
-    vector<bool> v1(N, false), v2(N, false);
-    queue<int> a, b;
-    v1[0] = true;
-    v2[N - 1] = true;
-    a.push(0);
-    b.push(N - 1);
-    vector<int> d1(N, 1e8);
-    vector<int> d2(N, 1e8);
+    if (visited[r1][r2] == true)
+      return;
+
+    visited[r1][r2] = true;
+    repauto(r11, edges[r1])
+    {
+      repauto(r22, edges[r2])
+      {
+        if (color[r11] != color[r22])
+        {
+          eee[r11 * N + r22].push_back(r1 * N + r2);
+          eee[r1 * N + r2].push_back(r11 * N + r22);
+          DFS(r11, r22);
+        }
+      }
+    }
+  }
+  int BFS(int root)
+  {
+    vector<bool> visited(N * N, false);
+    queue<int> next_to_visit;
+
+    visited[root] = true;
+    next_to_visit.push(root);
+    vector<int> dist(N * N, 1e8);
     dist[root] = 0;
     while (!next_to_visit.empty())
     {
       int current_node = next_to_visit.front();
       next_to_visit.pop();
-      for (auto &x : edges[current_node])
+      for (auto &x : eee[current_node])
       {
         if (!visited[x])
         {
@@ -125,7 +147,7 @@ struct Graph
         }
       }
     }
-    return dist;
+    return dist[(N - 1) * N];
   }
 };
 
@@ -138,12 +160,17 @@ void solve()
     LL rd(c);
     G.set_color(i, c);
   }
-  rep(i, n)
+  rep(i, m)
   {
     LL rd(u, v);
     G.add_edge(u - 1, v - 1);
   }
-  prn(G.BFS());
+  G.DFS(0, n - 1);
+  auto dist = G.BFS(n - 1);
+  if (dist == 1e8)
+    prn(-1);
+  else
+    prn(dist);
 }
 
 int main()

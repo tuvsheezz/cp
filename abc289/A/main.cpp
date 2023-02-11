@@ -100,16 +100,8 @@ inline bool chmax(T &a, T b)
   return false;
 }
 
-void solve()
+string solve(string s)
 {
-}
-
-int main()
-{
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  STR rd(s);
   int n = s.size();
   rep(i, n)
   {
@@ -118,6 +110,15 @@ int main()
     else
       s[i] = '0';
   }
-  prn(s);
+  return s;
+}
+
+int main()
+{
+  ios_base::sync_with_stdio(false);
+  cin.tie(0);
+  cout.tie(0);
+  STR rd(s);
+  prn(solve(s));
   return 0;
 }
