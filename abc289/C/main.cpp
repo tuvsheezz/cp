@@ -79,35 +79,43 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-
-
-void solve()
-{
-}
 
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
+  LL rd(n, m);
+  VV<LL> a(m);
+  rep(i, m)
   {
-    solve();
+    LL rd(nn);
+    rep(j, nn)
+    {
+      LL rd(x);
+      a[i].push_back(x);
+    }
   }
+  LL ans = 0;
+  rep(i, (1 << m))
+  {
+    vector<bool> f(n, false);
+    rep(j, m)
+    {
+      if (i >> j & 1)
+      {
+        repauto(x, a[j]) f[x - 1] = true;
+      }
+    }
+    bool FF = true;
+    rep(i, n)
+    {
+      if (f[i] == false)
+        FF = false;
+    }
+    if (FF)
+      ans++;
+  }
+  prn(ans);
   return 0;
 }

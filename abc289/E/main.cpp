@@ -79,24 +79,71 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD1 1000000007
 #define MOD2 998244353
 #define MAX_N 100100
-template<class T> inline bool chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template<class T> inline bool chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
 
+struct Graph
+{
+  int N;
+  vector<vector<pair<int, int>>> edges;
+  vector<int> color;
+  Graph(int n)
+  {
+    N = n;
+    edges.resize(n);
+    color.resize(n);
+  }
+  void set_color(int u, int c)
+  {
+    color[u] = c;
+  }
+  void add_edge(int u, int v)
+  {
+    edges[u].push_back(v);
+    edges[v].push_back(u);
+  }
+  LL BFS()
+  {
+    vector<bool> v1(N, false), v2(N, false);
+    queue<int> a, b;
+    v1[0] = true;
+    v2[N - 1] = true;
+    a.push(0);
+    b.push(N - 1);
+    vector<int> d1(N, 1e8);
+    vector<int> d2(N, 1e8);
+    dist[root] = 0;
+    while (!next_to_visit.empty())
+    {
+      int current_node = next_to_visit.front();
+      next_to_visit.pop();
+      for (auto &x : edges[current_node])
+      {
+        if (!visited[x])
+        {
+          dist[x] = dist[current_node] + 1;
+          visited[x] = true;
+          next_to_visit.push(x);
+        }
+      }
+    }
+    return dist;
+  }
+};
 
 void solve()
 {
+  LL rd(n, m);
+  Graph G(n);
+  rep(i, n)
+  {
+    LL rd(c);
+    G.set_color(i, c);
+  }
+  rep(i, n)
+  {
+    LL rd(u, v);
+    G.add_edge(u - 1, v - 1);
+  }
+  prn(G.BFS());
 }
 
 int main()
