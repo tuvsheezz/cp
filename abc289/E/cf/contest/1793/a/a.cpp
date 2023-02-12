@@ -96,10 +96,28 @@ void solve()
   if (pp > qq)
     swap(pp, qq);
   LL ans = 1 + pp * (pp + 1) / 2;
-  prn(ans);
   ans += (qq - pp - 1) * (qq - pp) / 2;
-  prn(ans);
   ans += (n - 1 - qq) * (n - qq) / 2;
+  repa(i, 1, n)
+  {
+    LL ppp = x[i], qqq = y[i];
+    if (ppp > qqq)
+      swap(ppp, qqq);
+    if ((pp < ppp && ppp < qq) || (pp < qqq && qqq < qq))
+    {
+    }
+    else
+    {
+      if (qqq < pp)
+        ans += (pp - qqq) * (n - qq);
+      else if (ppp > qq)
+        ans += (ppp - qq) * (pp + 1);
+      else
+        ans += (pp - ppp) * (qqq - qq);
+    }
+    pp = min(pp, ppp);
+    qq = max(qq, qqq);
+  }
   prn(ans);
 }
 
