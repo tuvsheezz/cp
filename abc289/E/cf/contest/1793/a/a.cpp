@@ -80,81 +80,27 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-template <class T>
-T fmin(T a, T b)
-{
-  ret min(a, b);
-}
-template <class T>
-T fmax(T a, T b) { ret max(a, b); }
-template <class T>
-T fxor(T a, T b) { ret a ^ b; }
-template <class T>
-struct SegmentTree
-{
-  V<T> tree;
-  T tree_size, N, def;
-  T(*ope)
-  (T, T);
-
-  void init(T n, V<T> a, T (*op)(T, T), bool set_parent = true, T v = 0)
-  {
-    while (__builtin_popcount(n) != 1)
-    {
-      a.PB(v);
-      n++;
-    }
-    tree.resize(2 * n, v);
-    tree_size = 2 * n;
-    N = n;
-    def = v;
-    ope = op;
-    rep(i, n) { tree[n + i] = a[i]; }
-    if (set_parent)
-      repd(i, n - 1, 1) { tree[i] = ope(tree[2 * i], tree[2 * i + 1]); }
-  }
-
-  T get_range(T ql, T qr) { ret _get_range(1, 0, N - 1, ql, qr); }
-  T _get_range(T node, T sl, T sr, T ql, T qr)
-  {
-    if (ql <= sl && sr <= qr)
-      ret tree[node];
-    if (sr < ql || qr < sl)
-      ret def;
-    ret ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
-  }
-
-  void update_range(T ql, T qr, T v) { _update_range(1, 0, N - 1, ql, qr, v); }
-  void _update_range(T node, T sl, T sr, T ql, T qr, T v)
-  {
-    if (ql <= sl && sr <= qr)
-    {
-      tree[node] += v;
-      ret;
-    }
-    if (sr < ql || qr < sl)
-      ret;
-    _update_range(2 * node, sl, (sl + sr) / 2, ql, qr, v);
-    _update_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr, v);
-  }
-
-  void update_node(T ind, T val)
-  {
-    tree[ind += N] = val;
-    while (ind / 2 >= 1)
-    {
-      ind /= 2;
-      tree[ind] = ope(tree[2 * ind], tree[2 * ind + 1]);
-    }
-  }
-  void check_tree() { rep(i, tree_size) cout << i << ": " << tree[i] << "\n"; }
-  LL get_leaf(LL x) { ret tree[x + N]; }
-};
-
 void solve()
 {
   LL rd(n);
-  V<LL> rdv(a, n);
+  V<LL> rdv(p, n);
+  V<LL> rdv(q, n);
+  V<LL> x(n, -1);
+  V<LL> y(n, -1);
+  rep(i, n)
+  {
+    x[p[i] - 1] = i;
+    y[q[i] - 1] = i;
+  }
+  LL pp = x[0], qq = y[0];
+  if (pp > qq)
+    swap(pp, qq);
+  LL ans = 1 + pp * (pp + 1) / 2;
+  prn(ans);
+  ans += (qq - pp - 1) * (qq - pp) / 2;
+  prn(ans);
+  ans += (n - 1 - qq) * (n - qq) / 2;
+  prn(ans);
 }
 
 int main()
@@ -162,11 +108,6 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-  {
-    solve();
-  }
-
+  solve();
   return 0;
 }
