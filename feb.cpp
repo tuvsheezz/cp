@@ -80,13 +80,80 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+template <class T>
+T fgcd(T a, T b)
+{
+  return gcd(a, b);
+}
+template <class T>
+struct SegmentTree
+{
+  V<T> tree;
+  T tree_size, N, def;
+  T(*ope)
+  (T, T);
+
+  void init(T n, V<T> a, T (*op)(T, T), bool set_parent = true, T v = 0)
+  {
+    while (__builtin_popcount(n) != 1)
+    {
+      a.PB(v);
+      n++;
+    }
+    tree.resize(2 * n, v);
+    tree_size = 2 * n;
+    N = n;
+    def = v;
+    ope = op;
+    rep(i, n) { tree[n + i] = a[i]; }
+    if (set_parent)
+      repd(i, n - 1, 1) { tree[i] = ope(tree[2 * i], tree[2 * i + 1]); }
+  }
+
+  T get_range(T ql, T qr) { return _get_range(1, 0, N - 1, ql, qr); }
+  T _get_range(T node, T sl, T sr, T ql, T qr)
+  {
+    if (ql <= sl && sr <= qr)
+      return tree[node];
+    if (sr < ql || qr < sl)
+      return def;
+    return ope(_get_range(2 * node, sl, (sl + sr) / 2, ql, qr), _get_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
+  }
+
+  void update_range(T ql, T qr, T v) { _update_range(1, 0, N - 1, ql, qr, v); }
+  void _update_range(T node, T sl, T sr, T ql, T qr, T v)
+  {
+    if (ql <= sl && sr <= qr)
+    {
+      tree[node] += v;
+      return;
+    }
+    if (sr < ql || qr < sl)
+      return;
+    _update_range(2 * node, sl, (sl + sr) / 2, ql, qr, v);
+    _update_range(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr, v);
+  }
+
+  void update_node(T ind, T val)
+  {
+    tree[ind += N] = val;
+    while (ind / 2 >= 1)
+    {
+      ind /= 2;
+      tree[ind] = ope(tree[2 * ind], tree[2 * ind + 1]);
+    }
+  }
+};
+
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-
-  
+  SegmentTree<LL> st;
+  vector<LL> a;
+  rep(i, MAX_N) a.push_back(i);
+  st.init(n, a, &fgcd, true);
 
   return 0;
 }
