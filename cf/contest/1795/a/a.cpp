@@ -78,29 +78,17 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAXN 1001000
 
 void solve()
 {
   LL rd(n);
-  V<LL> rdv(a, n);
-  V<LL> rdv(b, n);
-  PQA<LL> pq;
-  LL minus = 0, cur = 0;
-  V<LL> ans(n, 0);
+  V<LL> a(n + 2, 0);
+  rep(i, n) cin >> a[i + 1];
   rep(i, n)
   {
-    cur += b[i];
-    pq.push(a[i] + minus);
-    while (!pq.empty() && pq.top() <= cur)
-    {
-      ans[i] += pq.top() - minus;
-      pq.pop();
-    }
-    ans[i] += b[i] * pq.size();
-    minus += b[i];
+    LL cur = a[i];
   }
-  pr(ans);
 }
 
 int main()
