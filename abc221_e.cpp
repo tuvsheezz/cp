@@ -80,43 +80,50 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-struct SegTree {
-    int left, right;
-    int sum = 0;
-    SegTree *left_child = nullptr, *right_child = nullptr;
+struct SegTree
+{
+  int left, right;
+  int sum = 0;
+  SegTree *left_child = nullptr, *right_child = nullptr;
 
-    SegTree(int lb, int rb) {
-        left = lb;
-        right = rb;
-    }
+  SegTree(int lb, int rb)
+  {
+    left = lb;
+    right = rb;
+  }
 
-    void extend() {
-        if (!left_child && left + 1 < right) {
-            int t = (left + right) / 2;
-            left_child = new SegTree(left, t);
-            right_child = new SegTree(t, right);
-        }
+  void extend()
+  {
+    if (!left_child && left + 1 < right)
+    {
+      int t = (left + right) / 2;
+      left_child = new SegTree(left, t);
+      right_child = new SegTree(t, right);
     }
+  }
 
-    void add(int k, int x) {
-        extend();
-        sum += x;
-        if (left_child) {
-            if (k < left_child->right)
-                left_child->add(k, x);
-            else
-                right_child->add(k, x);
-        }
+  void add(int k, int x)
+  {
+    extend();
+    sum += x;
+    if (left_child)
+    {
+      if (k < left_child->right)
+        left_child->add(k, x);
+      else
+        right_child->add(k, x);
     }
+  }
 
-    int get_sum(int lq, int rq) {
-        if (lq <= left && right <= rq)
-            return sum;
-        if (max(left, lq) >= min(right, rq))
-            return 0;
-        extend();
-        return left_child->get_sum(lq, rq) + right_child->get_sum(lq, rq);
-    }
+  int get_sum(int lq, int rq)
+  {
+    if (lq <= left && right <= rq)
+      return sum;
+    if (max(left, lq) >= min(right, rq))
+      return 0;
+    extend();
+    return left_child->get_sum(lq, rq) + right_child->get_sum(lq, rq);
+  }
 };
 
 long long big_pow(long long a, long long b, long long mod)
@@ -124,13 +131,13 @@ long long big_pow(long long a, long long b, long long mod)
   long long d = 1;
   while (b > 0)
   {
-    if (b % 2 == 1) d = d * a % mod;
+    if (b % 2 == 1)
+      d = d * a % mod;
     b /= 2;
     a = a * a % mod;
   }
   return d;
 }
-
 
 int main()
 {
@@ -141,7 +148,8 @@ int main()
   LL ans = 0;
   V<LL> rdv(a, n);
   SegTree st(0, MOD1);
-  repd(i, n - 1, 0) {
+  repd(i, n - 1, 0)
+  {
     auto x = st.get_sum(a[i], MOD1);
     ans = (ans + (MOD2 + big_pow(2, x, MOD2) - 1)) % MOD2;
     st.add(a[i], 1);
