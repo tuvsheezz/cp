@@ -6,7 +6,7 @@ struct imos2D
 {
   vector<vector<T>> a;
   long long h, w;
-  imos2D(long long hh, long long ww) { h = hh, w = ww, a.resize(hh + 1, vector<long long>(ww + 1)); }
+  imos2D(long long hh, long long ww) { h = hh, w = ww, a.resize(hh + 2, vector<long long>(ww + 2)); }
 
   void add(long long x1, long long y1, long long x2, long long y2, T v)
   {
