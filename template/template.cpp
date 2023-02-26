@@ -80,73 +80,11 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-struct UnionFind
-{
-  vector<long long> parent, size;
-  long long size_max = 0, count;
-
-  UnionFind(long long n)
-  {
-    parent.resize(n, -1);
-    size.resize(n, 1);
-    count = n;
-    size_max = 1;
-  }
-
-  long long root(long long x) { return parent[x] == -1 ? x : parent[x] = root(parent[x]); }
-  bool same(long long x, long long y) { return root(x) == root(y); }
-  void unite(long long x, long long y)
-  {
-    x = root(x);
-    y = root(y);
-    if (x == y)
-      return;
-
-    if (size[x] < size[y])
-      swap(x, y);
-    parent[y] = x;
-    size[x] += size[y];
-    size_max = max(size[x], size_max);
-    count--;
-  }
-  long long count_of_sets() { return count; }
-  long long get_union_size(long long x) { return size[root(x)]; }
-};
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(n, m);
-  UnionFind uf(n);
-  vector<bool> c(n, false);
-  rep(i, m)
-  {
-    LL rd(x);
-    uf.unite(x, x - 1);
-  }
-  vector<LL> ans;
-  rep(i, n)
-  {
-    if (c[i] == false)
-    {
-      LL pa = uf.root(i);
-      PQD<LL> pq;
-      rep(j, n)
-      {
-        if (uf.root(j) == pa)
-        {
-          pq.insert(i + 1);
-        }
-      }
-      while (!pq.empty())
-      {
-        ans.push_back(pq.top());
-        pq.pop();
-      }
-    }
-  }
-  pr(ans);
+
   return 0;
 }
