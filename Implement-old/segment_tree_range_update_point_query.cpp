@@ -128,7 +128,7 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  
+
   LL rd(n, Q);
   LL ans = (n - 2) * (n - 2);
   SegmentTree row(n), col(n);
@@ -138,15 +138,19 @@ int main()
   col.update_range(0, 0, 0);
   row.update_range(n - 1, n - 1, 0);
   col.update_range(n - 1, n - 1, 0);
-  
-  while(Q--) {
+
+  while (Q--)
+  {
     LL rd(c, d);
     d--;
-    if(c == 1) {
+    if (c == 1)
+    {
       auto f = row.get_point(d);
       ans -= f - 1;
       col.update_range(0, f - 1, d);
-    } else {
+    }
+    else
+    {
       auto f = col.get_point(d);
       ans -= f - 1;
       row.update_range(0, f - 1, d);
