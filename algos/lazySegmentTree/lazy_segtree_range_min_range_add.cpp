@@ -7,7 +7,7 @@ struct LazySegmentTree
   vector<T> tree, lazy;
   vector<bool> visi;
   int tree_size, N;
-  T def_tree_val, def_lazy_val;
+  T def;
 
   T __initFun(T a, T b) { return min(a, b); }
   T __getFun(T a, T b) { return min(a, b); }
@@ -17,7 +17,7 @@ struct LazySegmentTree
   T __evalUpdateLazyChild(T a, T b) { return a + b; }
   T __updateUpdatelazy(T a, T b, int sl, int sr) { return a + b; }
 
-  LazySegmentTree(int n, vector<T> a, bool set_parent = true, T v = 0, T vv = 0)
+  LazySegmentTree(int n, vector<T> a, bool set_parent = true, T v = 0)
   {
     while (__builtin_popcount(n) != 1)
     {
@@ -27,12 +27,11 @@ struct LazySegmentTree
     tree_size = 2 * n;
 
     tree.resize(tree_size, v);
-    lazy.resize(tree_size, vv);
+    lazy.resize(tree_size, 0);
     visi.resize(tree_size, false);
 
     N = n;
-    def_tree_val = v;
-    def_lazy_val = vv;
+    def = v;
 
     for (int i = 0; i < n; i++)
       tree[n + i] = a[i];
@@ -54,7 +53,7 @@ struct LazySegmentTree
         visi[2 * node] = true;
         visi[2 * node + 1] = true;
       }
-      lazy[node] = def_lazy_val;
+      lazy[node] = 0;
       visi[node] = false;
     }
     while (node / 2 >= 1)
@@ -107,7 +106,7 @@ int main()
 {
   int n, Q, com, l, r, x;
   cin >> n >> Q;
-  LazySegmentTree<long long> lst(n, vector<long long>(n, 0), false, 0, 0);
+  LazySegmentTree<long long> lst(n, vector<long long>(n, 0), false, 0);
   while (Q--)
   {
     cin >> com >> l >> r;
