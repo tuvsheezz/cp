@@ -9,13 +9,13 @@ struct LazySegmentTree
   int tree_size, N;
   T def;
 
-  T __initFun(T a, T b) { return a + b; }
-  T __getFun(T a, T b) { return a + b; }
+  T __initFun(T a, T b) { return min(a, b); }
+  T __getFun(T a, T b) { return min(a, b); }
 
-  T __evalUpdateParent(bool vis, T a, T b) { return a + b; }
-  T __evalUpdateTree(T a, T b) { return a + b; }
-  T __evalUpdateLazyChild(T a, T b) { return a + b / 2; }
-  T __updateUpdatelazy(T a, T b, int sl, int sr) { return a + (sr - sl + 1) * b; }
+  T __evalUpdateParent(bool vis, T a, T b) { return vis ? a : b; }
+  T __evalUpdateTree(T a, T b) { return b; }
+  T __evalUpdateLazyChild(T a, T b) { return b; }
+  T __updateUpdatelazy(T a, T b, int sl, int sr) { return b; }
 
   LazySegmentTree(int n, vector<T> a, bool set_parent = true, T v = 0)
   {
@@ -59,9 +59,8 @@ struct LazySegmentTree
     while (node / 2 >= 1)
     {
       node /= 2;
-      tree[node] = __initFun(
-          __evalUpdateParent(vis[2 * node], lazy[2 * node], tree[2 * node]),
-          __evalUpdateParent(vis[2 * node + 1], lazy[2 * node + 1], tree[2 * node + 1]));
+      tree[node] = __initFun(__evalUpdateParent(vis[2 * node], lazy[2 * node], tree[2 * node]),
+                             __evalUpdateParent(vis[2 * node + 1], lazy[2 * node + 1], tree[2 * node + 1]));
     }
   }
 
@@ -107,19 +106,19 @@ int main()
 {
   int n, Q, com, l, r, x;
   cin >> n >> Q;
-  LazySegmentTree<long long> lst(n, vector<long long>(n, 0), false, 0);
+  LazySegmentTree<long long> lst(n, vector<long long>(n, INT32_MAX), true, INT32_MAX);
   while (Q--)
   {
     cin >> com >> l >> r;
     if (com == 0)
     {
       cin >> x;
-      lst.update(l - 1, r - 1, x);
+      lst.update(l, r, x);
     }
     else
-      cout << lst.get(l - 1, r - 1) << endl;
+      cout << lst.get(l, r) << endl;
   }
   return 0;
 }
 
-// https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_G
+// https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_F

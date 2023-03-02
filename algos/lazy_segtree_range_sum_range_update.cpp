@@ -9,6 +9,14 @@ struct LazySegmentTree
   int tree_size, N;
   T def;
 
+  T __initFun(T a, T b) { return a + b; }
+  T __getFun(T a, T b) { return a + b; }
+
+  T __evalUpdateParent(bool vis, T a, T b) { return vis ? a : b; }
+  T __evalUpdateTree(T a, T b) { return b; }
+  T __evalUpdateLazyChild(T a, T b) { return b / 2; }
+  T __updateUpdatelazy(T a, T b, int sl, int sr) { return (sr - sl + 1) * b; }
+
   LazySegmentTree(int n, vector<T> a, bool set_parent = true, T v = 0)
   {
     while (__builtin_popcount(n) != 1)
@@ -30,18 +38,18 @@ struct LazySegmentTree
 
     if (set_parent)
       for (int i = n - 1; i >= 1; i--)
-        tree[i] = tree[2 * i] + tree[2 * i + 1];
+        tree[i] = __initFun(tree[2 * i], tree[2 * i + 1]);
   }
 
   void eval(int node, int sl, int sr)
   {
     if (vis[node])
     {
-      tree[node] = lazy[node];
+      tree[node] = __evalUpdateTree(tree[node], lazy[node]);
       if (sr > sl)
       {
-        lazy[2 * node] = lazy[node] / 2;
-        lazy[2 * node + 1] = lazy[node] / 2;
+        lazy[2 * node] = __evalUpdateLazyChild(lazy[2 * node], lazy[node]);
+        lazy[2 * node + 1] = __evalUpdateLazyChild(lazy[2 * node + 1], lazy[node]);
         vis[2 * node] = true;
         vis[2 * node + 1] = true;
       }
@@ -51,9 +59,9 @@ struct LazySegmentTree
     while (node / 2 >= 1)
     {
       node /= 2;
-      tree[node] =
-          (vis[2 * node] ? lazy[2 * node] : tree[2 * node]) +
-          (vis[2 * node + 1] ? lazy[2 * node + 1] : tree[2 * node + 1]);
+      tree[node] = __initFun(
+          __evalUpdateParent(vis[2 * node], lazy[2 * node], tree[2 * node]),
+          __evalUpdateParent(vis[2 * node + 1], lazy[2 * node + 1], tree[2 * node + 1]));
     }
   }
 
@@ -70,7 +78,7 @@ struct LazySegmentTree
 
     if (ql <= sl && sr <= qr)
     {
-      lazy[node] = (sr - sl + 1) * x;
+      lazy[node] = __updateUpdatelazy(lazy[node], x, sl, sr);
       vis[node] = true;
       eval(node, sl, sr);
       return;
@@ -90,8 +98,8 @@ struct LazySegmentTree
     if (ql <= sl && sr <= qr)
       return tree[node];
 
-    return _get(2 * node, sl, (sl + sr) / 2, ql, qr) +
-           _get(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr);
+    return __getFun(_get(2 * node, sl, (sl + sr) / 2, ql, qr),
+                    _get(2 * node + 1, (sl + sr) / 2 + 1, sr, ql, qr));
   }
 };
 
@@ -99,7 +107,7 @@ int main()
 {
   int n, Q, com, l, r, x;
   cin >> n >> Q;
-  LazySegmentTree<long long> lst(n, vector<long long>(n, 0));
+  LazySegmentTree<long long> lst(n, vector<long long>(n, 0), false, 0);
   while (Q--)
   {
     cin >> com >> l >> r;
@@ -113,3 +121,5 @@ int main()
   }
   return 0;
 }
+
+// https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_I
