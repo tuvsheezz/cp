@@ -19,49 +19,54 @@ struct BellmanFord
 
   void add_edge(int from, int to, T cost) { E.emplace_back(from, to, cost); }
 
+  // yaj hereglehiin buu med
   bool find_negative_loop()
   {
     vector<T> dist(V, 0);
-    for (int i = 0, updated = 1; i < V && exchange(updated, 0); i++)
+    bool updated = true;
+    for (int i = 0; i < V; i++)
     {
       for (auto &e : E)
       {
         if (dist[e.from] + e.cost < dist[e.to])
         {
           dist[e.to] = dist[e.from] + e.cost;
-          updated = 1;
+          updated = true;
         }
       }
       if (!updated)
         return true;
       if (i == V - 1)
         return false;
+      updated = false;
     }
   }
-
-  vector<T> solve(int s)
+  // busad buh node ruu yvah.
+  vector<T> shortest_path_to_all_vertices(int s)
   {
     vector<T> dist(V, inf);
     dist[s] = 0;
-    for (int i = 0, updated = 1; i < V && exchange(updated, 0); i++)
+    bool updated = true;
+    for (int i = 0; i < V; i++)
     {
       for (auto &e : E)
       {
         if (dist[e.from] != inf && dist[e.from] + e.cost < dist[e.to])
         {
           dist[e.to] = dist[e.from] + e.cost;
-          updated = 1;
+          updated = true;
         }
       }
       if (!updated)
         break;
       if (i == V - 1)
         return {};
+      updated = false;
     }
     return dist;
   }
-
-  vector<T> shortest_path(int s, int t)
+  // s-ees t ruu yvah. (hamaaralgui gazar uusch baigaa negative loop-g tootsohgui)
+  vector<T> shortest_path_to_one_vertex(int s, int t)
   {
     vector<T> dist(V, inf);
     dist[s] = 0;
@@ -103,7 +108,7 @@ int main()
     BF.add_edge(s, t, d);
   }
 
-  auto ans = BF.solve(r);
+  auto ans = BF.shortest_path_to_all_vertices(r);
   if (ans.empty())
   {
     cout << "NEGATIVE CYCLE" << '\n';
