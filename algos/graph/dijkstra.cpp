@@ -5,16 +5,15 @@ template <class T>
 struct Graph
 {
   int V;
+  const T inf = numeric_limits<T>::max() / 2;
   vector<vector<pair<int, T>>> edges; // PLL: (destination, cost)
   bool is_directed;
-  T def;
 
-  Graph(int n, T d, bool dir = false)
+  Graph(int n, bool dir = false)
   {
     V = n;
     edges.resize(n);
     is_directed = dir;
-    def = d;
   }
 
   void add_edge(int u, int v, T cost)
@@ -26,7 +25,7 @@ struct Graph
 
   vector<int> Dijkstra(int s)
   {
-    vector<T> dist(V, def);
+    vector<T> dist(V, inf);
     vector<int> prev(V, -1);
     dist[s] = 0;
     priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> next_to_visit;
@@ -64,7 +63,7 @@ int main()
 
   int n, m, u, v, w;
   cin >> n >> m;
-  Graph<long long> G(n, 1e18);
+  Graph<long long> G(n);
   while (m--)
   {
     cin >> u >> v >> w;

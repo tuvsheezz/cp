@@ -11,78 +11,77 @@ struct BellmanFord
     edge(int from, int to, T cost) : from(from), to(to), cost(cost) {}
   };
 
-  int n;
+  int V;
   const T inf = numeric_limits<T>::max() / 2;
-  vector<T> d;
-  vector<edge> es;
+  vector<edge> E;
 
-  BellmanFord(int n) : n(n), d(n) {}
+  BellmanFord(int n) : V(n) {}
 
-  void add_edge(int from, int to, T cost) { es.emplace_back(from, to, cost); }
+  void add_edge(int from, int to, T cost) { E.emplace_back(from, to, cost); }
 
   bool find_negative_loop()
   {
-    fill(d.begin(), d.end(), 0);
-    for (int i = 0, updated = 1; i < n && exchange(updated, 0); i++)
+    vector<T> dist(V, 0);
+    for (int i = 0, updated = 1; i < V && exchange(updated, 0); i++)
     {
-      for (auto &e : es)
+      for (auto &e : E)
       {
-        if (d[e.from] + e.cost < d[e.to])
+        if (dist[e.from] + e.cost < dist[e.to])
         {
-          d[e.to] = d[e.from] + e.cost;
+          dist[e.to] = dist[e.from] + e.cost;
           updated = 1;
         }
       }
       if (!updated)
         return true;
-      if (i == n - 1)
+      if (i == V - 1)
         return false;
     }
   }
 
   vector<T> solve(int s)
   {
-    fill(d.begin(), d.end(), inf);
-    d[s] = 0;
-    for (int i = 0, updated = 1; i < n and exchange(updated, 0); i++)
+    vector<T> dist(V, inf);
+    dist[s] = 0;
+    for (int i = 0, updated = 1; i < V && exchange(updated, 0); i++)
     {
-      for (auto &e : es)
+      for (auto &e : E)
       {
-        if (d[e.from] != inf and d[e.from] + e.cost < d[e.to])
+        if (dist[e.from] != inf && dist[e.from] + e.cost < dist[e.to])
         {
-          d[e.to] = d[e.from] + e.cost;
+          dist[e.to] = dist[e.from] + e.cost;
           updated = 1;
         }
       }
       if (!updated)
         break;
-      if (i == n - 1)
+      if (i == V - 1)
         return {};
     }
-    return d;
+    return dist;
   }
 
   vector<T> shortest_path(int s, int t)
   {
-    fill(d.begin(), d.end(), inf);
-    d[s] = 0;
-    for (int i = 0; i < 2 * n - 1; i++)
+    vector<T> dist(V, inf);
+    dist[s] = 0;
+    for (int i = 0; i < 2 * V - 1; i++)
     {
-      for (auto &e : es)
+      for (auto &e : E)
       {
-        if (d[e.from] != inf and d[e.from] + e.cost < d[e.to])
+        if (dist[e.from] != inf && dist[e.from] + e.cost < dist[e.to])
         {
-          d[e.to] = d[e.from] + e.cost;
-          if (i >= n - 1)
+          dist[e.to] = dist[e.from] + e.cost;
+          if (i >= V - 1)
           {
             if (e.to == t)
               return {};
-            d[e.to] = -inf;
+            dist[e.to] = -inf;
           }
         }
       }
     }
-    return d;
+    return dist;
   }
 };
 
