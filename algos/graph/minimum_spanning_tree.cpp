@@ -58,3 +58,5 @@ int main()
   cout << ans << endl;
   return 0;
 }
+
+// ene barag l Kruskal
