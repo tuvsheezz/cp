@@ -5,14 +5,12 @@ struct Graph
 {
   int V;
   vector<vector<int>> E;
-  bool is_directed;
   vector<int> degree;
 
   Graph(int n)
   {
     V = n;
     E.resize(n);
-    is_directed = true;
     degree.resize(n, 0);
   }
 
