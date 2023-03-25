@@ -7,7 +7,7 @@ struct Graph
   vector<vector<int>> E;
   bool is_directed;
 
-  void init(int n, bool dir = false)
+  Graph(int n, bool dir = false)
   {
     V = n;
     E.resize(n);
