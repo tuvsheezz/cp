@@ -79,23 +79,27 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  int n, c, v, x;
+  int n, x, c, v;
   cin >> n;
   Graph G(n);
-  for (int i = 0; i < n - 1; i++)
+  for (int i = 0; i < n; i++)
   {
-    cin >> c >> v;
-    G.add_edge(c - 1, v - 1);
+    cin >> c;
+    for (int j = 0; j < c; j++)
+    {
+      cin >> x;
+      G.add_edge(i, x);
+    }
   }
   G.lca_build();
   cin >> x;
   while (x--)
   {
     cin >> c >> v;
-    c--, v--;
-    auto lc = G.lca_query(c, v);
-    cout << G.depth[c] + G.depth[v] - 2 * G.depth[lc] + 1 << endl;
+    cout << G.lca_query(c, v) << endl;
   }
 
   return 0;
 }
+
+// https://atcoder.jp/contests/tessoku-book/tasks/abc007_3
