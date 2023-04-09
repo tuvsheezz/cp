@@ -26,38 +26,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -82,27 +82,33 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(n, Q);
-  V<LL> X(n), Y(n);
-  LL x_max = -INF, x_min = INF, y_max = -INF, y_min = INF;
-  rep(i, n)
-  {
-    LL rd(x, y);
-    X[i] = x - y;
-    Y[i] = x + y;
-    x_max = max(x_max, x - y);
-    x_min = min(x_min, x - y);
-    y_max = max(y_max, x + y);
-    y_min = min(y_min, x + y);
-  }
-  while (Q--)
-  {
-    LL rd(ind);
-    ind--;
-    prn(max({abs(X[ind] - x_max), abs(X[ind] - x_min), abs(Y[ind] - y_max), abs(Y[ind] - y_min)}));
-  }
-  return 0;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    LL rd(h, w);
+    VV<LL> a(h, V<LL>(w));
+    rep(i, h) rep(j, w) cin >> a[i][j];
+
+    LL ans = 0;
+
+    repa(bit, 1, (1 << h))
+    {
+        LL ehehe = __builtin_popcountll(bit);
+        unordered_map<LL, LL> mp;
+        rep(j, w)
+        {
+            unordered_map<LL, LL> mp2;
+            rep(i, h)
+            {
+                if (bit & (1 << i))
+                    mp2[a[i][j]]++;
+            }
+            if (mp2.size() == 1)
+                mp[mp2.begin()->first]++;
+        }
+        repauto(x, mp) ans = max(ans, x.S * ehehe);
+    }
+    prn(ans);
+    return 0;
 }

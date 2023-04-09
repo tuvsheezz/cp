@@ -26,38 +26,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -80,29 +80,68 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+struct Graph
+{
+    int V;
+    vector<vector<int>> E;
+    bool is_directed;
+    int ans = -1;
+
+    vector<bool> visited;
+
+    Graph(int n, bool dir = false)
+    {
+        V = n;
+        E.resize(n);
+        is_directed = dir;
+        visited.resize(n, false);
+    }
+
+    void add_edge(int u, int v)
+    {
+        E[u].push_back(v);
+        E[v].push_back(u);
+    }
+
+    void DFS(int node, int root, int len)
+    {
+        if (visited[node] == true)
+        {
+            if (node == root && len > 2)
+                ans = max(len, ans);
+            return;
+        }
+
+        visited[node] = true;
+        for (auto &x : E[node])
+            DFS(x, root, len + 1);
+        visited[node] = false;
+    }
+
+    int max_len()
+    {
+        for (int i = 0; i < V; i++)
+            DFS(i, i, 0);
+        return ans;
+    }
+};
+
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(n, Q);
-  V<LL> X(n), Y(n);
-  LL x_max = -INF, x_min = INF, y_max = -INF, y_min = INF;
-  rep(i, n)
-  {
-    LL rd(x, y);
-    X[i] = x - y;
-    Y[i] = x + y;
-    x_max = max(x_max, x - y);
-    x_min = min(x_min, x - y);
-    y_max = max(y_max, x + y);
-    y_min = min(y_min, x + y);
-  }
-  while (Q--)
-  {
-    LL rd(ind);
-    ind--;
-    prn(max({abs(X[ind] - x_max), abs(X[ind] - x_min), abs(Y[ind] - y_max), abs(Y[ind] - y_min)}));
-  }
-  return 0;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    LL rd(h, w);
+    Graph G(h * w);
+    V<STR> rdv(s, h);
+    rep(i, h) rep(j, w)
+    {
+        if (i > 0 && s[i - 1][j] == '.' && s[i][j] == '.')
+            G.add_edge(i * w + j, (i - 1) * w + j);
+        if (j > 0 && s[i][j - 1] == '.' && s[i][j] == '.')
+            G.add_edge(i * w + j, i * w + j - 1);
+    }
+    prn(G.max_len());
+
+    return 0;
 }

@@ -26,38 +26,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -82,27 +82,52 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(n, Q);
-  V<LL> X(n), Y(n);
-  LL x_max = -INF, x_min = INF, y_max = -INF, y_min = INF;
-  rep(i, n)
-  {
-    LL rd(x, y);
-    X[i] = x - y;
-    Y[i] = x + y;
-    x_max = max(x_max, x - y);
-    x_min = min(x_min, x - y);
-    y_max = max(y_max, x + y);
-    y_min = min(y_min, x + y);
-  }
-  while (Q--)
-  {
-    LL rd(ind);
-    ind--;
-    prn(max({abs(X[ind] - x_max), abs(X[ind] - x_min), abs(Y[ind] - y_max), abs(Y[ind] - y_min)}));
-  }
-  return 0;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    LL rd(n);
+    VV<LL> E(n);
+    V<bool> visited(n, false);
+    V<LL> q(n, 1), p(n, 0);
+
+    rep(i, n - 1)
+    {
+        LL rd(u, v);
+        u--, v--;
+        p[u]++, p[v]++;
+        E[u].PB(v);
+        E[v].PB(u);
+    }
+
+    queue<LL> qu;
+    rep(i, n)
+    {
+        if (E[i].size() == 1)
+            qu.push(i);
+    }
+
+    LL ans = 0;
+    while (!qu.empty())
+    {
+        LL u = qu.front();
+        ans += (n - q[u]) * q[u];
+        qu.pop();
+        visited[u] = true;
+
+        for (auto &v : E[u])
+        {
+            if (visited[v])
+                continue;
+            else
+            {
+                q[v] += q[u];
+                p[v]--;
+                if (p[v] == 1)
+                    qu.push(v);
+            }
+        }
+    }
+    prn(ans);
+
+    return 0;
 }

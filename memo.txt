@@ -29,4 +29,8 @@
     }
     long long aa = (2 * a - b) / 3, bb = (2 * b - a) / 3;
     cout << nCk(aa + bb, aa, mod) << endl;
-13. 
+13. manhattan distance-g bodohdoo 45 gradus erguuldeg n 
+    X = x - y
+    Y = x + y geed
+ dist = |x1 - x2| + |y1 - y2| baisan n 
+ dist = max(|X1 - X2|, |Y1 - Y2|) boldog bolhoor ih amar ym shgi baina tee.
