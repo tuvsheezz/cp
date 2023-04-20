@@ -26,38 +26,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -80,16 +80,51 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+long long big_pow(long long a, long long b, long long mod)
+{
+    long long d = 1;
+    while (b > 0)
+    {
+        if (b % 2 == 1)
+            d = d * a % mod;
+        b /= 2;
+        a = a * a % mod;
+    }
+    return d;
+}
+
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-  LL ans = 1;
-  LL rd(N);
-  V<LL> rdv(A, N);
-  V<LL> rdv(B, N);
+    LL rd(Q);
+    LL now = 1, n = 1;
+    deque<LL> dq;
+    dq.push_back(1);
 
-  return 0;
+    while (Q--)
+    {
+        LL rd(com);
+        if (com == 1)
+        {
+            LL rd(x);
+            now = (now * 10 + x) % MOD2;
+            dq.push_back(x);
+            n++;
+        }
+        else if (com == 2)
+        {
+            now = (now - dq.front() * big_pow(10, n - 1, MOD2) % MOD2 + MOD2) % MOD2;
+            dq.pop_front();
+            n--;
+        }
+        else
+        {
+            prn(now);
+        }
+    }
+
+    return 0;
 }

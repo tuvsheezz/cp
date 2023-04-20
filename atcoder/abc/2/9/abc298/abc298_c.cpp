@@ -26,38 +26,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -78,18 +78,41 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 100100
+#define MAX_N 200100
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    LL rd(n, Q);
+    V<multiset<LL>> box(MAX_N);
+    V<set<LL>> num(MAX_N);
 
-  LL ans = 1;
-  LL rd(N);
-  V<LL> rdv(A, N);
-  V<LL> rdv(B, N);
+    while (Q--)
+    {
+        LL rd(com);
+        if (com == 1)
+        {
+            LL rd(i, j);
+            box[j - 1].insert(i);
+            num[i - 1].insert(j);
+        }
+        else if (com == 2)
+        {
+            LL rd(i);
+            for (auto itr = box[i - 1].begin(); itr != box[i - 1].end(); ++itr)
+                prs(*itr);
+            PN;
+        }
+        else
+        {
+            LL rd(i);
+            for (auto itr = num[i - 1].begin(); itr != num[i - 1].end(); ++itr)
+                prs(*itr);
+            PN;
+        }
+    }
 
-  return 0;
+    return 0;
 }
