@@ -1,0 +1,1 @@
+puts gets.split.join.reverse.to_i(2)

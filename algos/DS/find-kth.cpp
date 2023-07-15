@@ -80,37 +80,85 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 1000100
 
-LL ff(LL n, LL k)
+struct Vertex
 {
-  if (n <= 1 + k)
-    return 1;
-  LL mx = 1 + k + 1 + (k - 1) / 2;
-  if (n <= mx)
-    return 2;
-  LL ans = (n / mx) * 3;
-  LL rem = n % mx;
-  if (rem == 0)
-    return ans;
-  if (rem <= 1 + k)
-    return ans + 1;
-  return ans + 3;
+  Vertex *l, *r;
+  LL sum;
+
+  Vertex(LL val) : l(nullptr), r(nullptr), sum(val) {}
+  Vertex(Vertex *l, Vertex *r) : l(l), r(r), sum(0)
+  {
+    if (l)
+      sum += l->sum;
+    if (r)
+      sum += r->sum;
+  }
+};
+
+Vertex *build(LL tl, LL tr, LL val)
+{
+  if (tl == tr)
+    return new Vertex(val);
+  LL tm = (tl + tr) / 2;
+  return new Vertex(build(tl, tm, val), build(tm + 1, tr, val));
+}
+
+Vertex *update(Vertex *v, LL tl, LL tr, LL pos)
+{
+  if (tl == tr)
+    return new Vertex(v->sum + 1);
+  LL tm = (tl + tr) / 2;
+  if (pos <= tm)
+    return new Vertex(update(v->l, tl, tm, pos), v->r);
+  else
+    return new Vertex(v->l, update(v->r, tm + 1, tr, pos));
+}
+
+LL find_kth(Vertex *vl, Vertex *vr, LL tl, LL tr, LL k)
+{
+  if (tl == tr)
+    return tl;
+  LL tm = (tl + tr) / 2, left_count = vr->l->sum - vl->l->sum;
+  if (left_count >= k)
+    return find_kth(vl->l, vr->l, tl, tm, k);
+  return find_kth(vl->r, vr->r, tm + 1, tr, k - left_count);
 }
 
 void solve()
 {
-  LL rd(n, k);
-  LL ans = ff(n, k), p = 1;
-  while (true)
+  LL rd(n, m);
+  V<PLL> a(m);
+  rep(i, m) cin >> a[i].F >> a[i].S;
+
+  LL rd(Q);
+
+  V<LL> x(n, Q);
+
+  rep(i, Q)
   {
-    if (ff(n - p, k) + p < ans)
-    {
-      ans = ff(n - p, k) + p;
-      p++;
-    }
-    else
-      break;
+    LL rd(xx);
+    x[xx - 1] = i;
   }
-  prn(ans);
+
+  LL tl = 0, tr = Q;
+
+  vector<Vertex *> roots;
+
+  roots.push_back(build(tl, tr, Q));
+
+  LL res = Q;
+
+  rep(i, n) roots.push_back(update(roots.back(), tl, tr, x[i]));
+  rep(i, m)
+  {
+    LL l = a[i].first - 1, r = a[i].second - 1;
+    LL tmp = find_kth(roots[l], roots[r + 1], tl, tr, (r - l + 1) / 2 + 1);
+    res = min(res, tmp);
+  }
+  if (res == Q)
+    prn(-1);
+  else
+    prn(res + 1);
 }
 
 int main()
@@ -123,7 +171,3 @@ int main()
     solve();
   return 0;
 }
-
-100000020010000002
-
-    10000100

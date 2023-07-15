@@ -26,38 +26,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -78,52 +78,79 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 1000100
+#define MAX_N 100100
 
-LL ff(LL n, LL k)
+struct UnionFind
 {
-  if (n <= 1 + k)
-    return 1;
-  LL mx = 1 + k + 1 + (k - 1) / 2;
-  if (n <= mx)
-    return 2;
-  LL ans = (n / mx) * 3;
-  LL rem = n % mx;
-  if (rem == 0)
-    return ans;
-  if (rem <= 1 + k)
-    return ans + 1;
-  return ans + 3;
-}
+    vector<int> parent, size;
+    int size_max = 0, count;
 
-void solve()
-{
-  LL rd(n, k);
-  LL ans = ff(n, k), p = 1;
-  while (true)
-  {
-    if (ff(n - p, k) + p < ans)
+    UnionFind(int n)
     {
-      ans = ff(n - p, k) + p;
-      p++;
+        parent.resize(n, -1);
+        size.resize(n, 1);
+        count = n;
+        size_max = 1;
     }
-    else
-      break;
-  }
-  prn(ans);
-}
+
+    int root(int x) { return parent[x] == -1 ? x : parent[x] = root(parent[x]); }
+    bool same(int x, int y) { return root(x) == root(y); }
+    void unite(int x, int y)
+    {
+        x = root(x);
+        y = root(y);
+        if (x == y)
+            return;
+
+        if (size[x] < size[y])
+            swap(x, y);
+        parent[y] = x;
+        size[x] += size[y];
+        size_max = max(size[x], size_max);
+        count--;
+    }
+    int count_of_sets() { return count; }
+    int get_union_size(int x) { return size[root(x)]; }
+};
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(T);
-  while (T--)
-    solve();
-  return 0;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int rd(n, m);
+
+    UnionFind uf(n);
+    rep(i, m)
+    {
+        int rd(u, v);
+        uf.unite(u - 1, v - 1);
+    }
+
+    map<pair<int, int>, int> mp;
+
+    int rd(k);
+
+    rep(i, k)
+    {
+        int rd(u, v);
+        u = uf.root(u - 1);
+        v = uf.root(v - 1);
+        mp[{u, v}]++;
+    }
+
+    int rd(Q);
+    while (Q--)
+    {
+        int rd(u, v);
+        u = uf.root(u - 1);
+        v = uf.root(v - 1);
+
+        if (mp.find({u, v}) != mp.end() || mp.find({v, u}) != mp.end())
+            No;
+        else
+            Yes;
+    }
+
+    return 0;
 }
-
-100000020010000002
-
-    10000100

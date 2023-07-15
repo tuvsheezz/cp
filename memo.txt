@@ -34,3 +34,6 @@
     Y = x + y geed
  dist = |x1 - x2| + |y1 - y2| baisan n 
  dist = max(|X1 - X2|, |Y1 - Y2|) boldog bolhoor ih amar ym shgi baina tee.
+
+14. Boyer-Moore Voting Algorithm: baigaa listend talaas n iluu adilhan element baigaa yug boddog Algorithm
+https://qiita.com/mhiro216/items/52a11a001fb5f56c74c9

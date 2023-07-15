@@ -519,7 +519,7 @@ int LCSSeq(D a, D b)
         dp[i][j] = 1 + dp[i - 1][j - 1];
       else
         dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-  return n + m - 2 * dp[n][m];
+  return dp[n][m];
 }
 
 // longest common subarray

@@ -2,7 +2,6 @@
 using namespace std;
 
 template <class T>
-
 struct Compression
 {
   unordered_map<T, int> coor;

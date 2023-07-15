@@ -26,38 +26,38 @@ using PQD = priority_queue<T, V<T>, less<T>>;
 #define repa(i, s, e) for (LL i = s; i < e; i++)
 #define repd(i, s, e) for (LL i = s; i >= e; i--)
 #define repauto(x, s) for (auto x : s)
-#define rd(...) \
-  __VA_ARGS__;  \
-  read(__VA_ARGS__)
+#define rd(...)  \
+    __VA_ARGS__; \
+    read(__VA_ARGS__)
 #define rdv(value, ...) \
-  value(__VA_ARGS__);   \
-  cin >> value
+    value(__VA_ARGS__); \
+    cin >> value
 template <class T>
 auto &operator>>(istream &is, vector<T> &xs)
 {
-  for (auto &x : xs)
-    is >> x;
-  return is;
+    for (auto &x : xs)
+        is >> x;
+    return is;
 }
 template <class T>
 auto &operator<<(ostream &os, vector<T> &xs)
 {
-  int sz = xs.size();
-  rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
-  return os;
+    int sz = xs.size();
+    rep(i, sz) os << xs[i] << " \n"[i + 1 == sz];
+    return os;
 }
 template <class T, class Y>
 auto &operator<<(ostream &os, pair<T, Y> &xs)
 {
-  os << "{" << xs.first << ", " << xs.second << "}";
-  return os;
+    os << "{" << xs.first << ", " << xs.second << "}";
+    return os;
 }
 template <class T, class Y>
 auto &operator>>(istream &is, vector<pair<T, Y>> &xs)
 {
-  for (auto &[x1, x2] : xs)
-    is >> x1 >> x2;
-  return is;
+    for (auto &[x1, x2] : xs)
+        is >> x1 >> x2;
+    return is;
 }
 template <class... Args>
 auto &read(Args &...args) { return (cin >> ... >> args); }
@@ -78,52 +78,74 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define INF (1LL << 60)
 #define MOD1 1000000007
 #define MOD2 998244353
-#define MAX_N 1000100
+#define MAX_N 100100
 
-LL ff(LL n, LL k)
+struct Graph
 {
-  if (n <= 1 + k)
-    return 1;
-  LL mx = 1 + k + 1 + (k - 1) / 2;
-  if (n <= mx)
-    return 2;
-  LL ans = (n / mx) * 3;
-  LL rem = n % mx;
-  if (rem == 0)
-    return ans;
-  if (rem <= 1 + k)
-    return ans + 1;
-  return ans + 3;
-}
+    int V;
+    vector<set<int>> E;
+    bool is_directed;
+    int ans = 0, iso;
 
-void solve()
-{
-  LL rd(n, k);
-  LL ans = ff(n, k), p = 1;
-  while (true)
-  {
-    if (ff(n - p, k) + p < ans)
+    vector<bool> visited;
+
+    Graph(int n, bool dir = false)
     {
-      ans = ff(n - p, k) + p;
-      p++;
+        V = n;
+        iso = n;
+        E.resize(n);
+        is_directed = dir;
+        visited.resize(n, false);
     }
-    else
-      break;
-  }
-  prn(ans);
-}
+
+    void add_edge(int u, int v)
+    {
+        if (E[u].size() == 0)
+            iso--;
+        E[u].insert(v);
+
+        if (E[v].size() == 0)
+            iso--;
+        E[v].insert(u);
+    }
+
+    void del(int node)
+    {
+        set<int>::iterator it;
+        if (E[node].size() == 0)
+            return;
+        for (it = E[node].begin(); it != E[node].end(); it++)
+        {
+            E[*it].erase(node);
+            if (E[*it].size() == 0)
+                iso++;
+        }
+        E[node].clear();
+        iso++;
+    }
+};
 
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
-  LL rd(T);
-  while (T--)
-    solve();
-  return 0;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    LL rd(n, Q);
+    Graph G(n);
+    while (Q--)
+    {
+        LL rd(com);
+        if (com == 1)
+        {
+            LL rd(u, v);
+            G.add_edge(u - 1, v - 1);
+        }
+        else
+        {
+            LL rd(u);
+            G.del(u - 1);
+        }
+        prn(G.iso);
+    }
+    return 0;
 }
-
-100000020010000002
-
-    10000100
