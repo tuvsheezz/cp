@@ -134,117 +134,20 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-struct Graph
-{
-  int V;
-  vector<vector<int>> E;
-  vector<int> degree, drev;
-  vector<LL> tm;
-  vector<bool> sa;
-
-  Graph(int n)
-  {
-    V = n;
-    E.resize(n);
-    degree.resize(n, 0);
-    tm.resize(n);
-    sa.resize(n, false);
-  }
-
-  void add_edge(int u, int v)
-  {
-    E[u].push_back(v);
-    degree[v]++;
-  }
-
-  vector<PLL> TopologicalSort()
-  {
-    PQA<pair<LL, PLL>> next;
-    vector<PLL> ans;
-    vector<LL> par(V, INF);
-
-    for (int i = 0; i < V; i++)
-    {
-      if (degree[i] == 0)
-      {
-        next.push({tm[i], {i, INF}});
-        sa[i] = true;
-      }
-    }
-    while (!next.empty())
-    {
-      auto cur = next.top();
-      next.pop();
-
-      if (sa[cur.second.first] == false)
-        par[cur.second.first] = min(par[cur.second.first], par[cur.second.second]);
-      else
-        par[cur.second.first] = ans.size();
-
-      ans.push_back({cur.first, par[cur.second.first]});
-
-      for (auto &x : E[cur.second.first])
-      {
-        degree[x]--;
-        if (degree[x] == 0)
-          next.push({tm[x], {x, par[cur.second.first]}});
-      }
-    }
-    return ans;
-  }
-};
-
-void solve()
-{
-  LL rd(n, m, k);
-  V<LL> rdv(a, n);
-  Graph G(n);
-  rep(i, n) G.tm[i] = a[i];
-  rep(i, m)
-  {
-    LL rd(u, v);
-    u--;
-    v--;
-    G.add_edge(u, v);
-  }
-
-  auto ts = G.TopologicalSort();
-  LL added = 0;
-
-  repa(i, 1, n)
-  {
-    if (ts[i].F < ts[i - 1].F)
-      added++;
-  }
-  V<LL> mn(n, INF);
-
-  LL ans = added * k + ts[n - 1].F - ts[0].F;
-
-  repd(i, n - 1, 0)
-  {
-    mn[i] = ts[i].second;
-    if (i + 1 < n)
-      mn[i] = min(mn[i], mn[i + 1]);
-  }
-
-  rep(i, n)
-  {
-    if (i > 0 && G.sa[i] == true && mn[i] == ts[i].S)
-    {
-      LL tmp = (added + 1) * k + ts[i - 1].F - ts[i].F;
-      ans = min(ans, tmp);
-    }
-  }
-  prn(ans);
-}
-
 int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-  LL rd(T);
-  while (T--)
-    solve();
+  LL rd(n, h, x);
+  V<LL> rdv(a, n);
+  rep(i, n)
+  {
+    if (a[i] + h >= x)
+    {
+      prn(i + 1);
+      return 0;
+    }
+  }
   return 0;
 }
