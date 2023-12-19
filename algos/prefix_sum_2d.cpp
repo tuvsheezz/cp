@@ -22,6 +22,7 @@ struct PrefixSum2D
         a[i + 1][j + 1] += a[i][j + 1];
   }
 
+  // 1 <= x1 <= h, 1 <= y1 <= w, 1 <= x2 <= h, 1 <= y2 <= w
   T query(long long x1, long long y1, long long x2, long long y2)
   {
     return a[x2][y2] - a[x2][y1 - 1] - a[x1 - 1][y2] + a[x1 - 1][y1 - 1];

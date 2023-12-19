@@ -136,8 +136,61 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 void solve()
 {
-  LL rd(n, m);
-  prn(n + m);
+  LL rd(n);
+  n = 2 * n - 1;
+  V<LL> rdv(a, n);
+  vsorta(a);
+  LL ans = INF;
+  if (n == 1)
+  {
+    prn(1);
+    return;
+  }
+
+  // a0 a1 a2 ... an-2 an-1
+  // 1. sum = a0 + an-1
+  {
+    LL sum = a[0] + a[n - 1];
+    MLL mp;
+    rep(i, n) mp[a[i]]++;
+    LL tmp = INF, cnt = 0;
+    rep(i, n)
+    {
+      if (mp.find(a[i]) != mp.end() && mp[a[i]] > 0)
+      {
+        if (mp.find(sum - a[i]) != mp.end() && mp[sum - a[i]] > 0)
+        {
+          mp[sum - a[i]]--;
+          mp[a[i]]--;
+          cnt++;
+        }
+        else
+          tmp = sum - a[i];
+      }
+    }
+    if (cnt == n / 2)
+      ans = min(ans, tmp);
+  }
+  // 2. sum = a0 + an-2
+  {
+    LL sum = a[0] + a[n - 2];
+    bool f = true;
+    rep(i, n / 2) f = f && (a[i] + a[n - 2 - i] == sum);
+    if (f && sum - a[n - 1] > 0)
+      ans = min(ans, sum - a[n - 1]);
+  }
+  // 3. sum = a1 + an-1
+  {
+    LL sum = a[1] + a[n - 1];
+    bool f = true;
+    rep(i, n / 2) f = f && (a[i + 1] + a[n - 1 - i] == sum);
+    if (f)
+      ans = min(ans, sum - a[0]);
+  }
+  if (ans == INF)
+    prn(-1);
+  else
+    prn(ans);
 }
 
 int main()
@@ -145,8 +198,12 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
+
   LL rd(T);
-  while (T--)
+  rep(i, T)
+  {
+    cout << "Case #" << i + 1 << ": ";
     solve();
+  }
   return 0;
 }

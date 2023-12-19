@@ -134,10 +134,106 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+struct UnionFind
+{
+  vector<int> parent, size, pp;
+  vector<bool> invalid;
+  int size_max = 0, count;
+  map<pair<int, int>, int> mp;
+  UnionFind(int n)
+  {
+    parent.resize(n, -1);
+    size.resize(n, 1);
+    pp.resize(n, 0);
+    invalid.resize(n, false);
+    count = n;
+    size_max = 1;
+  }
+
+  int root(int x) { return parent[x] == -1 ? x : parent[x] = root(parent[x]); }
+  bool same(int x, int y) { return root(x) == root(y); }
+  void unite(int x, int y)
+  {
+    x = root(x);
+    y = root(y);
+    if (x == y)
+      return;
+
+    if (size[x] < size[y])
+      swap(x, y);
+    parent[y] = x;
+    size[x] += size[y];
+    pp[x] += pp[y];
+    size_max = max(size[x], size_max);
+    count--;
+  }
+  int count_of_sets() { return count; }
+  int get_union_size(int x) { return size[root(x)]; }
+  void update_invalid(int x) { invalid[root(x)] = false; }
+  void update_count(int x, int y)
+  {
+    int ro = root(x);
+    if (mp.find({ro, y}) == mp.end())
+    {
+      mp[{ro, y}] = 1;
+      pp[ro]++;
+    }
+  }
+};
+
 void solve()
 {
-  LL rd(n, m);
-  prn(n + m);
+  LL rd(h, w);
+  V<STR> rdv(s, h);
+  UnionFind uf(h * w);
+  vector<pair<int, int>> move = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+  map<pair<int, int>, int> mp;
+  rep(i, h) rep(j, w)
+  {
+    if (s[i][j] == 'W')
+    {
+      for (auto [x, y] : move)
+        if (i + x >= 0 && i + x < h && j + y >= 0 && j + y < w && s[i + x][j + y] == 'W')
+          uf.unite(i * w + j, (i + x) * w + j + y);
+    }
+  }
+  rep(i, h) rep(j, w)
+  {
+    if (s[i][j] == 'W')
+    {
+      V<LL> cn;
+      for (auto [x, y] : move)
+        if (i + x >= 0 && i + x < h && j + y >= 0 && j + y < w && s[i + x][j + y] == '.')
+          cn.PB((i + x) * h + j + y);
+      if (cn.size() > 1)
+        uf.update_invalid(i * w + j);
+      if (cn.size() == 1)
+        uf.update_count(i * w + j, cn[0]);
+    }
+  }
+  LL ans = 0;
+
+  rep(i, h) rep(j, w)
+  {
+    if (s[i][j] == '.')
+    {
+      LL tmp = 0;
+      for (auto [x, y] : move)
+        if (i + x >= 0 && i + x < h && j + y >= 0 && j + y < w && s[i + x][j + y] == 'W')
+        {
+          auto root = uf.root((i + x) * w + j + y);
+          if (uf.invalid[root])
+            continue;
+          if (uf.pp[root] == 1 && mp.find({root, i * h + j}) == mp.end())
+          {
+            tmp += uf.size[root];
+            mp[{root, i * h + j}] = 1;
+          }
+        }
+      ans = max(ans, tmp);
+    }
+  }
+  ans > 0 ? YES : NO;
 }
 
 int main()
@@ -145,8 +241,12 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
+
   LL rd(T);
-  while (T--)
+  rep(i, T)
+  {
+    cout << "Case #" << i + 1 << ": ";
     solve();
+  }
   return 0;
 }

@@ -134,10 +134,115 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
+template <class T>
+struct Compression
+{
+  unordered_map<T, int> coor;
+  long long n;
+
+  Compression(vector<T> aa)
+  {
+    n = aa.size();
+    sort(aa.begin(), aa.end());
+    int ind = 1;
+    for (int i = 0; i < n; i++)
+    {
+      if (coor.find(aa[i]) != coor.end())
+        continue;
+      coor[aa[i]] = ind++;
+    }
+  }
+
+  int query(T val) { return coor[val]; }
+};
+
+long long big_pow(long long a, long long b, long long mod)
+{
+  long long d = 1;
+  while (b > 0)
+  {
+    if (b % 2 == 1)
+      d = d * a % mod;
+    b /= 2;
+    a = a * a % mod;
+  }
+  return d;
+}
+
 void solve()
 {
-  LL rd(n, m);
-  prn(n + m);
+  LL rd(n);
+  V<LL> rdv(a, n);
+  V<LL> rdv(b, n);
+  rep(i, n)
+  {
+    a.push_back(b[i]);
+    b.push_back(a[i]);
+  }
+  rep(i, n)
+  {
+    a.push_back(a[i]);
+    b.push_back(b[i]);
+  }
+  rep(i, n)
+  {
+    a.push_back(b[i]);
+    b.push_back(a[i]);
+  }
+  LL N = 4 * n;
+
+  Compression<LL> com(a);
+  rep(i, N)
+  {
+    a[i] = com.query(a[i]);
+    b[i] = com.query(b[i]);
+  }
+
+  V<LL> ca(N + 1, 0);
+  V<LL> cb(N + 1, 0);
+  V<LL> eq(N + 1, 0);
+
+  rep(i, N)
+  {
+    ca[i + 1] = ca[i] + (a[i] < b[i]);
+    cb[i + 1] = cb[i] + (a[i] > b[i]);
+  }
+
+  LL p = 4000043;
+  V<LL> g(3 * n, 0), h(3 * n, 0);
+  LL p_pow = 1;
+
+  rep(i, n)
+  {
+    g[0] = (g[0] + a[i] * p_pow) % MOD1;
+    h[0] = (h[0] + b[n - 1 - i] * p_pow) % MOD1;
+    p_pow = (p_pow * p) % MOD1;
+  }
+
+  repa(i, 1, 3 * n)
+  {
+    LL tmph = (h[i - 1] - (big_pow(p, n - 1, MOD1) * b[i - 1]) % MOD1 + MOD1) % MOD1;
+    tmph = tmph * p % MOD1;
+    h[i] = (tmph + b[i + n - 1]) % MOD1;
+
+    LL tmp = (g[i - 1] + MOD1 - a[i - 1]) % MOD1;
+    tmp = tmp * big_pow(p, MOD1 - 2, MOD1) % MOD1;
+    g[i] = (tmp + a[i + n - 1] * big_pow(p, n - 1, MOD1) % MOD1) % MOD1;
+  }
+
+  rep(i, 3 * n)
+  {
+    bool f1 = (ca[i + n / 2] - ca[i]) == n / 2;
+    bool f2 = (n % 2 == 0) ? true : (a[i + n / 2] == b[i + n / 2]);
+    bool f3 = (cb[i + n] - cb[i + n / 2 + n % 2]) == n / 2;
+    bool f4 = (g[i] == h[i]);
+    if (f1 && f2 && f3 && f4)
+    {
+      prn(i);
+      return;
+    }
+  }
+  prn(-1);
 }
 
 int main()
@@ -145,8 +250,12 @@ int main()
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
+
   LL rd(T);
-  while (T--)
+  rep(i, T)
+  {
+    cout << "Case #" << i + 1 << ": ";
     solve();
+  }
   return 0;
 }
