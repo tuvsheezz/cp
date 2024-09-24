@@ -43,23 +43,32 @@ struct SegTree
     if (max(left, lq) >= min(right, rq))
       return INT32_MIN;
     extend();
-    return max(left_child->get_max(lq, rq), right_child->get_max(lq, rq));
+    return left_child->get_max(lq, rq) + right_child->get_max(lq, rq);
   }
 };
 
 int main()
 {
-  int n, m, u, v;
+  int n, q;
   int mod = 1000000007;
+  SegTree st(-mod, mod);
   cin >> n;
-  SegTree st(0, mod);
+
+  vector<int> x(n), p(n);
   for (int i = 0; i < n; i++)
+    cin >> x[i];
+  for (int i = 0; i < n; i++)
+    cin >> p[i];
+  for (int i = 0; i < n; i++)
+    st.set(x[i], p[i]);
+
+  while (q--)
   {
-    cin >> u;
-    auto x = st.get_max(u + 1, mod);
-    st.set(u, i + 1);
-    cout << (x == INT32_MIN ? -1 : x) << " \n"[i == n - 1];
+    int l, r;
+    cin >> l >> r;
+    cout << st.get_max(l, r + 1) << endl;
   }
+
   return 0;
 }
 

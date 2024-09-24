@@ -1,5 +1,57 @@
+#include <algorithm>
+#include <bitset>
+#include <complex>
+#include <deque>
+#include <exception>
+#include <fstream>
+#include <functional>
+#include <iomanip>
+#include <ios>
+#include <iosfwd>
+#include <iostream>
+#include <istream>
+#include <iterator>
+#include <limits>
+#include <list>
+#include <locale>
+#include <map>
+#include <memory>
+#include <new>
+#include <numeric>
+#include <ostream>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <stdexcept>
+#include <streambuf>
+#include <string>
+#include <typeinfo>
+#include <utility>
+#include <valarray>
+#include <vector>
 
-#include <bits/stdc++.h>
+#if __cplusplus >= 201103L
+#include <array>
+#include <atomic>
+#include <chrono>
+#include <condition_variable>
+#include <forward_list>
+#include <future>
+#include <initializer_list>
+#include <mutex>
+#include <random>
+#include <ratio>
+#include <regex>
+#include <scoped_allocator>
+#include <system_error>
+#include <thread>
+#include <tuple>
+#include <typeindex>
+#include <type_traits>
+#include <unordered_map>
+#include <unordered_set>
+#endif
 
 using namespace std;
 #define PI 3.141592653589793238462643383279502884L
@@ -82,72 +134,27 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 #define MOD2 998244353
 #define MAX_N 100100
 
-using namespace std;
+void print_ans(LL t, DD ans)
+{
+  prd();
+  cout << "Case #" << t << ": " << ans << '\n';
+}
 
-// int main()
-// {
-//   LL rd(n);
-//   VV<LL> a(n, V<LL>(n, 0));
-//   VV<LL> b(n, V<LL>(n, 0));
-//   VV<LL> c(n, V<LL>(n, 0));
-
-//   {
-//     LL rd(ma);
-//     rep(i, ma)
-//     {
-//       LL rd(x, y);
-//       a[x - 1][y - 1] = 1;
-//     }
-//   }
-//   {
-//     LL rd(ma);
-//     rep(i, ma)
-//     {
-//       LL rd(x, y);
-//       b[x - 1][y - 1] = 1;
-//     }
-//   }
-
-//   rep(i, n)
-//   {
-//     repa(j, i + 1, n)
-//     {
-//       LL rd(x);
-//       c[i][j] = x;
-//       c[j][i] = x;
-//     }
-//   }
-
-//   V<LL> x;
-//   rep(i, n) x.push_back(i);
-//   LL ans = INF;
-//   do
-//   {
-//     LL cost = 0;
-//     rep(i, n) rep(j, n)
-//     {
-//       if (a[x[i]][x[j]] != b[i][j])
-//         cost += c[i][j];
-//     }
-//     ans = min(cost, ans);
-//   } while (next_permutation(x.begin(), x.end()));
-//   prn(ans / 2);
-//   return 0;
-// }
+void solve(LL t)
+{
+  DD rd(n, p);
+  DD X = pow(p / 100, (n - 1) / n) * 100 - p;
+  print_ans(t, X);
+}
 
 int main()
 {
-  LL rd(n);
-  V<LL> rdv(a, n);
-  V<LL> prev(n + 1, 0);
-  LL ans = 0;
-  rep(i, n)
-  {
-    LL len = n - prev[a[i]];
-    ans += len * (len + 1) / 2;
+  ios_base::sync_with_stdio(false);
+  cin.tie(0);
+  cout.tie(0);
+  LL rd(T);
 
-    prev[a[i]] = i + 1;
-  }
-  prn(ans);
+  rep(i, T) solve(i + 1);
+
   return 0;
 }
