@@ -84,70 +84,14 @@ auto &read(Args &...args) { return (cin >> ... >> args); }
 
 using namespace std;
 
-// int main()
-// {
-//   LL rd(n);
-//   VV<LL> a(n, V<LL>(n, 0));
-//   VV<LL> b(n, V<LL>(n, 0));
-//   VV<LL> c(n, V<LL>(n, 0));
-
-//   {
-//     LL rd(ma);
-//     rep(i, ma)
-//     {
-//       LL rd(x, y);
-//       a[x - 1][y - 1] = 1;
-//     }
-//   }
-//   {
-//     LL rd(ma);
-//     rep(i, ma)
-//     {
-//       LL rd(x, y);
-//       b[x - 1][y - 1] = 1;
-//     }
-//   }
-
-//   rep(i, n)
-//   {
-//     repa(j, i + 1, n)
-//     {
-//       LL rd(x);
-//       c[i][j] = x;
-//       c[j][i] = x;
-//     }
-//   }
-
-//   V<LL> x;
-//   rep(i, n) x.push_back(i);
-//   LL ans = INF;
-//   do
-//   {
-//     LL cost = 0;
-//     rep(i, n) rep(j, n)
-//     {
-//       if (a[x[i]][x[j]] != b[i][j])
-//         cost += c[i][j];
-//     }
-//     ans = min(cost, ans);
-//   } while (next_permutation(x.begin(), x.end()));
-//   prn(ans / 2);
-//   return 0;
-// }
-
 int main()
 {
-  LL rd(n);
+  LL rd(n, m, X);
   V<LL> rdv(a, n);
-  V<LL> prev(n + 1, 0);
-  LL ans = 0;
-  rep(i, n)
-  {
-    LL len = n - prev[a[i]];
-    ans += len * (len + 1) / 2;
+  LL sum = 0;
+  V<V<LL>> b(n);
+  rep(i, n) b[i] = {a[i], i};
+  vsortd(b);
 
-    prev[a[i]] = i + 1;
-  }
-  prn(ans);
   return 0;
 }
